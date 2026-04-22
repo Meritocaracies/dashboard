@@ -333,13 +333,15 @@
 
         // Reddit user
         document.getElementById("reddit-user-list").innerHTML =
-  (data.reddit_user?.items || []).length
-    ? (data.reddit_user.items || []).map(item => `
-        <div class="row">
-          <div><a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a></div>
-        </div>
-      `).join("")
-    : '<div class="small">No recent posts found or feed unavailable.</div>';
+  (data.reddit_user?.items || []).map(item => `
+    <div class="section-block" style="padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:10px;">
+      <div style="margin-bottom:4px;">
+        <a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a>
+      </div>
+      ${item.updated ? `<div class="small" style="margin-bottom:4px;">${escapeHtml(formatTimestamp(item.updated))}</div>` : ""}
+      ${item.snippet ? `<div class="small">${escapeHtml(item.snippet)}</div>` : ""}
+    </div>
+  `).join("") || '<div class="small">No recent comments found.</div>';
 
         // Gmail
         document.getElementById("gmail-links").innerHTML =
