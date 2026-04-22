@@ -604,7 +604,7 @@ def update_dashboard():
     fresh = {
         "ai_leaderboard": get_ai_leaderboard(),
         "ai_free_tier": get_free_tier_ai_leaderboard(),
-        "reddit_user": get_reddit_user_updates(),
+        "reddit_user": get_reddit_user_comments(),
         "reddit_searches": get_reddit_searches([
             {"label": "Longevity", "query": "longevity OR rapamycin"},
             {"label": "Hormones", "query": "testosterone OR enclomiphene OR hcg"},
