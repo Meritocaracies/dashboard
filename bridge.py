@@ -437,6 +437,4 @@ def update_dashboard():
     print("Saved data.json")
 
 if __name__ == "__main__":
-    while True:
-        update_dashboard()
-        time.sleep(900)
+    update_dashboard()
