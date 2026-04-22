@@ -3,6 +3,7 @@ import json
 import time
 import requests
 import feedparser
+import re
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
@@ -19,6 +20,183 @@ session.headers.update({
     "Accept": "application/json, application/xml;q=0.9, text/html;q=0.8"
 })
 
+def extract_price_candidates(text):
+    """
+    Returns a list of numeric USD-looking prices found in text.
+    Example: '$299', '$100.00'
+    """
+    matches = re.findall(r'\$\s?(\d+(?:\.\d{1,2})?)', text)
+    prices = []
+    for m in matches:
+        try:
+            prices.append(float(m))
+        except ValueError:
+            pass
+    return prices
+
+def pick_reasonable_genomics_price(prices, low=50, high=2000):
+    """
+    Filters absurd values and returns the minimum plausible price.
+    """
+    candidates = [p for p in prices if low <= p <= high]
+    return min(candidates) if candidates else None
+
+def fetch_html(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; DashboardBot/1.0)"
+    }
+    res = session.get(url, headers=headers, timeout=25)
+    res.raise_for_status()
+    return res.text
+
+def get_nebula_price():
+    url = "https://nebula.org/whole-genome-sequencing-dna-test/"
+    try:
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_price_candidates(text)
+        price = pick_reasonable_genomics_price(prices)
+
+        return {
+            "provider": "Nebula",
+            "product_name": "Whole Genome Sequencing",
+            "test_type": "wgs",
+            "coverage": "30x?",
+            "price_usd": price,
+            "display_price": f"${int(price)}" if price else "Unknown",
+            "subscription_required": False,
+            "notes": "Auto-scraped; verify current sale/subscription terms",
+            "url": url,
+            "status": "ok" if price else "error"
+        }
+    except Exception as e:
+        return {
+            "provider": "Nebula",
+            "product_name": "Whole Genome Sequencing",
+            "test_type": "wgs",
+            "coverage": "30x?",
+            "price_usd": None,
+            "display_price": "Unknown",
+            "subscription_required": False,
+            "notes": f"Failed to scrape: {e}",
+            "url": url,
+            "status": "error"
+        }
+
+def get_tellmegen_price():
+    url = "https://tellmegen.com/en/"
+    try:
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_price_candidates(text)
+        price = pick_reasonable_genomics_price(prices)
+
+        return {
+            "provider": "tellmeGen",
+            "product_name": "Genome product",
+            "test_type": "wgs_or_other",
+            "coverage": "Unknown",
+            "price_usd": price,
+            "display_price": f"${int(price)}" if price else "Unknown",
+            "subscription_required": False,
+            "notes": "Auto-scraped homepage; verify product is true WGS and note coverage",
+            "url": url,
+            "status": "ok" if price else "error"
+        }
+    except Exception as e:
+        return {
+            "provider": "tellmeGen",
+            "product_name": "Genome product",
+            "test_type": "wgs_or_other",
+            "coverage": "Unknown",
+            "price_usd": None,
+            "display_price": "Unknown",
+            "subscription_required": False,
+            "notes": f"Failed to scrape: {e}",
+            "url": url,
+            "status": "error"
+        }
+
+def get_element_vitari_watch():
+    return {
+        "provider": "Element Vitari",
+        "product_name": "$100 genome watch",
+        "test_type": "future_wgs",
+        "coverage": "TBD",
+        "price_usd": 100,
+        "display_price": "$100 target",
+        "subscription_required": False,
+        "notes": "Future target / announcement watch, not necessarily commercially available now",
+        "url": "https://www.elementbiosciences.com/",
+        "status": "ok"
+    }
+
+def get_sequencing_com_price():
+    url = "https://sequencing.com/"
+    try:
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_price_candidates(text)
+        price = pick_reasonable_genomics_price(prices)
+
+        return {
+            "provider": "Sequencing.com",
+            "product_name": "Genome sequencing",
+            "test_type": "wgs_or_bundle",
+            "coverage": "Unknown",
+            "price_usd": price,
+            "display_price": f"${int(price)}" if price else "Unknown",
+            "subscription_required": False,
+            "notes": "Auto-scraped; verify whether this is standalone WGS or bundle pricing",
+            "url": url,
+            "status": "ok" if price else "error"
+        }
+    except Exception as e:
+        return {
+            "provider": "Sequencing.com",
+            "product_name": "Genome sequencing",
+            "test_type": "wgs_or_bundle",
+            "coverage": "Unknown",
+            "price_usd": None,
+            "display_price": "Unknown",
+            "subscription_required": False,
+            "notes": f"Failed to scrape: {e}",
+            "url": url,
+            "status": "error"
+        }
+# ---------------- WGS ----------------
+def get_wgs_prices():
+    source = "provider pages + manual watch"
+    try:
+        rows = [
+            get_nebula_price(),
+            get_tellmegen_price(),
+            get_sequencing_com_price(),
+            get_element_vitari_watch(),
+        ]
+
+        # sort by numeric price if available
+        sortable = []
+        unsortable = []
+
+        for r in rows:
+            if r.get("price_usd") is not None and r.get("test_type") in ("wgs", "wgs_or_other", "wgs_or_bundle", "future_wgs"):
+                sortable.append(r)
+            else:
+                unsortable.append(r)
+
+        sortable.sort(key=lambda x: x["price_usd"])
+        items = sortable + unsortable
+
+        return ok(items, source, meta={"note": "Verify WGS vs WES/low-pass before purchase"})
+    except Exception as e:
+        return err(source, e)
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
@@ -302,14 +480,6 @@ def get_reddit_searches(searches):
     except Exception as e:
         return err("reddit rss", e)
 
-# ---------------- WGS ----------------
-
-def get_wgs_prices():
-    return ok([
-        {"provider": "Element Vitari", "price": "$100", "note": "Targeting 2026", "url": "https://www.elementbiosciences.com/"},
-        {"provider": "Nebula", "price": "$249", "note": "Current Sale", "url": "https://nebula.org/whole-genome-sequencing-dna-test/"},
-        {"provider": "Sequencing.com", "price": "$379", "note": "Clinical Grade", "url": "https://sequencing.com/"}
-    ], "manual")
 
 # ---------------- PubMed ----------------
 
