@@ -1,0 +1,244 @@
+{
+  "last_updated": "2026-04-22T20:56:32.411068+00:00",
+  "ai_leaderboard": {
+    "status": "error",
+    "items": [],
+    "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
+    "retrieved_at": "2026-04-22T20:56:30.102012+00:00",
+    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
+  },
+  "ai_free_tier": {
+    "status": "error",
+    "items": [],
+    "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
+    "retrieved_at": "2026-04-22T20:56:30.102027+00:00",
+    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
+  },
+  "reddit_user": {
+    "status": "ok",
+    "items": [],
+    "source": "https://www.reddit.com/user/Drwillpowers/submitted.rss",
+    "retrieved_at": "2026-04-22T20:56:30.231523+00:00",
+    "meta": {}
+  },
+  "reddit_searches": {
+    "status": "ok",
+    "items": [
+      {
+        "label": "Longevity",
+        "query": "longevity OR rapamycin",
+        "items": []
+      },
+      {
+        "label": "Hormones",
+        "query": "testosterone OR enclomiphene OR hcg",
+        "items": []
+      },
+      {
+        "label": "Genome",
+        "query": "\"whole genome sequencing\" OR WGS",
+        "items": []
+      }
+    ],
+    "source": "reddit rss",
+    "retrieved_at": "2026-04-22T20:56:30.591086+00:00",
+    "meta": {}
+  },
+  "wgs_price": {
+    "status": "ok",
+    "items": [
+      {
+        "provider": "Element Vitari",
+        "price": "$100",
+        "note": "Targeting 2026",
+        "url": "https://www.elementbiosciences.com/"
+      },
+      {
+        "provider": "Nebula",
+        "price": "$249",
+        "note": "Current Sale",
+        "url": "https://nebula.org/whole-genome-sequencing-dna-test/"
+      },
+      {
+        "provider": "Sequencing.com",
+        "price": "$379",
+        "note": "Clinical Grade",
+        "url": "https://sequencing.com/"
+      }
+    ],
+    "source": "manual",
+    "retrieved_at": "2026-04-22T20:56:30.591100+00:00",
+    "meta": {}
+  },
+  "pubmed": {
+    "status": "error",
+    "items": [],
+    "source": "pubmed",
+    "retrieved_at": "2026-04-22T20:56:31.528098+00:00",
+    "error": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,41938343,41802677,41923668"
+  },
+  "arxiv": {
+    "status": "ok",
+    "items": [
+      {
+        "query": "AI agents",
+        "items": [
+          {
+            "title": "Tstars-Tryon 1.0: Robust and Realistic Virtual Try-On for Diverse Fashion Items",
+            "link": "https://arxiv.org/abs/2604.19748v1",
+            "published": "2026-04-21T17:59:49Z"
+          },
+          {
+            "title": "PlayCoder: Making LLM-Generated GUI Code Playable",
+            "link": "https://arxiv.org/abs/2604.19742v1",
+            "published": "2026-04-21T17:59:16Z"
+          },
+          {
+            "title": "A-MAR: Agent-based Multimodal Art Retrieval for Fine-Grained Artwork Understanding",
+            "link": "https://arxiv.org/abs/2604.19689v1",
+            "published": "2026-04-21T17:11:48Z"
+          },
+          {
+            "title": "An Answer is just the Start: Related Insight Generation for Open-Ended Document-Grounded QA",
+            "link": "https://arxiv.org/abs/2604.19685v1",
+            "published": "2026-04-21T17:07:53Z"
+          },
+          {
+            "title": "InHabit: Leveraging Image Foundation Models for Scalable 3D Human Placement",
+            "link": "https://arxiv.org/abs/2604.19673v1",
+            "published": "2026-04-21T16:53:18Z"
+          }
+        ]
+      },
+      {
+        "query": "genomics foundation model",
+        "items": [
+          {
+            "title": "Tstars-Tryon 1.0: Robust and Realistic Virtual Try-On for Diverse Fashion Items",
+            "link": "https://arxiv.org/abs/2604.19748v1",
+            "published": "2026-04-21T17:59:49Z"
+          },
+          {
+            "title": "AnyRecon: Arbitrary-View 3D Reconstruction with Video Diffusion Model",
+            "link": "https://arxiv.org/abs/2604.19747v1",
+            "published": "2026-04-21T17:59:47Z"
+          },
+          {
+            "title": "Calibration-Induced Systematics in SALT3 Training and Their Impact on Dark Energy Constraints from Stage IV Supernova Surveys",
+            "link": "https://arxiv.org/abs/2604.19746v1",
+            "published": "2026-04-21T17:59:47Z"
+          },
+          {
+            "title": "Precision Kinematic Sunyaev--Zel'dovich Measurements Across Halo Mass and Redshift with DESI DR2 and ACT DR6: Part II. Bright Galaxy Survey and Emission-Line Galaxies",
+            "link": "https://arxiv.org/abs/2604.19745v1",
+            "published": "2026-04-21T17:59:30Z"
+          },
+          {
+            "title": "Precision Kinematic Sunyaev--Zel'dovich Measurements Across Halo Mass and Redshift with DESI DR2 and ACT DR6: Part I. Luminous Red Galaxies",
+            "link": "https://arxiv.org/abs/2604.19744v1",
+            "published": "2026-04-21T17:59:26Z"
+          }
+        ]
+      },
+      {
+        "query": "longevity",
+        "items": [
+          {
+            "title": "Evidence for Environmental Stripping in the Coma Cluster",
+            "link": "https://arxiv.org/abs/2604.16619v1",
+            "published": "2026-04-17T18:15:25Z"
+          },
+          {
+            "title": "The Cosmic Web and Its Filaments: Neutrino Mass from Topology and Persistent Homology",
+            "link": "https://arxiv.org/abs/2604.09148v1",
+            "published": "2026-04-10T09:30:28Z"
+          },
+          {
+            "title": "Computing with Living Neurons: Chaos-Controlled Reservoir Computing with Knowledge Transplant",
+            "link": "https://arxiv.org/abs/2604.02552v1",
+            "published": "2026-04-02T22:03:26Z"
+          },
+          {
+            "title": "Bipolar plates for the next generation of proton exchange membrane fuel cells (PEMFCs): A review of the latest processing methods for unconventional flow channels",
+            "link": "https://arxiv.org/abs/2604.00461v1",
+            "published": "2026-04-01T04:17:12Z"
+          },
+          {
+            "title": "Surface mechanisms governing long-term stability of GEM detectors in CO$_2$-based gaseous mixtures",
+            "link": "https://arxiv.org/abs/2604.06226v1",
+            "published": "2026-03-27T17:06:26Z"
+          }
+        ]
+      }
+    ],
+    "source": "arxiv",
+    "retrieved_at": "2026-04-22T20:56:31.758809+00:00",
+    "meta": {}
+  },
+  "weather": {
+    "status": "ok",
+    "items": [
+      {
+        "temperature": 23.5,
+        "feels_like": 22.3,
+        "weather_code": 0,
+        "today_max": 23.5,
+        "today_min": 8.5
+      }
+    ],
+    "source": "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
+    "retrieved_at": "2026-04-22T20:56:32.410813+00:00",
+    "meta": {}
+  },
+  "calendar": {
+    "status": "ok",
+    "items": [],
+    "source": "agenda.json",
+    "retrieved_at": "2026-04-22T20:56:32.410872+00:00",
+    "meta": {}
+  },
+  "bookmarks": {
+    "status": "ok",
+    "items": {
+      "AI": [
+        {
+          "title": "Artificial Analysis",
+          "url": "https://artificialanalysis.ai/"
+        },
+        {
+          "title": "OpenRouter",
+          "url": "https://openrouter.ai/"
+        }
+      ],
+      "Bio": [
+        {
+          "title": "PubMed",
+          "url": "https://pubmed.ncbi.nlm.nih.gov/"
+        },
+        {
+          "title": "arXiv q-bio",
+          "url": "https://arxiv.org/list/q-bio/new"
+        }
+      ]
+    },
+    "source": "bookmarks.json",
+    "retrieved_at": "2026-04-22T20:56:32.411056+00:00",
+    "meta": {}
+  },
+  "gmail_links": {
+    "status": "ok",
+    "items": [
+      {
+        "title": "Important in last 24 hours",
+        "url": "https://mail.google.com/mail/u/0/#search/is%3Aimportant+newer_than%3A1d"
+      },
+      {
+        "title": "Unread starred",
+        "url": "https://mail.google.com/mail/u/0/#search/is%3Aunread+is%3Astarred"
+      }
+    ],
+    "source": "manual",
+    "retrieved_at": "2026-04-22T20:56:32.411065+00:00",
+    "meta": {}
+  }
+}
