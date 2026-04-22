@@ -429,8 +429,8 @@ def get_free_tier_ai_leaderboard(limit=5):
 
 # ---------------- Reddit ----------------
 
-def get_reddit_user_updates(username="Drwillpowers", limit=4):
-    rss_url = f"https://www.reddit.com/user/{username}/submitted.rss"
+def get_reddit_user_comments(username="Drwillpowers", limit=5):
+    rss_url = f"https://www.reddit.com/user/{username}/comments.rss"
     headers = {
         "User-Agent": "Mozilla/5.0 (compatible; DashboardBot/1.0)"
     }
@@ -446,23 +446,31 @@ def get_reddit_user_updates(username="Drwillpowers", limit=4):
         for entry in entries:
             title_tag = entry.find("title")
             link_tag = entry.find("link")
+            updated_tag = entry.find("updated")
+            content_tag = entry.find("content")
 
             title = title_tag.text.strip() if title_tag else "Untitled"
             link = link_tag.get("href", "#") if link_tag else "#"
+            updated = updated_tag.text.strip() if updated_tag else None
 
-            if "personal messages" in title.lower():
-                continue
+            snippet = ""
+            if content_tag:
+                snippet_html = content_tag.text.strip()
+                snippet_soup = BeautifulSoup(snippet_html, "html.parser")
+                snippet = snippet_soup.get_text(" ", strip=True)
+                snippet = snippet[:220] + ("..." if len(snippet) > 220 else "")
 
             items.append({
                 "title": title,
-                "link": link
+                "link": link,
+                "updated": updated,
+                "snippet": snippet
             })
 
             if len(items) >= limit:
                 break
 
         return ok(items, rss_url, meta={"entry_count": len(entries)})
-
     except Exception as e:
         return err(rss_url, e)
 
