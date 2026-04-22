@@ -3,6 +3,7 @@ import json
 import time
 import requests
 import feedparser
+from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
 from dotenv import load_dotenv
@@ -251,17 +252,38 @@ def get_free_tier_ai_leaderboard(limit=5):
 
 def get_reddit_user_updates(username="Drwillpowers", limit=4):
     rss_url = f"https://www.reddit.com/user/{username}/submitted.rss"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; DashboardBot/1.0)"
+    }
+
     try:
-        feed = feedparser.parse(rss_url)
+        res = session.get(rss_url, headers=headers, timeout=20)
+        res.raise_for_status()
+
+        soup = BeautifulSoup(res.content, "xml")
+        entries = soup.find_all("entry")
+
         items = []
-        for entry in feed.entries:
-            title = entry.get("title", "Untitled")
+        for entry in entries:
+            title_tag = entry.find("title")
+            link_tag = entry.find("link")
+
+            title = title_tag.text.strip() if title_tag else "Untitled"
+            link = link_tag.get("href", "#") if link_tag else "#"
+
             if "personal messages" in title.lower():
                 continue
-            items.append({"title": title, "link": entry.get("link", "#")})
+
+            items.append({
+                "title": title,
+                "link": link
+            })
+
             if len(items) >= limit:
                 break
-        return ok(items, rss_url)
+
+        return ok(items, rss_url, meta={"entry_count": len(entries)})
+
     except Exception as e:
         return err(rss_url, e)
 
