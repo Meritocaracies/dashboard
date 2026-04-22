@@ -247,14 +247,30 @@
         </div>
       `).join("");
     }
-
+    function formatTimestamp(isoString) {
+  if (!isoString) return "unknown";
+  try {
+    return new Date(isoString).toLocaleString("en-US", {
+      timeZone: "America/Los_Angeles",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true
+    }) + " PT";
+  } catch {
+    return isoString;
+  }
+}
     async function loadData() {
       try {
         const response = await fetch("data.json?_=" + Date.now());
         const data = await response.json();
 
         document.getElementById("page-meta").textContent =
-          "Last updated: " + (data.last_updated || "unknown");
+  "Last updated: " + formatTimestamp(data.last_updated);
 
         setStatus("ai-status", data.ai_leaderboard);
         setStatus("free-ai-status", data.ai_free_tier);
