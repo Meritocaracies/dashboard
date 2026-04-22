@@ -40,13 +40,16 @@ def err(source, message, items=None):
     }
 
 def load_existing_data():
-    if os.path.exists(DATA_FILE):
-        try:
-            with open(DATA_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"Failed to load existing data: {e}")
-    return {}
+    if not os.path.exists(DATA_FILE):
+        return {}
+
+    try:
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        return migrate_legacy_data(data)
+    except Exception as e:
+        print(f"Failed to load existing data: {e}")
+        return {}
 
 def save_data(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -55,12 +58,29 @@ def save_data(data):
 def preserve_previous_if_failed(existing, key, fresh):
     if fresh.get("status") == "ok":
         return fresh
-    if key in existing:
-        prev = existing[key]
+
+    if key not in existing:
+        return fresh
+
+    prev = existing[key]
+
+    # New schema: already a widget dict
+    if isinstance(prev, dict) and "items" in prev:
+        prev = dict(prev)  # shallow copy
         prev["stale"] = True
         prev["stale_reason"] = fresh.get("error", "unknown error")
         return prev
-    return fresh
+
+    # Old schema fallback: wrap legacy values
+    return {
+        "status": "ok",
+        "items": prev if isinstance(prev, list) else [prev],
+        "source": "legacy_data.json",
+        "retrieved_at": now_iso(),
+        "stale": True,
+        "stale_reason": fresh.get("error", "unknown error"),
+        "meta": {"migrated_from_legacy_format": True}
+    }
 
 # ---------------- AI / Artificial Analysis ----------------
 
