@@ -24,6 +24,18 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
+        - name: Debug secret presence
+  env:
+    ARTIFICIAL_ANALYSIS_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
+  run: |
+    if [ -z "$ARTIFICIAL_ANALYSIS_API_KEY" ]; then
+      echo "ARTIFICIAL_ANALYSIS_API_KEY is NOT set"
+      exit 1
+    else
+      echo "ARTIFICIAL_ANALYSIS_API_KEY is set"
+    fi
+    
+
       - name: Run Dashboard Updater
         env:
           ARTIFICIAL_ANALYSIS_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
