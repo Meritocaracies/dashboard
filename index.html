@@ -1,85 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AI/Bio Command Center</title>
-    <style>
-        :root { --bg: #0b0e14; --card: #161b22; --text: #c9d1d9; --accent: #58a6ff; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; max-width: 1200px; margin: auto; }
-        .card { background: var(--card); border: 1px solid #30363d; border-radius: 8px; padding: 20px; }
-        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #30363d; margin-bottom: 15px; }
-        .search-bar { width: 100%; padding: 15px; background: #0d1117; border: 1px solid #30363d; color: white; border-radius: 6px; margin-bottom: 30px; }
-        .price { color: #3fb950; font-weight: bold; }
-        .reddit-item { margin-bottom: 12px; font-size: 0.9rem; }
-        a { color: var(--accent); text-decoration: none; }
-        .tag { font-size: 0.7rem; background: #21262d; padding: 2px 6px; border-radius: 10px; }
-    </style>
+  <meta charset="UTF-8" />
+  <title>AI/Bio Command Center</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #0b0e14;
+      --card: #161b22;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --red: #f85149;
+      --border: #30363d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px;
+    }
+    .topbar {
+      max-width: 1400px;
+      margin: 0 auto 24px auto;
+    }
+    .search-bar {
+      width: 100%;
+      padding: 14px 16px;
+      background: #0d1117;
+      border: 1px solid var(--border);
+      color: white;
+      border-radius: 10px;
+      margin-bottom: 12px;
+      font-size: 1rem;
+    }
+    .meta {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 1400px;
+      margin: auto;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 180px;
+    }
+    .span-2 { grid-column: span 2; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      gap: 8px;
+    }
+    .header h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .tag {
+      font-size: 0.72rem;
+      background: #21262d;
+      padding: 3px 8px;
+      border-radius: 999px;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .status-ok { color: var(--green); }
+    .status-error { color: var(--red); }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .row:last-child { border-bottom: none; }
+    .score, .price { font-weight: 700; }
+    .price { color: var(--green); }
+    .small {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .section-block {
+      margin-bottom: 14px;
+    }
+    .section-block:last-child {
+      margin-bottom: 0;
+    }
+    ul.clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    .error {
+      color: var(--red);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 720px) {
+      .grid { grid-template-columns: 1fr; }
+      .span-2 { grid-column: span 1; }
+    }
+  </style>
 </head>
 <body>
-
+  <div class="topbar">
     <form action="https://www.google.com/search" method="get">
-        <input type="text" name="q" class="search-bar" placeholder="Google Search | Use 'site:reddit.com' for niche threads..." autofocus>
+      <input type="text" name="q" class="search-bar" placeholder="Search Google | tip: site:reddit.com query" autofocus>
     </form>
+    <div class="meta" id="page-meta">Loading dashboard...</div>
+  </div>
 
-    <div class="grid">
-        <div class="card">
-            <div class="header"><h3>🏆 Intelligence Ranking</h3><small>via Artificial Analysis</small></div>
-            <div id="ai-list">Loading...</div>
-        </div>
-
-        <div class="card">
-            <div class="header"><h3>🧬 WGS Price Watch</h3><span class="tag">Real-time</span></div>
-            <div id="wgs-list">Loading...</div>
-        </div>
-
-        <div class="card">
-            <div class="header"><h3>🔴 u/Drwillpowers</h3><span class="tag">New Posts</span></div>
-            <div id="reddit-list">Loading...</div>
-        </div>
-
-        <div class="card">
-            <div class="header"><h3>📩 AI Email Filter</h3></div>
-            <p>Direct jumps to prioritized threads:</p>
-            <a href="https://mail.google.com/mail/u/0/#search/17-hydroxyprogesterone+OR+monogenic" target="_blank">🧬 Lab Results & Bio Threads</a><br><br>
-            <a href="https://mail.google.com/mail/u/0/#search/is%3Aimportant+newer_than%3A1d" target="_blank">🔥 Last 24 Hours (High Priority)</a>
-        </div>
+  <div class="grid">
+    <div class="card">
+      <div class="header">
+        <h3>🏆 AI Leaderboard</h3>
+        <span class="tag" id="ai-status">...</span>
+      </div>
+      <div id="ai-list">Loading...</div>
     </div>
 
-    <script>
-    async function loadData() {
-        try {
-            const response = await fetch('data.json?_=' + Date.now());
-            const data = await response.json();
+    <div class="card">
+      <div class="header">
+        <h3>🆓 Free-Tier AI</h3>
+        <span class="tag" id="free-ai-status">...</span>
+      </div>
+      <div id="free-ai-list">Loading...</div>
+    </div>
 
-            document.getElementById('ai-list').innerHTML =
-                (data.ai_leaderboard?.items || []).map(m =>
-                    `<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                        <span>${m.model}</span>
-                        <strong>${m.score ?? m.elo ?? ''}</strong>
-                    </div>`
-                ).join('') || '<div>No AI data available</div>';
+    <div class="card">
+      <div class="header">
+        <h3>🧬 WGS Price Watch</h3>
+        <span class="tag" id="wgs-status">...</span>
+      </div>
+      <div id="wgs-list">Loading...</div>
+    </div>
 
-            document.getElementById('wgs-list').innerHTML =
-                (data.wgs_price?.items || []).map(p =>
-                    `<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                        <span>${p.provider}</span>
-                        <span class="price">${p.price}</span>
-                    </div>`
-                ).join('') || '<div>No WGS data available</div>';
+    <div class="card span-2">
+      <div class="header">
+        <h3>🔴 Reddit Saved Searches</h3>
+        <span class="tag" id="reddit-search-status">...</span>
+      </div>
+      <div id="reddit-searches">Loading...</div>
+    </div>
 
-            document.getElementById('reddit-list').innerHTML =
-                (data.reddit?.items || []).map(r =>
-                    `<div class="reddit-item"><a href="${r.link}" target="_blank">${r.title}</a></div>`
-                ).join('') || '<div>No Reddit posts available</div>';
+    <div class="card">
+      <div class="header">
+        <h3>👤 u/Drwillpowers</h3>
+        <span class="tag" id="reddit-user-status">...</span>
+      </div>
+      <div id="reddit-user-list">Loading...</div>
+    </div>
 
-        } catch (e) {
-            console.error("Could not load data.json.", e);
-        }
+    <div class="card">
+      <div class="header">
+        <h3>📩 Gmail Deep Links</h3>
+      </div>
+      <div id="gmail-links">Loading...</div>
+    </div>
+
+    <div class="card span-2">
+      <div class="header">
+        <h3>📚 PubMed Tracker</h3>
+        <span class="tag" id="pubmed-status">...</span>
+      </div>
+      <div id="pubmed-list">Loading...</div>
+    </div>
+
+    <div class="card span-2">
+      <div class="header">
+        <h3>🧠 arXiv Tracker</h3>
+        <span class="tag" id="arxiv-status">...</span>
+      </div>
+      <div id="arxiv-list">Loading...</div>
+    </div>
+
+    <div class="card">
+      <div class="header">
+        <h3>🌤 Weather</h3>
+        <span class="tag" id="weather-status">...</span>
+      </div>
+      <div id="weather-box">Loading...</div>
+    </div>
+
+    <div class="card">
+      <div class="header">
+        <h3>📅 Calendar</h3>
+        <span class="tag" id="calendar-status">...</span>
+      </div>
+      <div id="calendar-box">Loading...</div>
+    </div>
+
+    <div class="card span-2">
+      <div class="header">
+        <h3>🔖 Bookmarks by Topic</h3>
+        <span class="tag" id="bookmarks-status">...</span>
+      </div>
+      <div id="bookmarks-box">Loading...</div>
+    </div>
+  </div>
+
+  <script>
+    function setStatus(id, widget) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const ok = widget?.status === "ok";
+      el.textContent = ok ? "OK" : "ERR";
+      el.className = "tag " + (ok ? "status-ok" : "status-error");
     }
 
-    setInterval(loadData, 5000);
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function renderSimpleRows(items, leftKey, rightKey, rightClass = "score") {
+      if (!items?.length) return '<div class="small">No items</div>';
+      return items.map(item => `
+        <div class="row">
+          <div>${escapeHtml(item[leftKey])}</div>
+          <div class="${rightClass}">${escapeHtml(item[rightKey])}</div>
+        </div>
+      `).join("");
+    }
+
+    async function loadData() {
+      try {
+        const response = await fetch("data.json?_=" + Date.now());
+        const data = await response.json();
+
+        document.getElementById("page-meta").textContent =
+          "Last updated: " + (data.last_updated || "unknown");
+
+        setStatus("ai-status", data.ai_leaderboard);
+        setStatus("free-ai-status", data.ai_free_tier);
+        setStatus("wgs-status", data.wgs_price);
+        setStatus("reddit-search-status", data.reddit_searches);
+        setStatus("reddit-user-status", data.reddit_user);
+        setStatus("pubmed-status", data.pubmed);
+        setStatus("arxiv-status", data.arxiv);
+        setStatus("weather-status", data.weather);
+        setStatus("calendar-status", data.calendar);
+        setStatus("bookmarks-status", data.bookmarks);
+
+        // AI leaderboard
+        document.getElementById("ai-list").innerHTML =
+          (data.ai_leaderboard?.items || []).map(m => `
+            <div class="row">
+              <div>
+                ${escapeHtml(m.model)}
+                ${m.provider ? `<div class="small">${escapeHtml(m.provider)}</div>` : ""}
+              </div>
+              <div class="score">${escapeHtml(m.score)}</div>
+            </div>
+          `).join("") || '<div class="small">No AI leaderboard data</div>';
+
+        // Free AI
+        document.getElementById("free-ai-list").innerHTML =
+          (data.ai_free_tier?.items || []).map(m => `
+            <div class="row">
+              <div>${escapeHtml(m.model)}</div>
+              <div class="score">${escapeHtml(m.score)}</div>
+            </div>
+          `).join("") || '<div class="small">No free-tier data</div>';
+
+        // WGS
+        document.getElementById("wgs-list").innerHTML =
+          (data.wgs_price?.items || []).map(p => `
+            <div class="row">
+              <div>
+                <a href="${escapeHtml(p.url || "#")}" target="_blank">${escapeHtml(p.provider)}</a>
+                ${p.note ? `<div class="small">${escapeHtml(p.note)}</div>` : ""}
+              </div>
+              <div class="price">${escapeHtml(p.price)}</div>
+            </div>
+          `).join("") || '<div class="small">No WGS data</div>';
+
+        // Reddit searches
+        document.getElementById("reddit-searches").innerHTML =
+          (data.reddit_searches?.items || []).map(group => `
+            <div class="section-block">
+              <div class="small" style="margin-bottom:6px;">
+                <strong>${escapeHtml(group.label)}</strong> — ${escapeHtml(group.query)}
+              </div>
+              <ul class="clean">
+                ${(group.items || []).map(item => `
+                  <li><a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a></li>
+                `).join("")}
+              </ul>
+            </div>
+          `).join("") || '<div class="small">No Reddit search data</div>';
+
+        // Reddit user
+        document.getElementById("reddit-user-list").innerHTML =
+          (data.reddit_user?.items || []).map(item => `
+            <div class="row">
+              <div><a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a></div>
+            </div>
+          `).join("") || '<div class="small">No Reddit user posts</div>';
+
+        // Gmail
+        document.getElementById("gmail-links").innerHTML =
+          (data.gmail_links?.items || []).map(item => `
+            <div class="row">
+              <div><a href="${escapeHtml(item.url)}" target="_blank">${escapeHtml(item.title)}</a></div>
+            </div>
+          `).join("") || '<div class="small">No Gmail links</div>';
+
+        // PubMed
+        document.getElementById("pubmed-list").innerHTML =
+          (data.pubmed?.items || []).map(group => `
+            <div class="section-block">
+              <div class="small" style="margin-bottom:6px;"><strong>${escapeHtml(group.query)}</strong></div>
+              <ul class="clean">
+                ${(group.items || []).map(item => `
+                  <li>
+                    <a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a>
+                    ${item.pubdate ? `<div class="small">${escapeHtml(item.pubdate)}</div>` : ""}
+                  </li>
+                `).join("")}
+              </ul>
+            </div>
+          `).join("") || '<div class="small">No PubMed data</div>';
+
+        // arXiv
+        document.getElementById("arxiv-list").innerHTML =
+          (data.arxiv?.items || []).map(group => `
+            <div class="section-block">
+              <div class="small" style="margin-bottom:6px;"><strong>${escapeHtml(group.query)}</strong></div>
+              <ul class="clean">
+                ${(group.items || []).map(item => `
+                  <li>
+                    <a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a>
+                    ${item.published ? `<div class="small">${escapeHtml(item.published)}</div>` : ""}
+                  </li>
+                `).join("")}
+              </ul>
+            </div>
+          `).join("") || '<div class="small">No arXiv data</div>';
+
+        // Weather
+        const weather = data.weather?.items?.[0];
+        document.getElementById("weather-box").innerHTML = weather ? `
+          <div class="row"><div>Temp</div><div class="score">${escapeHtml(weather.temperature)}°</div></div>
+          <div class="row"><div>Feels like</div><div>${escapeHtml(weather.feels_like)}°</div></div>
+          <div class="row"><div>Today</div><div>${escapeHtml(weather.today_min)}° / ${escapeHtml(weather.today_max)}°</div></div>
+        ` : '<div class="small">No weather data</div>';
+
+        // Calendar
+        document.getElementById("calendar-box").innerHTML =
+          (data.calendar?.items || []).map(item => `
+            <div class="row">
+              <div>
+                ${escapeHtml(item.title || "Untitled")}
+                ${item.when ? `<div class="small">${escapeHtml(item.when)}</div>` : ""}
+              </div>
+            </div>
+          `).join("") || '<div class="small">No upcoming events</div>';
+
+        // Bookmarks
+        const b = data.bookmarks?.items || {};
+        document.getElementById("bookmarks-box").innerHTML =
+          Object.entries(b).map(([topic, links]) => `
+            <div class="section-block">
+              <div class="small" style="margin-bottom:6px;"><strong>${escapeHtml(topic)}</strong></div>
+              <ul class="clean">
+                ${(links || []).map(link => `
+                  <li><a href="${escapeHtml(link.url)}" target="_blank">${escapeHtml(link.title)}</a></li>
+                `).join("")}
+              </ul>
+            </div>
+          `).join("") || '<div class="small">No bookmarks</div>';
+
+      } catch (e) {
+        console.error("Could not load data.json", e);
+        document.getElementById("page-meta").textContent = "Failed to load dashboard data";
+      }
+    }
+
     loadData();
-</script>
+    setInterval(loadData, 30000);
+  </script>
 </body>
 </html>
