@@ -168,7 +168,7 @@ def normalize_ai_model(row):
         "ttft": row.get("median_time_to_first_token_seconds"),
     }
 
-def get_ai_leaderboard(limit=10):
+def get_ai_leaderboard(limit=5):
     try:
         source, rows = fetch_aa_models()
         items = []
