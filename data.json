@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-22T22:25:03.947855+00:00",
+  "last_updated": "2026-04-22T23:17:28.027457+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -7,6 +7,7 @@
         "model": "Claude Opus 4.7 (Adaptive Reasoning, Max Effort)",
         "provider": "Anthropic",
         "score": 57.3,
+        "display_score": 57,
         "release_date": "2026-04-16",
         "price_blended": 10
       },
@@ -14,6 +15,7 @@
         "model": "Gemini 3.1 Pro Preview",
         "provider": "Google",
         "score": 57.2,
+        "display_score": 57,
         "release_date": "2026-02-19",
         "price_blended": 4.5
       },
@@ -21,6 +23,7 @@
         "model": "GPT-5.4 (xhigh)",
         "provider": "OpenAI",
         "score": 56.8,
+        "display_score": 57,
         "release_date": "2026-03-05",
         "price_blended": 5.625
       },
@@ -28,6 +31,7 @@
         "model": "Kimi K2.6",
         "provider": "Kimi",
         "score": 53.9,
+        "display_score": 54,
         "release_date": "2026-04-20",
         "price_blended": 1.712
       },
@@ -35,12 +39,13 @@
         "model": "GPT-5.3 Codex (xhigh)",
         "provider": "OpenAI",
         "score": 53.6,
+        "display_score": 54,
         "release_date": "2026-02-05",
         "price_blended": 4.813
       }
     ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T22:25:01.832238+00:00",
+    "retrieved_at": "2026-04-22T23:17:22.495805+00:00",
     "meta": {
       "ranking_field": "artificial_analysis_intelligence_index"
     }
@@ -80,7 +85,7 @@
       }
     ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T22:25:02.076493+00:00",
+    "retrieved_at": "2026-04-22T23:17:22.720664+00:00",
     "meta": {
       "filter": "free_tier_allowlist_or_zero_price"
     }
@@ -89,24 +94,38 @@
     "status": "ok",
     "items": [
       {
-        "title": "17a-hydroxyprogesterone is an underutilized but critical lab value in fatigue, chronic pain, hEDS / hypermobility, \"POTS\", and other \"we dont know whats wrong with you\" conditions where the patient gets blamed for being lazy or whatever.",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1smh6au/17ahydroxyprogesterone_is_an_underutilized_but/"
+        "title": "/u/Drwillpowers on Had another random PSSD/PFS thought about the glucuronidation theory. Do any of you with PFS have elevated sulfation lab markers?",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1s8132u/had_another_random_pssdpfs_thought_about_the/oho3wn3/",
+        "updated": "2026-04-22T17:34:31+00:00",
+        "snippet": "I did! I'm hoping to have some more time to review them tonight, before the congress starts tomorrow. I have no idea what I'm going to find in there but if they're useful, I'll include them!"
       },
       {
-        "title": "If you visit the office in person, do pick up some of our free 3D printed PFM brand stuff, and while at it, score some of these really fun 3D printed dragon egg fidgets!",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1slqnr4/if_you_visit_the_office_in_person_do_pick_up_some/"
+        "title": "/u/Drwillpowers on Gen sequencing for dysphoric nonbinary",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1ssmefl/gen_sequencing_for_dysphoric_nonbinary/oho3mem/",
+        "updated": "2026-04-22T17:33:13+00:00",
+        "snippet": "Yes. For example, I produce more estrogen than the average man. I also produce more testosterone than the average man, regardless of my feedback loops because of something in my genome related to ovarian hyperstimulation..."
       },
       {
-        "title": "I'm going to be taking the week off next week to prepare for the Congress. Just wanted to warn everybody and also about the DPC and its waitlist at this time.",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sht3ak/im_going_to_be_taking_the_week_off_next_week_to/"
+        "title": "/u/Drwillpowers on The \"complete HRT labset\". Or, at least, the stuff I order the most commonly.",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/yfovnt/the_complete_hrt_labset_or_at_least_the_stuff_i/oho2oj2/",
+        "updated": "2026-04-22T17:28:52+00:00",
+        "snippet": "Add a 17hydroxyprogesterone. See my most recent post."
       },
       {
-        "title": "If you have PFS do not panic if you don't end up having abnormal urinary androgens. There are many ways to cause the catastrophe but it's all the same way. Here's a different example of someone who has a mild sulfation and mild glucuronidaton failure. Guy has normal estrogen levels but low E1S",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sg3yin/if_you_have_pfs_do_not_panic_if_you_dont_end_up/"
+        "title": "/u/Drwillpowers on Stumbled onto this research article on a different PPAR-Y agonist and it's benefits on hair growth. Has anyone incidentally noticed an improvement in hair growth on pioglitazone? Just curious.",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1hjdnmh/stumbled_onto_this_research_article_on_a/ohnziko/",
+        "updated": "2026-04-22T17:14:27+00:00",
+        "snippet": "Reduce visceral adiposity as part of my longevity escape velocity plan."
+      },
+      {
+        "title": "/u/Drwillpowers on Dutch test and testeterone ( pssd )",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sruv2j/dutch_test_and_testeterone_pssd/ohn9e9h/",
+        "updated": "2026-04-22T15:15:11+00:00",
+        "snippet": "because this is PSSD and PFS and I\"ve not found the same sort of obvious glitches in most PSSD patients compared to PFS. The interest was that I found it on occasion, but nowhere near the level of PFS people."
       }
     ],
-    "source": "https://www.reddit.com/user/Drwillpowers/submitted.rss",
-    "retrieved_at": "2026-04-22T22:25:02.566217+00:00",
+    "source": "https://www.reddit.com/user/Drwillpowers/comments.rss",
+    "retrieved_at": "2026-04-22T23:17:23.252222+00:00",
     "meta": {
       "entry_count": 25
     }
@@ -131,7 +150,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-22T22:25:02.744129+00:00",
+    "retrieved_at": "2026-04-22T23:17:23.494748+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -139,26 +158,58 @@
     "items": [
       {
         "provider": "Element Vitari",
-        "price": "$100",
-        "note": "Targeting 2026",
-        "url": "https://www.elementbiosciences.com/"
-      },
-      {
-        "provider": "Nebula",
-        "price": "$249",
-        "note": "Current Sale",
-        "url": "https://nebula.org/whole-genome-sequencing-dna-test/"
+        "product_name": "$100 genome watch",
+        "test_type": "future_wgs",
+        "coverage": "TBD",
+        "price_usd": 100,
+        "display_price": "$100 target",
+        "subscription_required": false,
+        "notes": "Future target / announcement watch, not necessarily commercially available now",
+        "url": "https://www.elementbiosciences.com/",
+        "status": "ok"
       },
       {
         "provider": "Sequencing.com",
-        "price": "$379",
-        "note": "Clinical Grade",
-        "url": "https://sequencing.com/"
+        "product_name": "Genome sequencing",
+        "test_type": "wgs_or_bundle",
+        "coverage": "Unknown",
+        "price_usd": 379.0,
+        "display_price": "$379",
+        "subscription_required": false,
+        "notes": "Auto-scraped; verify whether this is standalone WGS or bundle pricing",
+        "url": "https://sequencing.com/",
+        "status": "ok"
+      },
+      {
+        "provider": "Nebula",
+        "product_name": "Whole Genome Sequencing",
+        "test_type": "wgs",
+        "coverage": "30x?",
+        "price_usd": null,
+        "display_price": "Unknown",
+        "subscription_required": false,
+        "notes": "Failed to scrape: 404 Client Error: Not Found for url: https://nebula.org/whole-genome-sequencing-dna-test/",
+        "url": "https://nebula.org/whole-genome-sequencing-dna-test/",
+        "status": "error"
+      },
+      {
+        "provider": "tellmeGen",
+        "product_name": "Genome product",
+        "test_type": "wgs_or_other",
+        "coverage": "Unknown",
+        "price_usd": null,
+        "display_price": "Unknown",
+        "subscription_required": false,
+        "notes": "Auto-scraped homepage; verify product is true WGS and note coverage",
+        "url": "https://tellmegen.com/en/",
+        "status": "error"
       }
     ],
-    "source": "manual",
-    "retrieved_at": "2026-04-22T22:25:02.744140+00:00",
-    "meta": {}
+    "source": "provider pages + manual watch",
+    "retrieved_at": "2026-04-22T23:17:25.747760+00:00",
+    "meta": {
+      "note": "Verify WGS vs WES/low-pass before purchase"
+    }
   },
   "pubmed": {
     "status": "error",
@@ -264,29 +315,29 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-22T22:25:03.466997+00:00",
+    "retrieved_at": "2026-04-22T23:17:27.568326+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 21.4,
-        "feels_like": 19.1,
+        "temperature": 20.6,
+        "feels_like": 18.6,
         "weather_code": 0,
         "today_max": 22.7,
         "today_min": 8.5
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-22T22:25:03.947590+00:00",
+    "retrieved_at": "2026-04-22T23:17:28.027239+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-22T22:25:03.947646+00:00",
+    "retrieved_at": "2026-04-22T23:17:28.027293+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -314,7 +365,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-22T22:25:03.947842+00:00",
+    "retrieved_at": "2026-04-22T23:17:28.027446+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -330,7 +381,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T22:25:03.947852+00:00",
+    "retrieved_at": "2026-04-22T23:17:28.027455+00:00",
     "meta": {}
   }
 }
