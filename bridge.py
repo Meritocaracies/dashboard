@@ -187,12 +187,13 @@ def get_ai_leaderboard(limit=5):
         items.sort(key=lambda x: x["score"], reverse=True)
 
         top = [{
-            "model": m["model"],
-            "provider": m["provider"],
-            "score": m["score"],
-            "release_date": m["release_date"],
-            "price_blended": m["price_blended"],
-        } for m in items[:limit]]
+    "model": m["model"],
+    "provider": m["provider"],
+    "score": m["score"],
+    "display_score": round(m["score"]),
+    "release_date": m["release_date"],
+    "price_blended": m["price_blended"],
+} for m in items[:limit]]
 
         return ok(top, source, meta={"ranking_field": "artificial_analysis_intelligence_index"})
     except Exception as e:
