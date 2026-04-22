@@ -301,15 +301,20 @@
 
         // WGS
         document.getElementById("wgs-list").innerHTML =
-          (data.wgs_price?.items || []).map(p => `
-            <div class="row">
-              <div>
-                <a href="${escapeHtml(p.url || "#")}" target="_blank">${escapeHtml(p.provider)}</a>
-                ${p.note ? `<div class="small">${escapeHtml(p.note)}</div>` : ""}
-              </div>
-              <div class="price">${escapeHtml(p.price)}</div>
-            </div>
-          `).join("") || '<div class="small">No WGS data</div>';
+  (data.wgs_price?.items || []).map(p => `
+    <div class="row" style="align-items:flex-start;">
+      <div>
+        <a href="${escapeHtml(p.url || "#")}" target="_blank">${escapeHtml(p.provider)}</a>
+        <div class="small">
+          ${escapeHtml(p.product_name || "")}
+          ${p.test_type ? ` • ${escapeHtml(p.test_type)}` : ""}
+          ${p.coverage ? ` • ${escapeHtml(p.coverage)}` : ""}
+        </div>
+        ${p.notes ? `<div class="small">${escapeHtml(p.notes)}</div>` : ""}
+      </div>
+      <div class="price">${escapeHtml(p.display_price || p.price || "Unknown")}</div>
+    </div>
+  `).join("") || '<div class="small">No WGS data</div>';
 
         // Reddit searches
         document.getElementById("reddit-searches").innerHTML =
