@@ -47,31 +47,39 @@
     </div>
 
     <script>
-        async function loadData() {
-            try {
-                const response = await fetch('data.json');
-                const data = await response.json();
+    async function loadData() {
+        try {
+            const response = await fetch('data.json?_=' + Date.now());
+            const data = await response.json();
 
-                // Populate AI
-                document.getElementById('ai-list').innerHTML = data.ai_leaderboard.map(m => 
+            document.getElementById('ai-list').innerHTML =
+                (data.ai_leaderboard?.items || []).map(m =>
                     `<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                        <span>${m.model}</span> <strong>${m.elo}</strong>
-                    </div>`).join('');
+                        <span>${m.model}</span>
+                        <strong>${m.score ?? m.elo ?? ''}</strong>
+                    </div>`
+                ).join('') || '<div>No AI data available</div>';
 
-                // Populate WGS
-                document.getElementById('wgs-list').innerHTML = data.wgs_price.map(p => 
+            document.getElementById('wgs-list').innerHTML =
+                (data.wgs_price?.items || []).map(p =>
                     `<div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                        <span>${p.provider}</span> <span class="price">${p.price}</span>
-                    </div>`).join('');
+                        <span>${p.provider}</span>
+                        <span class="price">${p.price}</span>
+                    </div>`
+                ).join('') || '<div>No WGS data available</div>';
 
-                // Populate Reddit
-                document.getElementById('reddit-list').innerHTML = data.reddit.map(r => 
-                    `<div class="reddit-item"><a href="${r.link}" target="_blank">${r.title}</a></div>`).join('');
+            document.getElementById('reddit-list').innerHTML =
+                (data.reddit?.items || []).map(r =>
+                    `<div class="reddit-item"><a href="${r.link}" target="_blank">${r.title}</a></div>`
+                ).join('') || '<div>No Reddit posts available</div>';
 
-            } catch (e) { console.error("Could not load data.json. Make sure bridge.py is running."); }
+        } catch (e) {
+            console.error("Could not load data.json.", e);
         }
-        setInterval(loadData, 5000); // Refresh view every 5 seconds
-        loadData();
-    </script>
+    }
+
+    setInterval(loadData, 5000);
+    loadData();
+</script>
 </body>
 </html>
