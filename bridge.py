@@ -216,7 +216,7 @@ def looks_free_tier(model):
         model.get("price_output") == 0
     )
 
-def get_free_tier_ai_leaderboard(limit=10):
+def get_free_tier_ai_leaderboard(limit=5):
     try:
         source, rows = fetch_aa_models()
         allowlist = load_free_tier_allowlist()
