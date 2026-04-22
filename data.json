@@ -1,24 +1,28 @@
 {
-  "last_updated": "2026-04-22T21:48:51.043081+00:00",
+  "last_updated": "2026-04-22T21:58:19.048243+00:00",
   "ai_leaderboard": {
     "status": "error",
     "items": [],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
     "retrieved_at": "2026-04-22T21:48:49.390480+00:00",
-    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
+    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY",
+    "stale": true,
+    "stale_reason": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
   },
   "ai_free_tier": {
     "status": "error",
     "items": [],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
     "retrieved_at": "2026-04-22T21:48:49.390497+00:00",
-    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
+    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY",
+    "stale": true,
+    "stale_reason": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
   },
   "reddit_user": {
     "status": "ok",
     "items": [],
     "source": "https://www.reddit.com/user/Drwillpowers/submitted.rss",
-    "retrieved_at": "2026-04-22T21:48:49.472068+00:00",
+    "retrieved_at": "2026-04-22T21:58:17.632728+00:00",
     "meta": {}
   },
   "reddit_searches": {
@@ -41,7 +45,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-22T21:48:49.674174+00:00",
+    "retrieved_at": "2026-04-22T21:58:17.859731+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -67,7 +71,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T21:48:49.674185+00:00",
+    "retrieved_at": "2026-04-22T21:58:17.859743+00:00",
     "meta": {}
   },
   "pubmed": {
@@ -75,7 +79,9 @@
     "items": [],
     "source": "pubmed",
     "retrieved_at": "2026-04-22T21:48:50.290682+00:00",
-    "error": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,41938343,41802677,41923668"
+    "error": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,41938343,41802677,41923668",
+    "stale": true,
+    "stale_reason": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,41938343,41802677,41923668"
   },
   "arxiv": {
     "status": "ok",
@@ -172,7 +178,7 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-22T21:48:50.573617+00:00",
+    "retrieved_at": "2026-04-22T21:58:18.577966+00:00",
     "meta": {}
   },
   "weather": {
@@ -187,14 +193,14 @@
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-22T21:48:51.042884+00:00",
+    "retrieved_at": "2026-04-22T21:58:19.048009+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-22T21:48:51.042920+00:00",
+    "retrieved_at": "2026-04-22T21:58:19.048067+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -222,7 +228,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-22T21:48:51.043071+00:00",
+    "retrieved_at": "2026-04-22T21:58:19.048232+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -238,7 +244,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T21:48:51.043079+00:00",
+    "retrieved_at": "2026-04-22T21:58:19.048240+00:00",
     "meta": {}
   }
 }
