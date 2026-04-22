@@ -51,6 +51,52 @@ def load_existing_data():
         print(f"Failed to load existing data: {e}")
         return {}
 
+def wrap_legacy_widget(value, source="legacy_data.json"):
+    if isinstance(value, dict) and "items" in value:
+        return value
+
+    if isinstance(value, list):
+        items = value
+    elif value is None:
+        items = []
+    else:
+        items = [value]
+
+    return {
+        "status": "ok",
+        "items": items,
+        "source": source,
+        "retrieved_at": now_iso(),
+        "meta": {"migrated_from_legacy_format": True}
+    }
+
+def migrate_legacy_data(data):
+    if not isinstance(data, dict):
+        return {}
+
+    migrated = dict(data)
+
+    widget_keys = [
+        "ai_leaderboard",
+        "ai_free_tier",
+        "reddit",
+        "reddit_user",
+        "reddit_searches",
+        "wgs_price",
+        "pubmed",
+        "arxiv",
+        "weather",
+        "calendar",
+        "bookmarks",
+        "gmail_links",
+    ]
+
+    for key in widget_keys:
+        if key in migrated:
+            migrated[key] = wrap_legacy_widget(migrated[key])
+
+    return migrated
+
 def save_data(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
