@@ -333,11 +333,13 @@
 
         // Reddit user
         document.getElementById("reddit-user-list").innerHTML =
-          (data.reddit_user?.items || []).map(item => `
-            <div class="row">
-              <div><a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a></div>
-            </div>
-          `).join("") || '<div class="small">No Reddit user posts</div>';
+  (data.reddit_user?.items || []).length
+    ? (data.reddit_user.items || []).map(item => `
+        <div class="row">
+          <div><a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a></div>
+        </div>
+      `).join("")
+    : '<div class="small">No recent posts found or feed unavailable.</div>';
 
         // Gmail
         document.getElementById("gmail-links").innerHTML =
