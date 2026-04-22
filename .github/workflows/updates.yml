@@ -2,8 +2,8 @@ name: Update Dashboard Data
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Runs every 6 hours
-  workflow_dispatch: # Allows you to run it manually with a button
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -11,6 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -23,14 +24,14 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Scraper
-        run: python bridge.py
+      - name: Run Dashboard Updater
         env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ARTIFICIAL_ANALYSIS_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
+        run: python bridge.py
 
       - name: Commit and Push if data changed
         run: |
           git config --global user.name "Dashboard-Bot"
           git config --global user.email "bot@github.com"
           git add data.json
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update data" && git push)
+          git diff --staged --quiet || (git commit -m "Auto-update data" && git push)
