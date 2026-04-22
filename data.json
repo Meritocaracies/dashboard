@@ -1,28 +1,160 @@
 {
-  "last_updated": "2026-04-22T21:58:19.048243+00:00",
+  "last_updated": "2026-04-22T22:04:03.308586+00:00",
   "ai_leaderboard": {
-    "status": "error",
-    "items": [],
+    "status": "ok",
+    "items": [
+      {
+        "model": "Claude Opus 4.7 (Adaptive Reasoning, Max Effort)",
+        "provider": "Anthropic",
+        "score": 57.3,
+        "release_date": "2026-04-16",
+        "price_blended": 10
+      },
+      {
+        "model": "Gemini 3.1 Pro Preview",
+        "provider": "Google",
+        "score": 57.2,
+        "release_date": "2026-02-19",
+        "price_blended": 4.5
+      },
+      {
+        "model": "GPT-5.4 (xhigh)",
+        "provider": "OpenAI",
+        "score": 56.8,
+        "release_date": "2026-03-05",
+        "price_blended": 5.625
+      },
+      {
+        "model": "Kimi K2.6",
+        "provider": "Kimi",
+        "score": 53.9,
+        "release_date": "2026-04-20",
+        "price_blended": 1.712
+      },
+      {
+        "model": "GPT-5.3 Codex (xhigh)",
+        "provider": "OpenAI",
+        "score": 53.6,
+        "release_date": "2026-02-05",
+        "price_blended": 4.813
+      },
+      {
+        "model": "Claude Opus 4.6 (Adaptive Reasoning, Max Effort)",
+        "provider": "Anthropic",
+        "score": 53.0,
+        "release_date": "2026-02-05",
+        "price_blended": 10
+      },
+      {
+        "model": "Muse Spark",
+        "provider": "Meta",
+        "score": 52.1,
+        "release_date": "2026-04-08",
+        "price_blended": 0
+      },
+      {
+        "model": "Claude Opus 4.7 (Non-reasoning, High Effort)",
+        "provider": "Anthropic",
+        "score": 51.8,
+        "release_date": "2026-04-16",
+        "price_blended": 10
+      },
+      {
+        "model": "Qwen3.6 Max Preview",
+        "provider": "Alibaba",
+        "score": 51.8,
+        "release_date": "2026-04-20",
+        "price_blended": 2.925
+      },
+      {
+        "model": "Claude Sonnet 4.6 (Adaptive Reasoning, Max Effort)",
+        "provider": "Anthropic",
+        "score": 51.7,
+        "release_date": "2026-02-17",
+        "price_blended": 6
+      }
+    ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T21:48:49.390480+00:00",
-    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY",
-    "stale": true,
-    "stale_reason": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
+    "retrieved_at": "2026-04-22T22:04:00.892486+00:00",
+    "meta": {
+      "ranking_field": "artificial_analysis_intelligence_index"
+    }
   },
   "ai_free_tier": {
-    "status": "error",
-    "items": [],
+    "status": "ok",
+    "items": [
+      {
+        "model": "Muse Spark",
+        "provider": "Meta",
+        "score": 52.1,
+        "price_blended": 0
+      },
+      {
+        "model": "GLM-5-Turbo",
+        "provider": "Z AI",
+        "score": 46.8,
+        "price_blended": 0
+      },
+      {
+        "model": "MiMo-V2-Omni-0327",
+        "provider": "Xiaomi",
+        "score": 44.9,
+        "price_blended": 0
+      },
+      {
+        "model": "MiMo-V2-Omni",
+        "provider": "Xiaomi",
+        "score": 43.4,
+        "price_blended": 0
+      },
+      {
+        "model": "GLM 5V Turbo (Reasoning)",
+        "provider": "Z AI",
+        "score": 42.9,
+        "price_blended": 0
+      },
+      {
+        "model": "Gemma 4 31B (Reasoning)",
+        "provider": "Google",
+        "score": 39.2,
+        "price_blended": 0
+      },
+      {
+        "model": "Step 3.5 Flash 2603",
+        "provider": "StepFun",
+        "score": 38.5,
+        "price_blended": 0
+      },
+      {
+        "model": "Doubao Seed Code",
+        "provider": "ByteDance Seed",
+        "score": 33.5,
+        "price_blended": 0
+      },
+      {
+        "model": "Gemma 4 31B (Non-reasoning)",
+        "provider": "Google",
+        "score": 32.3,
+        "price_blended": 0
+      },
+      {
+        "model": "K-EXAONE (Reasoning)",
+        "provider": "LG AI Research",
+        "score": 32.1,
+        "price_blended": 0
+      }
+    ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T21:48:49.390497+00:00",
-    "error": "Missing ARTIFICIAL_ANALYSIS_API_KEY",
-    "stale": true,
-    "stale_reason": "Missing ARTIFICIAL_ANALYSIS_API_KEY"
+    "retrieved_at": "2026-04-22T22:04:01.079897+00:00",
+    "meta": {
+      "filter": "free_tier_allowlist_or_zero_price"
+    }
   },
   "reddit_user": {
     "status": "ok",
     "items": [],
     "source": "https://www.reddit.com/user/Drwillpowers/submitted.rss",
-    "retrieved_at": "2026-04-22T21:58:17.632728+00:00",
+    "retrieved_at": "2026-04-22T22:04:01.266794+00:00",
     "meta": {}
   },
   "reddit_searches": {
@@ -45,7 +177,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-22T21:58:17.859731+00:00",
+    "retrieved_at": "2026-04-22T22:04:01.739073+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -71,7 +203,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T21:58:17.859743+00:00",
+    "retrieved_at": "2026-04-22T22:04:01.739085+00:00",
     "meta": {}
   },
   "pubmed": {
@@ -178,29 +310,29 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-22T21:58:18.577966+00:00",
+    "retrieved_at": "2026-04-22T22:04:02.722625+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 21.9,
-        "feels_like": 19.7,
+        "temperature": 21.7,
+        "feels_like": 19.4,
         "weather_code": 0,
         "today_max": 22.7,
         "today_min": 8.5
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-22T21:58:19.048009+00:00",
+    "retrieved_at": "2026-04-22T22:04:03.308341+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-22T21:58:19.048067+00:00",
+    "retrieved_at": "2026-04-22T22:04:03.308400+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -228,7 +360,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-22T21:58:19.048232+00:00",
+    "retrieved_at": "2026-04-22T22:04:03.308576+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -244,7 +376,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T21:58:19.048240+00:00",
+    "retrieved_at": "2026-04-22T22:04:03.308584+00:00",
     "meta": {}
   }
 }
