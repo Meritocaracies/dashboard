@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-22T22:04:03.308586+00:00",
+  "last_updated": "2026-04-22T22:25:03.947855+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -37,45 +37,10 @@
         "score": 53.6,
         "release_date": "2026-02-05",
         "price_blended": 4.813
-      },
-      {
-        "model": "Claude Opus 4.6 (Adaptive Reasoning, Max Effort)",
-        "provider": "Anthropic",
-        "score": 53.0,
-        "release_date": "2026-02-05",
-        "price_blended": 10
-      },
-      {
-        "model": "Muse Spark",
-        "provider": "Meta",
-        "score": 52.1,
-        "release_date": "2026-04-08",
-        "price_blended": 0
-      },
-      {
-        "model": "Claude Opus 4.7 (Non-reasoning, High Effort)",
-        "provider": "Anthropic",
-        "score": 51.8,
-        "release_date": "2026-04-16",
-        "price_blended": 10
-      },
-      {
-        "model": "Qwen3.6 Max Preview",
-        "provider": "Alibaba",
-        "score": 51.8,
-        "release_date": "2026-04-20",
-        "price_blended": 2.925
-      },
-      {
-        "model": "Claude Sonnet 4.6 (Adaptive Reasoning, Max Effort)",
-        "provider": "Anthropic",
-        "score": 51.7,
-        "release_date": "2026-02-17",
-        "price_blended": 6
       }
     ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T22:04:00.892486+00:00",
+    "retrieved_at": "2026-04-22T22:25:01.832238+00:00",
     "meta": {
       "ranking_field": "artificial_analysis_intelligence_index"
     }
@@ -112,50 +77,39 @@
         "provider": "Z AI",
         "score": 42.9,
         "price_blended": 0
-      },
-      {
-        "model": "Gemma 4 31B (Reasoning)",
-        "provider": "Google",
-        "score": 39.2,
-        "price_blended": 0
-      },
-      {
-        "model": "Step 3.5 Flash 2603",
-        "provider": "StepFun",
-        "score": 38.5,
-        "price_blended": 0
-      },
-      {
-        "model": "Doubao Seed Code",
-        "provider": "ByteDance Seed",
-        "score": 33.5,
-        "price_blended": 0
-      },
-      {
-        "model": "Gemma 4 31B (Non-reasoning)",
-        "provider": "Google",
-        "score": 32.3,
-        "price_blended": 0
-      },
-      {
-        "model": "K-EXAONE (Reasoning)",
-        "provider": "LG AI Research",
-        "score": 32.1,
-        "price_blended": 0
       }
     ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T22:04:01.079897+00:00",
+    "retrieved_at": "2026-04-22T22:25:02.076493+00:00",
     "meta": {
       "filter": "free_tier_allowlist_or_zero_price"
     }
   },
   "reddit_user": {
     "status": "ok",
-    "items": [],
+    "items": [
+      {
+        "title": "17a-hydroxyprogesterone is an underutilized but critical lab value in fatigue, chronic pain, hEDS / hypermobility, \"POTS\", and other \"we dont know whats wrong with you\" conditions where the patient gets blamed for being lazy or whatever.",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1smh6au/17ahydroxyprogesterone_is_an_underutilized_but/"
+      },
+      {
+        "title": "If you visit the office in person, do pick up some of our free 3D printed PFM brand stuff, and while at it, score some of these really fun 3D printed dragon egg fidgets!",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1slqnr4/if_you_visit_the_office_in_person_do_pick_up_some/"
+      },
+      {
+        "title": "I'm going to be taking the week off next week to prepare for the Congress. Just wanted to warn everybody and also about the DPC and its waitlist at this time.",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sht3ak/im_going_to_be_taking_the_week_off_next_week_to/"
+      },
+      {
+        "title": "If you have PFS do not panic if you don't end up having abnormal urinary androgens. There are many ways to cause the catastrophe but it's all the same way. Here's a different example of someone who has a mild sulfation and mild glucuronidaton failure. Guy has normal estrogen levels but low E1S",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sg3yin/if_you_have_pfs_do_not_panic_if_you_dont_end_up/"
+      }
+    ],
     "source": "https://www.reddit.com/user/Drwillpowers/submitted.rss",
-    "retrieved_at": "2026-04-22T22:04:01.266794+00:00",
-    "meta": {}
+    "retrieved_at": "2026-04-22T22:25:02.566217+00:00",
+    "meta": {
+      "entry_count": 25
+    }
   },
   "reddit_searches": {
     "status": "ok",
@@ -177,7 +131,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-22T22:04:01.739073+00:00",
+    "retrieved_at": "2026-04-22T22:25:02.744129+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -203,7 +157,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T22:04:01.739085+00:00",
+    "retrieved_at": "2026-04-22T22:25:02.744140+00:00",
     "meta": {}
   },
   "pubmed": {
@@ -310,29 +264,29 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-22T22:04:02.722625+00:00",
+    "retrieved_at": "2026-04-22T22:25:03.466997+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 21.7,
-        "feels_like": 19.4,
+        "temperature": 21.4,
+        "feels_like": 19.1,
         "weather_code": 0,
         "today_max": 22.7,
         "today_min": 8.5
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-22T22:04:03.308341+00:00",
+    "retrieved_at": "2026-04-22T22:25:03.947590+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-22T22:04:03.308400+00:00",
+    "retrieved_at": "2026-04-22T22:25:03.947646+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -360,7 +314,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-22T22:04:03.308576+00:00",
+    "retrieved_at": "2026-04-22T22:25:03.947842+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -376,7 +330,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T22:04:03.308584+00:00",
+    "retrieved_at": "2026-04-22T22:25:03.947852+00:00",
     "meta": {}
   }
 }
