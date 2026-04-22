@@ -291,7 +291,7 @@
                 ${escapeHtml(m.model)}
                 ${m.provider ? `<div class="small">${escapeHtml(m.provider)}</div>` : ""}
               </div>
-              <div class="score">${escapeHtml(m.score)}</div>
+              <div class="score">${escapeHtml(m.display_score ?? m.score)}</div>
             </div>
           `).join("") || '<div class="small">No AI leaderboard data</div>';
 
