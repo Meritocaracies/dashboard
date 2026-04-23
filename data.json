@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-22T23:17:28.027457+00:00",
+  "last_updated": "2026-04-23T01:29:35.195448+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -36,16 +36,16 @@
         "price_blended": 1.712
       },
       {
-        "model": "GPT-5.3 Codex (xhigh)",
-        "provider": "OpenAI",
-        "score": 53.6,
+        "model": "MiMo-V2.5-Pro",
+        "provider": "Xiaomi",
+        "score": 53.8,
         "display_score": 54,
-        "release_date": "2026-02-05",
-        "price_blended": 4.813
+        "release_date": "2026-04-22",
+        "price_blended": 0
       }
     ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T23:17:22.495805+00:00",
+    "retrieved_at": "2026-04-23T01:29:25.888068+00:00",
     "meta": {
       "ranking_field": "artificial_analysis_intelligence_index"
     }
@@ -54,38 +54,43 @@
     "status": "ok",
     "items": [
       {
+        "model": "MiMo-V2.5-Pro",
+        "provider": "Xiaomi",
+        "score": 53.8,
+        "display_score": 54,
+        "price_blended": 0
+      },
+      {
         "model": "Muse Spark",
         "provider": "Meta",
         "score": 52.1,
+        "display_score": 52,
+        "price_blended": 0
+      },
+      {
+        "model": "MiMo-V2-Pro",
+        "provider": "Xiaomi",
+        "score": 49.2,
+        "display_score": 49,
         "price_blended": 0
       },
       {
         "model": "GLM-5-Turbo",
         "provider": "Z AI",
         "score": 46.8,
+        "display_score": 47,
         "price_blended": 0
       },
       {
         "model": "MiMo-V2-Omni-0327",
         "provider": "Xiaomi",
         "score": 44.9,
-        "price_blended": 0
-      },
-      {
-        "model": "MiMo-V2-Omni",
-        "provider": "Xiaomi",
-        "score": 43.4,
-        "price_blended": 0
-      },
-      {
-        "model": "GLM 5V Turbo (Reasoning)",
-        "provider": "Z AI",
-        "score": 42.9,
+        "display_score": 45,
         "price_blended": 0
       }
     ],
     "source": "https://artificialanalysis.ai/api/v2/data/llms/models",
-    "retrieved_at": "2026-04-22T23:17:22.720664+00:00",
+    "retrieved_at": "2026-04-23T01:29:31.520024+00:00",
     "meta": {
       "filter": "free_tier_allowlist_or_zero_price"
     }
@@ -94,38 +99,38 @@
     "status": "ok",
     "items": [
       {
-        "title": "/u/Drwillpowers on Had another random PSSD/PFS thought about the glucuronidation theory. Do any of you with PFS have elevated sulfation lab markers?",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1s8132u/had_another_random_pssdpfs_thought_about_the/oho3wn3/",
-        "updated": "2026-04-22T17:34:31+00:00",
-        "snippet": "I did! I'm hoping to have some more time to review them tonight, before the congress starts tomorrow. I have no idea what I'm going to find in there but if they're useful, I'll include them!"
+        "title": "/u/Drwillpowers on People with ADHD are 2x more likely to have low ferritin levels",
+        "link": "https://www.reddit.com/r/Biohackers/comments/1sszz24/people_with_adhd_are_2x_more_likely_to_have_low/ohqjm3d/",
+        "updated": "2026-04-23T01:08:53+00:00",
+        "snippet": "Ferritin is not a great measurement of whether or not somebody has iron deficiency all by itself. It can be both decreased and increased for various other reasons. The almost best way to check this is to order a TIBC, ir..."
       },
       {
-        "title": "/u/Drwillpowers on Gen sequencing for dysphoric nonbinary",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1ssmefl/gen_sequencing_for_dysphoric_nonbinary/oho3mem/",
-        "updated": "2026-04-22T17:33:13+00:00",
-        "snippet": "Yes. For example, I produce more estrogen than the average man. I also produce more testosterone than the average man, regardless of my feedback loops because of something in my genome related to ovarian hyperstimulation..."
+        "title": "/u/Drwillpowers on Hiw do I contact Dr. Powers as a direct care patient?",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1st1z8t/hiw_do_i_contact_dr_powers_as_a_direct_care/ohqirbq/",
+        "updated": "2026-04-23T01:04:01+00:00",
+        "snippet": "Which is questions@powersfamilymedicine.com"
       },
       {
-        "title": "/u/Drwillpowers on The \"complete HRT labset\". Or, at least, the stuff I order the most commonly.",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/yfovnt/the_complete_hrt_labset_or_at_least_the_stuff_i/oho2oj2/",
-        "updated": "2026-04-22T17:28:52+00:00",
-        "snippet": "Add a 17hydroxyprogesterone. See my most recent post."
+        "title": "/u/Drwillpowers on 17a-hydroxyprogesterone is an underutilized but critical lab value in fatigue, chronic pain, hEDS / hypermobility, \"POTS\", and other \"we dont know whats wrong with you\" conditions where the patient gets blamed for being lazy or whatever.",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1smh6au/17ahydroxyprogesterone_is_an_underutilized_but/ohqi1xa/",
+        "updated": "2026-04-23T01:00:01+00:00",
+        "snippet": "I mean, anything downstream from it could be elevated. But you having 17 alpha hydroxylase deficiency would decrease the probability of those things being elevated not increase it."
       },
       {
-        "title": "/u/Drwillpowers on Stumbled onto this research article on a different PPAR-Y agonist and it's benefits on hair growth. Has anyone incidentally noticed an improvement in hair growth on pioglitazone? Just curious.",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1hjdnmh/stumbled_onto_this_research_article_on_a/ohnziko/",
-        "updated": "2026-04-22T17:14:27+00:00",
-        "snippet": "Reduce visceral adiposity as part of my longevity escape velocity plan."
+        "title": "/u/Drwillpowers on 17a-hydroxyprogesterone is an underutilized but critical lab value in fatigue, chronic pain, hEDS / hypermobility, \"POTS\", and other \"we dont know whats wrong with you\" conditions where the patient gets blamed for being lazy or whatever.",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1smh6au/17ahydroxyprogesterone_is_an_underutilized_but/ohqb1tl/",
+        "updated": "2026-04-23T00:20:14+00:00",
+        "snippet": "Your doctor is wrong. How are you going to convert pregnenolone into excess DHEAS when it has to first go over 17 alpha hydroxylase? Obviously you're not a complete deficiency or you'd be in much worse shape. In reality ..."
       },
       {
-        "title": "/u/Drwillpowers on Dutch test and testeterone ( pssd )",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sruv2j/dutch_test_and_testeterone_pssd/ohn9e9h/",
-        "updated": "2026-04-22T15:15:11+00:00",
-        "snippet": "because this is PSSD and PFS and I\"ve not found the same sort of obvious glitches in most PSSD patients compared to PFS. The interest was that I found it on occasion, but nowhere near the level of PFS people."
+        "title": "/u/Drwillpowers on I collect more and more labs/genome/dutch tests that support my theory on PFS. I really think I have it nailed down. I do not have a optimized treatment regimen, but if you're interested in this, this post details what you should NOT do and will likely make you worse even if it \"windows\" you briefly",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sbm8xq/i_collect_more_and_more_labsgenomedutch_tests/ohqac72/",
+        "updated": "2026-04-23T00:16:12+00:00",
+        "snippet": "Yes this sounds like dopamine depletion. That is the one caveat of that supplement."
       }
     ],
     "source": "https://www.reddit.com/user/Drwillpowers/comments.rss",
-    "retrieved_at": "2026-04-22T23:17:23.252222+00:00",
+    "retrieved_at": "2026-04-23T01:29:31.870829+00:00",
     "meta": {
       "entry_count": 25
     }
@@ -150,65 +155,58 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-22T23:17:23.494748+00:00",
+    "retrieved_at": "2026-04-23T01:29:32.135391+00:00",
     "meta": {}
   },
   "wgs_price": {
     "status": "ok",
     "items": [
       {
-        "provider": "Element Vitari",
-        "product_name": "$100 genome watch",
-        "test_type": "future_wgs",
-        "coverage": "TBD",
-        "price_usd": 100,
-        "display_price": "$100 target",
-        "subscription_required": false,
-        "notes": "Future target / announcement watch, not necessarily commercially available now",
-        "url": "https://www.elementbiosciences.com/",
+        "provider": "UMN Genomics",
+        "product_name": "30x Whole Genome Sequencing",
+        "coverage": "30x",
+        "price_usd": 171.0,
+        "display_price": "$171",
+        "url": "https://genomics.umn.edu/service/human-whole-genome-sequencing",
+        "notes": "Human whole genome sequencing page",
         "status": "ok"
-      },
-      {
-        "provider": "Sequencing.com",
-        "product_name": "Genome sequencing",
-        "test_type": "wgs_or_bundle",
-        "coverage": "Unknown",
-        "price_usd": 379.0,
-        "display_price": "$379",
-        "subscription_required": false,
-        "notes": "Auto-scraped; verify whether this is standalone WGS or bundle pricing",
-        "url": "https://sequencing.com/",
-        "status": "ok"
-      },
-      {
-        "provider": "Nebula",
-        "product_name": "Whole Genome Sequencing",
-        "test_type": "wgs",
-        "coverage": "30x?",
-        "price_usd": null,
-        "display_price": "Unknown",
-        "subscription_required": false,
-        "notes": "Failed to scrape: 404 Client Error: Not Found for url: https://nebula.org/whole-genome-sequencing-dna-test/",
-        "url": "https://nebula.org/whole-genome-sequencing-dna-test/",
-        "status": "error"
       },
       {
         "provider": "tellmeGen",
-        "product_name": "Genome product",
-        "test_type": "wgs_or_other",
-        "coverage": "Unknown",
+        "product_name": "30x Whole Genome Sequencing",
+        "coverage": "30x",
         "price_usd": null,
         "display_price": "Unknown",
-        "subscription_required": false,
-        "notes": "Auto-scraped homepage; verify product is true WGS and note coverage",
-        "url": "https://tellmegen.com/en/",
+        "url": "https://shop.tellmegen.com/en/products/ultra-wgs-dna-kit",
+        "notes": "Failed to scrape: No plausible price found",
+        "status": "error"
+      },
+      {
+        "provider": "Sequencing.com",
+        "product_name": "30x Whole Genome Sequencing",
+        "coverage": "30x",
+        "price_usd": null,
+        "display_price": "Unknown",
+        "url": "https://sequencing.com/order/special-dna-day-wgs-bundle",
+        "notes": "Failed to scrape: No plausible price found",
+        "status": "error"
+      },
+      {
+        "provider": "Dante Labs",
+        "product_name": "30x Whole Genome Sequencing",
+        "coverage": "30x",
+        "price_usd": null,
+        "display_price": "Unknown",
+        "url": "https://dantelabs.com/genome/",
+        "notes": "Failed to scrape: No plausible price found",
         "status": "error"
       }
     ],
-    "source": "provider pages + manual watch",
-    "retrieved_at": "2026-04-22T23:17:25.747760+00:00",
+    "source": "tracked 30x WGS provider pages",
+    "retrieved_at": "2026-04-23T01:29:33.586772+00:00",
     "meta": {
-      "note": "Verify WGS vs WES/low-pass before purchase"
+      "coverage": "30x",
+      "cheapest_provider": "UMN Genomics"
     }
   },
   "pubmed": {
@@ -225,119 +223,41 @@
     "items": [
       {
         "query": "AI agents",
-        "items": [
-          {
-            "title": "Tstars-Tryon 1.0: Robust and Realistic Virtual Try-On for Diverse Fashion Items",
-            "link": "https://arxiv.org/abs/2604.19748v1",
-            "published": "2026-04-21T17:59:49Z"
-          },
-          {
-            "title": "PlayCoder: Making LLM-Generated GUI Code Playable",
-            "link": "https://arxiv.org/abs/2604.19742v1",
-            "published": "2026-04-21T17:59:16Z"
-          },
-          {
-            "title": "A-MAR: Agent-based Multimodal Art Retrieval for Fine-Grained Artwork Understanding",
-            "link": "https://arxiv.org/abs/2604.19689v1",
-            "published": "2026-04-21T17:11:48Z"
-          },
-          {
-            "title": "An Answer is just the Start: Related Insight Generation for Open-Ended Document-Grounded QA",
-            "link": "https://arxiv.org/abs/2604.19685v1",
-            "published": "2026-04-21T17:07:53Z"
-          },
-          {
-            "title": "InHabit: Leveraging Image Foundation Models for Scalable 3D Human Placement",
-            "link": "https://arxiv.org/abs/2604.19673v1",
-            "published": "2026-04-21T16:53:18Z"
-          }
-        ]
+        "items": []
       },
       {
         "query": "genomics foundation model",
-        "items": [
-          {
-            "title": "Tstars-Tryon 1.0: Robust and Realistic Virtual Try-On for Diverse Fashion Items",
-            "link": "https://arxiv.org/abs/2604.19748v1",
-            "published": "2026-04-21T17:59:49Z"
-          },
-          {
-            "title": "AnyRecon: Arbitrary-View 3D Reconstruction with Video Diffusion Model",
-            "link": "https://arxiv.org/abs/2604.19747v1",
-            "published": "2026-04-21T17:59:47Z"
-          },
-          {
-            "title": "Calibration-Induced Systematics in SALT3 Training and Their Impact on Dark Energy Constraints from Stage IV Supernova Surveys",
-            "link": "https://arxiv.org/abs/2604.19746v1",
-            "published": "2026-04-21T17:59:47Z"
-          },
-          {
-            "title": "Precision Kinematic Sunyaev--Zel'dovich Measurements Across Halo Mass and Redshift with DESI DR2 and ACT DR6: Part II. Bright Galaxy Survey and Emission-Line Galaxies",
-            "link": "https://arxiv.org/abs/2604.19745v1",
-            "published": "2026-04-21T17:59:30Z"
-          },
-          {
-            "title": "Precision Kinematic Sunyaev--Zel'dovich Measurements Across Halo Mass and Redshift with DESI DR2 and ACT DR6: Part I. Luminous Red Galaxies",
-            "link": "https://arxiv.org/abs/2604.19744v1",
-            "published": "2026-04-21T17:59:26Z"
-          }
-        ]
+        "items": []
       },
       {
         "query": "longevity",
-        "items": [
-          {
-            "title": "Evidence for Environmental Stripping in the Coma Cluster",
-            "link": "https://arxiv.org/abs/2604.16619v1",
-            "published": "2026-04-17T18:15:25Z"
-          },
-          {
-            "title": "The Cosmic Web and Its Filaments: Neutrino Mass from Topology and Persistent Homology",
-            "link": "https://arxiv.org/abs/2604.09148v1",
-            "published": "2026-04-10T09:30:28Z"
-          },
-          {
-            "title": "Computing with Living Neurons: Chaos-Controlled Reservoir Computing with Knowledge Transplant",
-            "link": "https://arxiv.org/abs/2604.02552v1",
-            "published": "2026-04-02T22:03:26Z"
-          },
-          {
-            "title": "Bipolar plates for the next generation of proton exchange membrane fuel cells (PEMFCs): A review of the latest processing methods for unconventional flow channels",
-            "link": "https://arxiv.org/abs/2604.00461v1",
-            "published": "2026-04-01T04:17:12Z"
-          },
-          {
-            "title": "Surface mechanisms governing long-term stability of GEM detectors in CO$_2$-based gaseous mixtures",
-            "link": "https://arxiv.org/abs/2604.06226v1",
-            "published": "2026-03-27T17:06:26Z"
-          }
-        ]
+        "items": []
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-22T23:17:27.568326+00:00",
+    "retrieved_at": "2026-04-23T01:29:34.789914+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 20.6,
-        "feels_like": 18.6,
+        "temperature": 17.8,
+        "feels_like": 14.9,
         "weather_code": 0,
-        "today_max": 22.7,
-        "today_min": 8.5
+        "today_max": 21.3,
+        "today_min": 11.5
       }
     ],
-    "source": "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-22T23:17:28.027239+00:00",
+    "source": "https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
+    "retrieved_at": "2026-04-23T01:29:35.195180+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-22T23:17:28.027293+00:00",
+    "retrieved_at": "2026-04-23T01:29:35.195254+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -365,7 +285,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-22T23:17:28.027446+00:00",
+    "retrieved_at": "2026-04-23T01:29:35.195439+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -381,7 +301,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-22T23:17:28.027455+00:00",
+    "retrieved_at": "2026-04-23T01:29:35.195446+00:00",
     "meta": {}
   }
 }
