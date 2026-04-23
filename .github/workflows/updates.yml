@@ -32,6 +32,9 @@ jobs:
           echo "→ arXiv"
           curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
 
+          echo "→ drwillpowers"
+          curl -s -A "Mozilla/5.0 (dashboard)" "https://www.reddit.com/user/drwillpowers.rss" -o dashboard/data/drwillpowers.xml
+
           echo "→ Artificial Analysis"
           curl -s -H "x-api-key: $AA_API_KEY" "https://artificialanalysis.ai/api/v2/data/llms/models" -o dashboard/data/aa-models.json
 
