@@ -1,9 +1,9 @@
 import os
+import re
 import json
 import time
 import requests
 import feedparser
-import re
 from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 from urllib.parse import quote_plus
@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATA_FILE = "data.json"
-ARTIFICIAL_ANALYSIS_API_KEY = os.getenv("ARTIFICIAL_ANALYSIS_API_KEY")
 
 session = requests.Session()
 session.headers.update({
@@ -20,183 +19,11 @@ session.headers.update({
     "Accept": "application/json, application/xml;q=0.9, text/html;q=0.8"
 })
 
-def extract_price_candidates(text):
-    """
-    Returns a list of numeric USD-looking prices found in text.
-    Example: '$299', '$100.00'
-    """
-    matches = re.findall(r'\$\s?(\d+(?:\.\d{1,2})?)', text)
-    prices = []
-    for m in matches:
-        try:
-            prices.append(float(m))
-        except ValueError:
-            pass
-    return prices
 
-def pick_reasonable_genomics_price(prices, low=50, high=2000):
-    """
-    Filters absurd values and returns the minimum plausible price.
-    """
-    candidates = [p for p in prices if low <= p <= high]
-    return min(candidates) if candidates else None
+# -------------------------
+# Generic helpers
+# -------------------------
 
-def fetch_html(url):
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; DashboardBot/1.0)"
-    }
-    res = session.get(url, headers=headers, timeout=25)
-    res.raise_for_status()
-    return res.text
-
-def get_nebula_price():
-    url = "https://nebula.org/whole-genome-sequencing-dna-test/"
-    try:
-        html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
-
-        prices = extract_price_candidates(text)
-        price = pick_reasonable_genomics_price(prices)
-
-        return {
-            "provider": "Nebula",
-            "product_name": "Whole Genome Sequencing",
-            "test_type": "wgs",
-            "coverage": "30x?",
-            "price_usd": price,
-            "display_price": f"${int(price)}" if price else "Unknown",
-            "subscription_required": False,
-            "notes": "Auto-scraped; verify current sale/subscription terms",
-            "url": url,
-            "status": "ok" if price else "error"
-        }
-    except Exception as e:
-        return {
-            "provider": "Nebula",
-            "product_name": "Whole Genome Sequencing",
-            "test_type": "wgs",
-            "coverage": "30x?",
-            "price_usd": None,
-            "display_price": "Unknown",
-            "subscription_required": False,
-            "notes": f"Failed to scrape: {e}",
-            "url": url,
-            "status": "error"
-        }
-
-def get_tellmegen_price():
-    url = "https://tellmegen.com/en/"
-    try:
-        html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
-
-        prices = extract_price_candidates(text)
-        price = pick_reasonable_genomics_price(prices)
-
-        return {
-            "provider": "tellmeGen",
-            "product_name": "Genome product",
-            "test_type": "wgs_or_other",
-            "coverage": "Unknown",
-            "price_usd": price,
-            "display_price": f"${int(price)}" if price else "Unknown",
-            "subscription_required": False,
-            "notes": "Auto-scraped homepage; verify product is true WGS and note coverage",
-            "url": url,
-            "status": "ok" if price else "error"
-        }
-    except Exception as e:
-        return {
-            "provider": "tellmeGen",
-            "product_name": "Genome product",
-            "test_type": "wgs_or_other",
-            "coverage": "Unknown",
-            "price_usd": None,
-            "display_price": "Unknown",
-            "subscription_required": False,
-            "notes": f"Failed to scrape: {e}",
-            "url": url,
-            "status": "error"
-        }
-
-def get_element_vitari_watch():
-    return {
-        "provider": "Element Vitari",
-        "product_name": "$100 genome watch",
-        "test_type": "future_wgs",
-        "coverage": "TBD",
-        "price_usd": 100,
-        "display_price": "$100 target",
-        "subscription_required": False,
-        "notes": "Future target / announcement watch, not necessarily commercially available now",
-        "url": "https://www.elementbiosciences.com/",
-        "status": "ok"
-    }
-
-def get_sequencing_com_price():
-    url = "https://sequencing.com/"
-    try:
-        html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
-
-        prices = extract_price_candidates(text)
-        price = pick_reasonable_genomics_price(prices)
-
-        return {
-            "provider": "Sequencing.com",
-            "product_name": "Genome sequencing",
-            "test_type": "wgs_or_bundle",
-            "coverage": "Unknown",
-            "price_usd": price,
-            "display_price": f"${int(price)}" if price else "Unknown",
-            "subscription_required": False,
-            "notes": "Auto-scraped; verify whether this is standalone WGS or bundle pricing",
-            "url": url,
-            "status": "ok" if price else "error"
-        }
-    except Exception as e:
-        return {
-            "provider": "Sequencing.com",
-            "product_name": "Genome sequencing",
-            "test_type": "wgs_or_bundle",
-            "coverage": "Unknown",
-            "price_usd": None,
-            "display_price": "Unknown",
-            "subscription_required": False,
-            "notes": f"Failed to scrape: {e}",
-            "url": url,
-            "status": "error"
-        }
-# ---------------- WGS ----------------
-def get_wgs_prices():
-    source = "provider pages + manual watch"
-    try:
-        rows = [
-            get_nebula_price(),
-            get_tellmegen_price(),
-            get_sequencing_com_price(),
-            get_element_vitari_watch(),
-        ]
-
-        # sort by numeric price if available
-        sortable = []
-        unsortable = []
-
-        for r in rows:
-            if r.get("price_usd") is not None and r.get("test_type") in ("wgs", "wgs_or_other", "wgs_or_bundle", "future_wgs"):
-                sortable.append(r)
-            else:
-                unsortable.append(r)
-
-        sortable.sort(key=lambda x: x["price_usd"])
-        items = sortable + unsortable
-
-        return ok(items, source, meta={"note": "Verify WGS vs WES/low-pass before purchase"})
-    except Exception as e:
-        return err(source, e)
 def now_iso():
     return datetime.now(timezone.utc).isoformat()
 
@@ -217,18 +44,6 @@ def err(source, message, items=None):
         "retrieved_at": now_iso(),
         "error": str(message)
     }
-
-def load_existing_data():
-    if not os.path.exists(DATA_FILE):
-        return {}
-
-    try:
-        with open(DATA_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        return migrate_legacy_data(data)
-    except Exception as e:
-        print(f"Failed to load existing data: {e}")
-        return {}
 
 def wrap_legacy_widget(value, source="legacy_data.json"):
     if isinstance(value, dict) and "items" in value:
@@ -276,6 +91,16 @@ def migrate_legacy_data(data):
 
     return migrated
 
+def load_existing_data():
+    if os.path.exists(DATA_FILE):
+        try:
+            with open(DATA_FILE, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return migrate_legacy_data(data)
+        except Exception as e:
+            print(f"Failed to load existing data: {e}")
+    return {}
+
 def save_data(data):
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
@@ -289,14 +114,12 @@ def preserve_previous_if_failed(existing, key, fresh):
 
     prev = existing[key]
 
-    # New schema: already a widget dict
     if isinstance(prev, dict) and "items" in prev:
-        prev = dict(prev)  # shallow copy
+        prev = dict(prev)
         prev["stale"] = True
         prev["stale_reason"] = fresh.get("error", "unknown error")
         return prev
 
-    # Old schema fallback: wrap legacy values
     return {
         "status": "ok",
         "items": prev if isinstance(prev, list) else [prev],
@@ -307,19 +130,32 @@ def preserve_previous_if_failed(existing, key, fresh):
         "meta": {"migrated_from_legacy_format": True}
     }
 
-# ---------------- AI / Artificial Analysis ----------------
+def fetch_html(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; DashboardBot/1.0)"
+    }
+    res = session.get(url, headers=headers, timeout=25)
+    res.raise_for_status()
+    return res.text
+
+
+# -------------------------
+# Artificial Analysis / AI
+# -------------------------
 
 def fetch_aa_models():
-    if not ARTIFICIAL_ANALYSIS_API_KEY:
+    api_key = os.getenv("ARTIFICIAL_ANALYSIS_API_KEY")
+    if not api_key:
         raise RuntimeError("Missing ARTIFICIAL_ANALYSIS_API_KEY")
 
     url = "https://artificialanalysis.ai/api/v2/data/llms/models"
-    res = session.get(url, headers={"x-api-key": ARTIFICIAL_ANALYSIS_API_KEY}, timeout=30)
+    res = session.get(url, headers={"x-api-key": api_key}, timeout=30)
     res.raise_for_status()
     payload = res.json()
 
     if not isinstance(payload, dict):
         raise RuntimeError("Unexpected API response shape")
+
     rows = payload.get("data", [])
     if not isinstance(rows, list):
         raise RuntimeError("Unexpected 'data' field type")
@@ -365,13 +201,13 @@ def get_ai_leaderboard(limit=5):
         items.sort(key=lambda x: x["score"], reverse=True)
 
         top = [{
-    "model": m["model"],
-    "provider": m["provider"],
-    "score": m["score"],
-    "display_score": round(m["score"]),
-    "release_date": m["release_date"],
-    "price_blended": m["price_blended"],
-} for m in items[:limit]]
+            "model": m["model"],
+            "provider": m["provider"],
+            "score": m["score"],
+            "display_score": round(m["score"]),
+            "release_date": m["release_date"],
+            "price_blended": m["price_blended"],
+        } for m in items[:limit]]
 
         return ok(top, source, meta={"ranking_field": "artificial_analysis_intelligence_index"})
     except Exception as e:
@@ -420,6 +256,7 @@ def get_free_tier_ai_leaderboard(limit=5):
             "model": m["model"],
             "provider": m["provider"],
             "score": m["score"],
+            "display_score": round(m["score"]),
             "price_blended": m["price_blended"],
         } for m in items[:limit]]
 
@@ -427,7 +264,24 @@ def get_free_tier_ai_leaderboard(limit=5):
     except Exception as e:
         return err("https://artificialanalysis.ai/api/v2/data/llms/models", e)
 
-# ---------------- Reddit ----------------
+
+# -------------------------
+# Reddit
+# -------------------------
+
+def get_reddit_searches(searches):
+    try:
+        groups = []
+        for s in searches:
+            label = s["label"]
+            query = s["query"]
+            rss_url = f"https://www.reddit.com/search.rss?q={quote_plus(query)}&sort=new"
+            feed = feedparser.parse(rss_url)
+            items = [{"title": e.get("title", "Untitled"), "link": e.get("link", "#")} for e in feed.entries[:5]]
+            groups.append({"label": label, "query": query, "items": items})
+        return ok(groups, "reddit rss")
+    except Exception as e:
+        return err("reddit rss", e)
 
 def get_reddit_user_comments(username="Drwillpowers", limit=5):
     rss_url = f"https://www.reddit.com/user/{username}/comments.rss"
@@ -474,22 +328,142 @@ def get_reddit_user_comments(username="Drwillpowers", limit=5):
     except Exception as e:
         return err(rss_url, e)
 
-def get_reddit_searches(searches):
+
+# -------------------------
+# WGS 30x watchlist
+# -------------------------
+
+def extract_prices_from_text(text):
+    matches = re.findall(r'\$\s?(\d+(?:\.\d{1,2})?)', text or "")
+    prices = []
+    for m in matches:
+        try:
+            prices.append(float(m))
+        except ValueError:
+            pass
+    return sorted(set(prices))
+
+def choose_best_price(prices, low=100, high=2000):
+    candidates = [p for p in prices if low <= p <= high]
+    return min(candidates) if candidates else None
+
+def normalize_wgs_result(provider, url, price, notes="", status="ok"):
+    return {
+        "provider": provider,
+        "product_name": "30x Whole Genome Sequencing",
+        "coverage": "30x",
+        "price_usd": price,
+        "display_price": f"${int(price)}" if isinstance(price, (int, float)) else "Unknown",
+        "url": url,
+        "notes": notes,
+        "status": status,
+    }
+
+def get_umn_wgs_price():
+    url = "https://genomics.umn.edu/service/human-whole-genome-sequencing"
+    provider = "UMN Genomics"
     try:
-        groups = []
-        for s in searches:
-            label = s["label"]
-            query = s["query"]
-            rss_url = f"https://www.reddit.com/search.rss?q={quote_plus(query)}&sort=new"
-            feed = feedparser.parse(rss_url)
-            items = [{"title": e.get("title", "Untitled"), "link": e.get("link", "#")} for e in feed.entries[:5]]
-            groups.append({"label": label, "query": query, "items": items})
-        return ok(groups, "reddit rss")
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_prices_from_text(text)
+        print(f"[WGS] {provider} prices found: {prices[:10]}")
+        price = choose_best_price(prices)
+
+        if price is None:
+            raise RuntimeError("No plausible price found")
+
+        return normalize_wgs_result(provider, url, price, notes="Human whole genome sequencing page")
     except Exception as e:
-        return err("reddit rss", e)
+        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+
+def get_tellmegen_wgs_price():
+    url = "https://shop.tellmegen.com/en/products/ultra-wgs-dna-kit"
+    provider = "tellmeGen"
+    try:
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_prices_from_text(text)
+        print(f"[WGS] {provider} prices found: {prices[:10]}")
+        price = choose_best_price(prices)
+
+        if price is None:
+            raise RuntimeError("No plausible price found")
+
+        return normalize_wgs_result(provider, url, price, notes="Ultra WGS DNA Kit")
+    except Exception as e:
+        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+
+def get_sequencing_com_wgs_price():
+    url = "https://sequencing.com/order/special-dna-day-wgs-bundle"
+    provider = "Sequencing.com"
+    try:
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_prices_from_text(text)
+        print(f"[WGS] {provider} prices found: {prices[:10]}")
+        price = choose_best_price(prices)
+
+        if price is None:
+            raise RuntimeError("No plausible price found")
+
+        return normalize_wgs_result(provider, url, price, notes="Special DNA Day WGS bundle")
+    except Exception as e:
+        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+
+def get_dantelabs_wgs_price():
+    url = "https://dantelabs.com/genome/"
+    provider = "Dante Labs"
+    try:
+        html = fetch_html(url)
+        soup = BeautifulSoup(html, "html.parser")
+        text = soup.get_text(" ", strip=True)
+
+        prices = extract_prices_from_text(text)
+        print(f"[WGS] {provider} prices found: {prices[:10]}")
+        price = choose_best_price(prices)
+
+        if price is None:
+            raise RuntimeError("No plausible price found")
+
+        return normalize_wgs_result(provider, url, price, notes="Genome product page")
+    except Exception as e:
+        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+
+def get_wgs_prices():
+    source = "tracked 30x WGS provider pages"
+    try:
+        items = [
+            get_umn_wgs_price(),
+            get_tellmegen_wgs_price(),
+            get_sequencing_com_wgs_price(),
+            get_dantelabs_wgs_price(),
+        ]
+
+        valid = [x for x in items if x.get("price_usd") is not None]
+        invalid = [x for x in items if x.get("price_usd") is None]
+
+        valid.sort(key=lambda x: x["price_usd"])
+        sorted_items = valid + invalid
+
+        cheapest = valid[0]["provider"] if valid else None
+
+        return ok(sorted_items, source, meta={
+            "coverage": "30x",
+            "cheapest_provider": cheapest
+        })
+    except Exception as e:
+        return err(source, e)
 
 
-# ---------------- PubMed ----------------
+# -------------------------
+# PubMed
+# -------------------------
 
 def get_pubmed_tracker(queries):
     try:
@@ -518,7 +492,10 @@ def get_pubmed_tracker(queries):
     except Exception as e:
         return err("pubmed", e)
 
-# ---------------- arXiv ----------------
+
+# -------------------------
+# arXiv
+# -------------------------
 
 def get_arxiv_tracker(queries):
     try:
@@ -536,10 +513,13 @@ def get_arxiv_tracker(queries):
     except Exception as e:
         return err("arxiv", e)
 
-# ---------------- Weather / Calendar / Bookmarks / Gmail ----------------
+
+# -------------------------
+# Weather / Calendar / Bookmarks / Gmail
+# -------------------------
 
 def get_weather():
-    url = "https://api.open-meteo.com/v1/forecast?latitude=42.3314&longitude=-83.0458&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto"
+    url = "https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto"
     try:
         r = session.get(url, timeout=20)
         r.raise_for_status()
@@ -595,16 +575,20 @@ def get_gmail_links():
         {"title": "Unread starred", "url": "https://mail.google.com/mail/u/0/#search/is%3Aunread+is%3Astarred"}
     ], "manual")
 
-# ---------------- Dashboard ----------------
+
+# -------------------------
+# Dashboard updater
+# -------------------------
 
 def update_dashboard():
     print(f"[{time.strftime('%H:%M:%S')}] Syncing data...")
+    print("AA key present in runtime:", bool(os.getenv("ARTIFICIAL_ANALYSIS_API_KEY")))
     existing = load_existing_data()
 
     fresh = {
-        "ai_leaderboard": get_ai_leaderboard(),
-        "ai_free_tier": get_free_tier_ai_leaderboard(),
-        "reddit_user": get_reddit_user_comments(),
+        "ai_leaderboard": get_ai_leaderboard(limit=5),
+        "ai_free_tier": get_free_tier_ai_leaderboard(limit=5),
+        "reddit_user": get_reddit_user_comments(limit=5),
         "reddit_searches": get_reddit_searches([
             {"label": "Longevity", "query": "longevity OR rapamycin"},
             {"label": "Hormones", "query": "testosterone OR enclomiphene OR hcg"},
@@ -636,6 +620,7 @@ def update_dashboard():
 
     save_data(final)
     print("Saved data.json")
+
 
 if __name__ == "__main__":
     update_dashboard()
