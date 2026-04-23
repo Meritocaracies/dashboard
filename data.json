@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-23T02:45:32.671253+00:00",
+  "last_updated": "2026-04-23T07:57:21.994473+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -134,7 +134,7 @@
       }
     ],
     "source": "https://www.reddit.com/user/Drwillpowers/comments.rss",
-    "retrieved_at": "2026-04-23T02:45:29.046647+00:00",
+    "retrieved_at": "2026-04-23T07:57:18.055622+00:00",
     "meta": {
       "entry_count": 25
     }
@@ -159,7 +159,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-23T02:45:29.263314+00:00",
+    "retrieved_at": "2026-04-23T07:57:18.321572+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -211,9 +211,6 @@
         "status": "ok",
         "candidates": [
           0.0,
-          55.0,
-          61.0,
-          67.0,
           188.0,
           444.0,
           773.0,
@@ -242,7 +239,7 @@
       }
     ],
     "source": "tracked 30x WGS provider pages",
-    "retrieved_at": "2026-04-23T02:45:30.643141+00:00",
+    "retrieved_at": "2026-04-23T07:57:19.776969+00:00",
     "meta": {
       "coverage": "30x",
       "cheapest_provider": "UMN Genomics"
@@ -352,29 +349,29 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-23T02:45:32.106850+00:00",
+    "retrieved_at": "2026-04-23T07:57:21.494274+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 16.3,
-        "feels_like": 14.2,
-        "weather_code": 0,
-        "today_max": 21.3,
-        "today_min": 11.5
+        "temperature": 12.9,
+        "feels_like": 12.4,
+        "weather_code": 3,
+        "today_max": 25.8,
+        "today_min": 10.7
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-23T02:45:32.670996+00:00",
+    "retrieved_at": "2026-04-23T07:57:21.994202+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-23T02:45:32.671059+00:00",
+    "retrieved_at": "2026-04-23T07:57:21.994264+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -402,7 +399,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-23T02:45:32.671227+00:00",
+    "retrieved_at": "2026-04-23T07:57:21.994461+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -418,7 +415,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-23T02:45:32.671252+00:00",
+    "retrieved_at": "2026-04-23T07:57:21.994470+00:00",
     "meta": {}
   }
 }
