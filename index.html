@@ -220,13 +220,12 @@ loadWeather();
 
 // PubMed
 async function loadPubmed(){
-  const el = document.getElementById('pubmed'); el.innerHTML = '<div class="text-zinc-500 text-xs">Fetching...</div>';
+  const el = document.getElementById('pubmed'); el.innerHTML = '<div class="text-zinc-500 text-xs">Loading...</div>';
   try{
-    const q = 'longevity OR CRISPR';
-    const s = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=${encodeURIComponent(q)}&retmode=json&retmax=5&sort=date`);
+    const s = await fetch('/dashboard/data/pubmed.json');
     const j = await s.json(); const ids = j.esearchresult.idlist||[];
     if(!ids.length) throw 0;
-    const sum = await fetch(`https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=${ids.join(',')}&retmode=json`);
+    const sum = await fetch('/dashboard/data/pubmed-summary.json');
     const sj = await sum.json();
     el.innerHTML = ids.map(id=>{ const it=sj.result[id]; return `<a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50"><div class="line-clamp-2">${it.title}</div><div class="text-[11px] text-zinc-500 mt-1">${(it.authors||[]).slice(0,2).map(a=>a.name).join(', ')} • ${it.pubdate?.split(' ')[0]||''}</div></a>` }).join('');
   }catch(e){ el.innerHTML = '<div class="text-xs text-zinc-500">PubMed blocked by CORS in some browsers. Use GitHub Action to pre-fetch (see instructions).</div>'; }
