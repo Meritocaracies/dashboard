@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-23T01:29:35.195448+00:00",
+  "last_updated": "2026-04-23T01:56:32.145014+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -48,7 +48,9 @@
     "retrieved_at": "2026-04-23T01:29:25.888068+00:00",
     "meta": {
       "ranking_field": "artificial_analysis_intelligence_index"
-    }
+    },
+    "stale": true,
+    "stale_reason": "429 Client Error: Too Many Requests for url: https://artificialanalysis.ai/api/v2/data/llms/models"
   },
   "ai_free_tier": {
     "status": "ok",
@@ -93,7 +95,9 @@
     "retrieved_at": "2026-04-23T01:29:31.520024+00:00",
     "meta": {
       "filter": "free_tier_allowlist_or_zero_price"
-    }
+    },
+    "stale": true,
+    "stale_reason": "429 Client Error: Too Many Requests for url: https://artificialanalysis.ai/api/v2/data/llms/models"
   },
   "reddit_user": {
     "status": "ok",
@@ -130,7 +134,7 @@
       }
     ],
     "source": "https://www.reddit.com/user/Drwillpowers/comments.rss",
-    "retrieved_at": "2026-04-23T01:29:31.870829+00:00",
+    "retrieved_at": "2026-04-23T01:56:26.651581+00:00",
     "meta": {
       "entry_count": 25
     }
@@ -155,7 +159,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-23T01:29:32.135391+00:00",
+    "retrieved_at": "2026-04-23T01:56:27.131307+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -165,45 +169,80 @@
         "provider": "UMN Genomics",
         "product_name": "30x Whole Genome Sequencing",
         "coverage": "30x",
-        "price_usd": 171.0,
-        "display_price": "$171",
+        "price_usd": 199.0,
+        "display_price": "$199",
         "url": "https://genomics.umn.edu/service/human-whole-genome-sequencing",
         "notes": "Human whole genome sequencing page",
-        "status": "ok"
+        "status": "ok",
+        "candidates": [
+          1.0,
+          171.0,
+          199.0,
+          212.0,
+          244.0,
+          292.0,
+          325.0,
+          333.0,
+          389.0,
+          799.0
+        ]
       },
       {
         "provider": "tellmeGen",
         "product_name": "30x Whole Genome Sequencing",
         "coverage": "30x",
-        "price_usd": null,
-        "display_price": "Unknown",
+        "price_usd": 299.0,
+        "display_price": "$299",
         "url": "https://shop.tellmegen.com/en/products/ultra-wgs-dna-kit",
-        "notes": "Failed to scrape: No plausible price found",
-        "status": "error"
+        "notes": "Ultra WGS DNA Kit",
+        "status": "ok",
+        "candidates": [
+          299.0
+        ]
       },
       {
         "provider": "Sequencing.com",
         "product_name": "30x Whole Genome Sequencing",
         "coverage": "30x",
-        "price_usd": null,
-        "display_price": "Unknown",
+        "price_usd": 444.0,
+        "display_price": "$444",
         "url": "https://sequencing.com/order/special-dna-day-wgs-bundle",
-        "notes": "Failed to scrape: No plausible price found",
-        "status": "error"
+        "notes": "Special DNA Day WGS bundle",
+        "status": "ok",
+        "candidates": [
+          0.0,
+          78.0,
+          188.0,
+          267.0,
+          444.0,
+          773.0,
+          774.0,
+          3900.0,
+          6900.0,
+          12900.0
+        ]
       },
       {
         "provider": "Dante Labs",
         "product_name": "30x Whole Genome Sequencing",
         "coverage": "30x",
-        "price_usd": null,
-        "display_price": "Unknown",
+        "price_usd": 449.0,
+        "display_price": "$449",
         "url": "https://dantelabs.com/genome/",
-        "notes": "Failed to scrape: No plausible price found",
-        "status": "error"
+        "notes": "Genome product page",
+        "status": "ok",
+        "candidates": [
+          200.0,
+          449.0,
+          599.0,
+          630.0,
+          849.0,
+          1200.0
+        ]
       }
     ],
     "source": "tracked 30x WGS provider pages",
-    "retrieved_at": "2026-04-23T01:29:33.586772+00:00",
+    "retrieved_at": "2026-04-23T01:56:29.335737+00:00",
     "meta": {
       "coverage": "30x",
       "cheapest_provider": "UMN Genomics"
@@ -223,41 +262,119 @@
     "items": [
       {
         "query": "AI agents",
-        "items": []
+        "items": [
+          {
+            "title": "A Field Guide to Decision Making",
+            "link": "https://arxiv.org/abs/2604.20669v1",
+            "published": "2026-04-22T15:18:23Z"
+          },
+          {
+            "title": "The Expense of Seeing: Attaining Trustworthy Multimodal Reasoning Within the Monolithic Paradigm",
+            "link": "https://arxiv.org/abs/2604.20665v1",
+            "published": "2026-04-22T15:15:32Z"
+          },
+          {
+            "title": "Cooperative Profiles Predict Multi-Agent LLM Team Performance in AI for Science Workflows",
+            "link": "https://arxiv.org/abs/2604.20658v1",
+            "published": "2026-04-22T15:07:54Z"
+          },
+          {
+            "title": "Importance Sampling in Expensive Finite-Sum Optimization via Contextual Bandit Methods",
+            "link": "https://arxiv.org/abs/2604.20657v1",
+            "published": "2026-04-22T15:07:19Z"
+          },
+          {
+            "title": "Large Language Models Outperform Humans in Fraud Detection and Resistance to Motivated Investor Pressure",
+            "link": "https://arxiv.org/abs/2604.20652v1",
+            "published": "2026-04-22T15:03:37Z"
+          }
+        ]
       },
       {
         "query": "genomics foundation model",
-        "items": []
+        "items": [
+          {
+            "title": "Uniqueness and Mixing in the Low-Temperature Random-Cluster Model on Trees and Random Graphs",
+            "link": "https://arxiv.org/abs/2604.20693v1",
+            "published": "2026-04-22T15:39:26Z"
+          },
+          {
+            "title": "A Kinematic Framework for Evaluating Pinch Configurations in Robotic Hand Design without Object or Contact Models",
+            "link": "https://arxiv.org/abs/2604.20692v1",
+            "published": "2026-04-22T15:38:40Z"
+          },
+          {
+            "title": "Unidirectional Transverse Scattering in Acoustic Dimers",
+            "link": "https://arxiv.org/abs/2604.20690v1",
+            "published": "2026-04-22T15:37:55Z"
+          },
+          {
+            "title": "Storm Surge Modeling, Bias Correction, Graph Neural Networks, Graph Convolution Networks",
+            "link": "https://arxiv.org/abs/2604.20688v1",
+            "published": "2026-04-22T15:36:19Z"
+          },
+          {
+            "title": "Toward nanophotonic platforms for solid-state $^{229}$Th nuclear clocks",
+            "link": "https://arxiv.org/abs/2604.20687v1",
+            "published": "2026-04-22T15:35:31Z"
+          }
+        ]
       },
       {
         "query": "longevity",
-        "items": []
+        "items": [
+          {
+            "title": "The physics of ELM-free regimes in EUROfusion tokamaks",
+            "link": "https://arxiv.org/abs/2604.20484v1",
+            "published": "2026-04-22T12:16:07Z"
+          },
+          {
+            "title": "Evidence for Environmental Stripping in the Coma Cluster",
+            "link": "https://arxiv.org/abs/2604.16619v1",
+            "published": "2026-04-17T18:15:25Z"
+          },
+          {
+            "title": "The Cosmic Web and Its Filaments: Neutrino Mass from Topology and Persistent Homology",
+            "link": "https://arxiv.org/abs/2604.09148v1",
+            "published": "2026-04-10T09:30:28Z"
+          },
+          {
+            "title": "Computing with Living Neurons: Chaos-Controlled Reservoir Computing with Knowledge Transplant",
+            "link": "https://arxiv.org/abs/2604.02552v1",
+            "published": "2026-04-02T22:03:26Z"
+          },
+          {
+            "title": "Bipolar plates for the next generation of proton exchange membrane fuel cells (PEMFCs): A review of the latest processing methods for unconventional flow channels",
+            "link": "https://arxiv.org/abs/2604.00461v1",
+            "published": "2026-04-01T04:17:12Z"
+          }
+        ]
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-23T01:29:34.789914+00:00",
+    "retrieved_at": "2026-04-23T01:56:31.482120+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 17.8,
-        "feels_like": 14.9,
+        "temperature": 17.2,
+        "feels_like": 14.8,
         "weather_code": 0,
         "today_max": 21.3,
         "today_min": 11.5
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-23T01:29:35.195180+00:00",
+    "retrieved_at": "2026-04-23T01:56:32.144724+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-23T01:29:35.195254+00:00",
+    "retrieved_at": "2026-04-23T01:56:32.144790+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -285,7 +402,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-23T01:29:35.195439+00:00",
+    "retrieved_at": "2026-04-23T01:56:32.145002+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -301,7 +418,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-23T01:29:35.195446+00:00",
+    "retrieved_at": "2026-04-23T01:56:32.145011+00:00",
     "meta": {}
   }
 }
