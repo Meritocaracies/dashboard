@@ -343,11 +343,104 @@ def extract_prices_from_text(text):
             pass
     return sorted(set(prices))
 
-def choose_best_price(prices, low=100, high=2000):
-    candidates = [p for p in prices if low <= p <= high]
-    return min(candidates) if candidates else None
+def extract_prices_from_json_ld(html):
+    """
+    Parse JSON-LD blocks for offers.price fields.
+    """
+    prices = []
+    soup = BeautifulSoup(html, "html.parser")
+    for tag in soup.find_all("script", type="application/ld+json"):
+        raw = tag.string or tag.get_text(strip=True)
+        if not raw:
+            continue
+        try:
+            data = json.loads(raw)
+            stack = data if isinstance(data, list) else [data]
+            while stack:
+                obj = stack.pop()
+                if isinstance(obj, dict):
+                    # direct price
+                    if "price" in obj:
+                        try:
+                            prices.append(float(obj["price"]))
+                        except Exception:
+                            pass
+                    # nested offers
+                    if "offers" in obj:
+                        offers = obj["offers"]
+                        if isinstance(offers, list):
+                            stack.extend(offers)
+                        else:
+                            stack.append(offers)
+                    # recurse all values
+                    for v in obj.values():
+                        if isinstance(v, (dict, list)):
+                            stack.append(v)
+                elif isinstance(obj, list):
+                    stack.extend(obj)
+        except Exception:
+            continue
+    return sorted(set(prices))
 
-def normalize_wgs_result(provider, url, price, notes="", status="ok"):
+def extract_prices_from_meta(html):
+    """
+    Extract possible price values from meta tags and common attributes.
+    """
+    prices = []
+    soup = BeautifulSoup(html, "html.parser")
+
+    meta_candidates = []
+    for tag in soup.find_all("meta"):
+        for attr in ("content", "value"):
+            val = tag.get(attr)
+            if val:
+                meta_candidates.append(val)
+
+    for value in meta_candidates:
+        matches = re.findall(r'(\d+(?:\.\d{1,2})?)', value)
+        for m in matches:
+            try:
+                p = float(m)
+                if 50 <= p <= 2000:
+                    prices.append(p)
+            except Exception:
+                pass
+
+    return sorted(set(prices))
+
+def choose_best_price(prices, expected=None, low=100, high=2000):
+    """
+    Prefer plausible prices and, if expected is known, choose the closest one.
+    """
+    candidates = sorted(set(p for p in prices if low <= p <= high))
+    if not candidates:
+        return None
+
+    if expected is None:
+        return min(candidates)
+
+    return min(candidates, key=lambda p: abs(p - expected))
+
+def gather_price_candidates(html):
+    soup = BeautifulSoup(html, "html.parser")
+    text = soup.get_text(" ", strip=True)
+
+    prices = []
+    prices.extend(extract_prices_from_json_ld(html))
+    prices.extend(extract_prices_from_meta(html))
+    prices.extend(extract_prices_from_text(text))
+
+    # also scan raw html for simple numeric price patterns
+    raw_matches = re.findall(r'["\']price["\']\s*[:=]\s*["\']?(\d+(?:\.\d{1,2})?)', html, re.IGNORECASE)
+    for m in raw_matches:
+        try:
+            prices.append(float(m))
+        except Exception:
+            pass
+
+    return sorted(set(prices))
+
+def normalize_wgs_result(provider, url, price, notes="", status="ok", candidates=None):
     return {
         "provider": provider,
         "product_name": "30x Whole Genome Sequencing",
@@ -357,83 +450,69 @@ def normalize_wgs_result(provider, url, price, notes="", status="ok"):
         "url": url,
         "notes": notes,
         "status": status,
+        "candidates": candidates or []
     }
 
-def get_umn_wgs_price():
-    url = "https://genomics.umn.edu/service/human-whole-genome-sequencing"
-    provider = "UMN Genomics"
+def scrape_wgs_provider(provider, url, expected_price, notes):
     try:
         html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
+        candidates = gather_price_candidates(html)
+        print(f"[WGS] {provider} candidate prices: {candidates[:20]}")
 
-        prices = extract_prices_from_text(text)
-        print(f"[WGS] {provider} prices found: {prices[:10]}")
-        price = choose_best_price(prices)
+        price = choose_best_price(candidates, expected=expected_price)
 
         if price is None:
             raise RuntimeError("No plausible price found")
 
-        return normalize_wgs_result(provider, url, price, notes="Human whole genome sequencing page")
+        return normalize_wgs_result(
+            provider=provider,
+            url=url,
+            price=price,
+            notes=notes,
+            status="ok",
+            candidates=candidates[:10]
+        )
     except Exception as e:
-        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+        return normalize_wgs_result(
+            provider=provider,
+            url=url,
+            price=None,
+            notes=f"Failed to scrape: {e}",
+            status="error",
+            candidates=[]
+        )
+
+def get_umn_wgs_price():
+    return scrape_wgs_provider(
+        provider="UMN Genomics",
+        url="https://genomics.umn.edu/service/human-whole-genome-sequencing",
+        expected_price=199,
+        notes="Human whole genome sequencing page"
+    )
 
 def get_tellmegen_wgs_price():
-    url = "https://shop.tellmegen.com/en/products/ultra-wgs-dna-kit"
-    provider = "tellmeGen"
-    try:
-        html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
-
-        prices = extract_prices_from_text(text)
-        print(f"[WGS] {provider} prices found: {prices[:10]}")
-        price = choose_best_price(prices)
-
-        if price is None:
-            raise RuntimeError("No plausible price found")
-
-        return normalize_wgs_result(provider, url, price, notes="Ultra WGS DNA Kit")
-    except Exception as e:
-        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+    return scrape_wgs_provider(
+        provider="tellmeGen",
+        url="https://shop.tellmegen.com/en/products/ultra-wgs-dna-kit",
+        expected_price=299,
+        notes="Ultra WGS DNA Kit"
+    )
 
 def get_sequencing_com_wgs_price():
-    url = "https://sequencing.com/order/special-dna-day-wgs-bundle"
-    provider = "Sequencing.com"
-    try:
-        html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
-
-        prices = extract_prices_from_text(text)
-        print(f"[WGS] {provider} prices found: {prices[:10]}")
-        price = choose_best_price(prices)
-
-        if price is None:
-            raise RuntimeError("No plausible price found")
-
-        return normalize_wgs_result(provider, url, price, notes="Special DNA Day WGS bundle")
-    except Exception as e:
-        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+    return scrape_wgs_provider(
+        provider="Sequencing.com",
+        url="https://sequencing.com/order/special-dna-day-wgs-bundle",
+        expected_price=379,
+        notes="Special DNA Day WGS bundle"
+    )
 
 def get_dantelabs_wgs_price():
-    url = "https://dantelabs.com/genome/"
-    provider = "Dante Labs"
-    try:
-        html = fetch_html(url)
-        soup = BeautifulSoup(html, "html.parser")
-        text = soup.get_text(" ", strip=True)
-
-        prices = extract_prices_from_text(text)
-        print(f"[WGS] {provider} prices found: {prices[:10]}")
-        price = choose_best_price(prices)
-
-        if price is None:
-            raise RuntimeError("No plausible price found")
-
-        return normalize_wgs_result(provider, url, price, notes="Genome product page")
-    except Exception as e:
-        return normalize_wgs_result(provider, url, None, notes=f"Failed to scrape: {e}", status="error")
+    return scrape_wgs_provider(
+        provider="Dante Labs",
+        url="https://dantelabs.com/genome/",
+        expected_price=449,
+        notes="Genome product page"
+    )
 
 def get_wgs_prices():
     source = "tracked 30x WGS provider pages"
@@ -459,7 +538,6 @@ def get_wgs_prices():
         })
     except Exception as e:
         return err(source, e)
-
 
 # -------------------------
 # PubMed
