@@ -254,7 +254,7 @@ async function loadLeaderboard(){
     // sort top 10
     const top = Object.entries(overall)
      .sort((a,b) => b[1] - a[1])
-     .slice(0, 8)
+     .slice(0, 5)
      .map(([model, elo]) => {
         // clean up model names
         const name = model
