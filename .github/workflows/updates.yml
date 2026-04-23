@@ -15,19 +15,19 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Fetch feeds
-        run: |
-          mkdir -p dashboard/data
-          # PubMed - IDs
-          curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity+OR+CRISPR&retmode=json&retmax=5&sort=date" -o dashboard/data/pubmed.json
-          # PubMed - summaries (needs jq)
-          IDS=$(jq -r '.esearchresult.idlist | join(",")' dashboard/data/pubmed.json)
-          curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=$IDS&retmode=json" -o dashboard/data/pubmed-summary.json
-          # arXiv
-          curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
-          # AI leaderboard (daily snapshot from community)
-          curl -sL https://raw.githubusercontent.com/nakasyou/lmarena-history/main/output/scores.json -o dashboard/data/arena.json
-          # meta
-          echo "{\"updated\":\"$(date -u +%FT%TZ)\"}" > dashboard/data/meta.json
+  env:
+    AA_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
+  run: |
+    mkdir -p dashboard/data
+    # PubMed
+    curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity+OR+CRISPR&retmode=json&retmax=5&sort=date" -o dashboard/data/pubmed.json
+    IDS=$(jq -r '.esearchresult.idlist | join(",")' dashboard/data/pubmed.json)
+    curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=$IDS&retmode=json" -o dashboard/data/pubmed-summary.json
+    # arXiv
+    curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
+    # Artificial Analysis - LLM leaderboard
+    curl -s -H "x-api-key: $AA_API_KEY" "https://artificialanalysis.ai/api/v2/data/llms/models" -o dashboard/data/aa-models.json
+    echo "{\"updated\":\"$(date -u +%FT%TZ)\"}" > dashboard/data/meta.json
 
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
