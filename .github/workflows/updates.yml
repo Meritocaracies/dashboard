@@ -1,20 +1,31 @@
 name: Update dashboard data
+
 on:
-  schedule: [{cron: "0 12 * *"}] # daily 5am PT
+  schedule:
+    - cron: "0 12 * * *" # 12:00 UTC = 5am PT
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-            - uses: actions/checkout@v4
-            - run: |
+      - uses: actions/checkout@v4
+
+      - name: Fetch feeds
+        run: |
           mkdir -p dashboard/data
-          # PubMed
+          # PubMed - IDs
           curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity+OR+CRISPR&retmode=json&retmax=5&sort=date" -o dashboard/data/pubmed.json
+          # PubMed - summaries (needs jq)
+          IDS=$(jq -r '.esearchresult.idlist | join(",")' dashboard/data/pubmed.json)
+          curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=$IDS&retmode=json" -o dashboard/data/pubmed-summary.json
           # arXiv
           curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
-          # AI leaderboard - scrape LMSYS (or keep static)
-          echo '{"updated":"'$(date -u +%FT%TZ)'"}' > dashboard/data/meta.json
-            - uses: stefanzweifel/git-auto-commit-action@v5
+          # AI leaderboard (daily snapshot from community)
+          curl -sL https://raw.githubusercontent.com/nakasyou/lmarena-history/main/output/scores.json -o dashboard/data/arena.json
+          # meta
+          echo "{\"updated\":\"$(date -u +%FT%TZ)\"}" > dashboard/data/meta.json
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update feeds"
