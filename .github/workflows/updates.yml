@@ -2,34 +2,46 @@ name: Update dashboard data
 
 on:
   schedule:
-    - cron: "0 12 * * *" # 12:00 UTC = 5am PT
+    - cron: "0 12 * * *"   # 12:00 UTC = 5am PT daily
   workflow_dispatch:
-
-permissions:
-  contents: write  # Add this to allow pushing commits
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-  name: Fetch feeds
-  env:
-    AA_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
-  run: |
-    mkdir -p dashboard/data
-    # PubMed
-    curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity+OR+CRISPR&retmode=json&retmax=5&sort=date" -o dashboard/data/pubmed.json
-    IDS=$(jq -r '.esearchresult.idlist | join(",")' dashboard/data/pubmed.json)
-    curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=$IDS&retmode=json" -o dashboard/data/pubmed-summary.json
-    # arXiv
-    curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
-    # Artificial Analysis - LLM leaderboard
-    curl -s -H "x-api-key: $AA_API_KEY" "https://artificialanalysis.ai/api/v2/data/llms/models" -o dashboard/data/aa-models.json
-    echo "{\"updated\":\"$(date -u +%FT%TZ)\"}" > dashboard/data/meta.json
+      - name: Fetch feeds
+        env:
+          AA_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
+        run: |
+          set -e
+          mkdir -p dashboard/data
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+          echo "→ PubMed"
+          curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity+OR+CRISPR&retmode=json&retmax=5&sort=date" -o dashboard/data/pubmed.json
+          IDS=$(jq -r '.esearchresult.idlist | join(",")' dashboard/data/pubmed.json)
+          if [ -n "$IDS" ]; then
+            curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&id=$IDS&retmode=json" -o dashboard/data/pubmed-summary.json
+          fi
+
+          echo "→ arXiv"
+          curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
+
+          echo "→ Artificial Analysis"
+          curl -s -H "x-api-key: $AA_API_KEY" "https://artificialanalysis.ai/api/v2/data/llms/models" -o dashboard/data/aa-models.json
+
+          echo "→ meta"
+          echo "{\"updated\":\"$(date -u +%FT%TZ)\"}" > dashboard/data/meta.json
+
+          ls -lh dashboard/data
+
+      - name: Commit updates
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update feeds"
-          token: ${{ secrets.GITHUB_TOKEN }}
+          file_pattern: dashboard/data/*
