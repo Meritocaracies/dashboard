@@ -91,6 +91,7 @@
     .small {
       color: var(--muted);
       font-size: 0.85rem;
+      line-height: 1.35;
     }
     a {
       color: var(--accent);
@@ -110,9 +111,15 @@
     li {
       margin-bottom: 8px;
     }
-    .error {
-      color: var(--red);
-      font-size: 0.9rem;
+    .comment-item {
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      margin-bottom: 10px;
+    }
+    .comment-item:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+      margin-bottom: 0;
     }
     @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
@@ -150,7 +157,7 @@
 
     <div class="card">
       <div class="header">
-        <h3>🧬 WGS Price Watch</h3>
+        <h3>🧬 30x WGS Price Watch</h3>
         <span class="tag" id="wgs-status">...</span>
       </div>
       <div id="wgs-list">Loading...</div>
@@ -166,7 +173,7 @@
 
     <div class="card">
       <div class="header">
-        <h3>👤 u/Drwillpowers</h3>
+        <h3>💬 DrWillPowers</h3>
         <span class="tag" id="reddit-user-status">...</span>
       </div>
       <div id="reddit-user-list">Loading...</div>
@@ -238,34 +245,26 @@
         .replaceAll("'", "&#039;");
     }
 
-    function renderSimpleRows(items, leftKey, rightKey, rightClass = "score") {
-      if (!items?.length) return '<div class="small">No items</div>';
-      return items.map(item => `
-        <div class="row">
-          <div>${escapeHtml(item[leftKey])}</div>
-          <div class="${rightClass}">${escapeHtml(item[rightKey])}</div>
-        </div>
-      `).join("");
-    }
     function formatTimestamp(isoString) {
-  if (!isoString) return "unknown";
-  try {
-    return new Date(isoString).toLocaleString("en-US", {
-      timeZone: "America/Los_Angeles",
-      dateStyle: "medium",
-      timeStyle: "medium"
-    });
-  } catch {
-    return isoString;
-  }
-}
+      if (!isoString) return "unknown";
+      try {
+        return new Date(isoString).toLocaleString("en-US", {
+          timeZone: "America/Los_Angeles",
+          dateStyle: "medium",
+          timeStyle: "medium"
+        });
+      } catch {
+        return isoString;
+      }
+    }
+
     async function loadData() {
       try {
         const response = await fetch("data.json?_=" + Date.now());
         const data = await response.json();
 
         document.getElementById("page-meta").textContent =
-  "Last updated: " + formatTimestamp(data.last_updated);
+          "Last updated: " + formatTimestamp(data.last_updated);
 
         setStatus("ai-status", data.ai_leaderboard);
         setStatus("free-ai-status", data.ai_free_tier);
@@ -278,7 +277,6 @@
         setStatus("calendar-status", data.calendar);
         setStatus("bookmarks-status", data.bookmarks);
 
-        // AI leaderboard
         document.getElementById("ai-list").innerHTML =
           (data.ai_leaderboard?.items || []).map(m => `
             <div class="row">
@@ -290,33 +288,31 @@
             </div>
           `).join("") || '<div class="small">No AI leaderboard data</div>';
 
-        // Free AI
         document.getElementById("free-ai-list").innerHTML =
           (data.ai_free_tier?.items || []).map(m => `
             <div class="row">
-              <div>${escapeHtml(m.model)}</div>
-              <div class="score">${escapeHtml(m.score)}</div>
+              <div>
+                ${escapeHtml(m.model)}
+                ${m.provider ? `<div class="small">${escapeHtml(m.provider)}</div>` : ""}
+              </div>
+              <div class="score">${escapeHtml(m.display_score ?? m.score)}</div>
             </div>
-          `).join("") || '<div class="small">No free-tier data</div>';
+          `).join("") || '<div class="small">No free-tier AI data</div>';
 
-        // WGS
         document.getElementById("wgs-list").innerHTML =
-  (data.wgs_price?.items || []).map(p => `
-    <div class="row" style="align-items:flex-start;">
-      <div>
-        <a href="${escapeHtml(p.url || "#")}" target="_blank">${escapeHtml(p.provider)}</a>
-        <div class="small">
-          ${escapeHtml(p.product_name || "")}
-          ${p.test_type ? ` • ${escapeHtml(p.test_type)}` : ""}
-          ${p.coverage ? ` • ${escapeHtml(p.coverage)}` : ""}
-        </div>
-        ${p.notes ? `<div class="small">${escapeHtml(p.notes)}</div>` : ""}
-      </div>
-      <div class="price">${escapeHtml(p.display_price || p.price || "Unknown")}</div>
-    </div>
-  `).join("") || '<div class="small">No WGS data</div>';
+          (data.wgs_price?.items || []).map((p, idx) => `
+            <div class="row" style="align-items:flex-start;">
+              <div>
+                <a href="${escapeHtml(p.url || "#")}" target="_blank">
+                  ${idx === 0 && p.price_usd != null ? "🥇 " : ""}${escapeHtml(p.provider)}
+                </a>
+                <div class="small">${escapeHtml(p.product_name || "30x WGS")} • ${escapeHtml(p.coverage || "")}</div>
+                ${p.notes ? `<div class="small">${escapeHtml(p.notes)}</div>` : ""}
+              </div>
+              <div class="price">${escapeHtml(p.display_price || "Unknown")}</div>
+            </div>
+          `).join("") || '<div class="small">No WGS data</div>';
 
-        // Reddit searches
         document.getElementById("reddit-searches").innerHTML =
           (data.reddit_searches?.items || []).map(group => `
             <div class="section-block">
@@ -331,19 +327,17 @@
             </div>
           `).join("") || '<div class="small">No Reddit search data</div>';
 
-        // Reddit user
         document.getElementById("reddit-user-list").innerHTML =
-  (data.reddit_user?.items || []).map(item => `
-    <div class="section-block" style="padding-bottom:10px; border-bottom:1px solid rgba(255,255,255,0.05); margin-bottom:10px;">
-      <div style="margin-bottom:4px;">
-        <a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a>
-      </div>
-      ${item.updated ? `<div class="small" style="margin-bottom:4px;">${escapeHtml(formatTimestamp(item.updated))}</div>` : ""}
-      ${item.snippet ? `<div class="small">${escapeHtml(item.snippet)}</div>` : ""}
-    </div>
-  `).join("") || '<div class="small">No recent comments found.</div>';
+          (data.reddit_user?.items || []).map(item => `
+            <div class="comment-item">
+              <div style="margin-bottom:4px;">
+                <a href="${escapeHtml(item.link)}" target="_blank">${escapeHtml(item.title)}</a>
+              </div>
+              ${item.updated ? `<div class="small" style="margin-bottom:4px;">${escapeHtml(formatTimestamp(item.updated))}</div>` : ""}
+              ${item.snippet ? `<div class="small">${escapeHtml(item.snippet)}</div>` : ""}
+            </div>
+          `).join("") || '<div class="small">No recent comments found.</div>';
 
-        // Gmail
         document.getElementById("gmail-links").innerHTML =
           (data.gmail_links?.items || []).map(item => `
             <div class="row">
@@ -351,7 +345,6 @@
             </div>
           `).join("") || '<div class="small">No Gmail links</div>';
 
-        // PubMed
         document.getElementById("pubmed-list").innerHTML =
           (data.pubmed?.items || []).map(group => `
             <div class="section-block">
@@ -367,7 +360,6 @@
             </div>
           `).join("") || '<div class="small">No PubMed data</div>';
 
-        // arXiv
         document.getElementById("arxiv-list").innerHTML =
           (data.arxiv?.items || []).map(group => `
             <div class="section-block">
@@ -383,7 +375,6 @@
             </div>
           `).join("") || '<div class="small">No arXiv data</div>';
 
-        // Weather
         const weather = data.weather?.items?.[0];
         document.getElementById("weather-box").innerHTML = weather ? `
           <div class="row"><div>Temp</div><div class="score">${escapeHtml(weather.temperature)}°</div></div>
@@ -391,7 +382,6 @@
           <div class="row"><div>Today</div><div>${escapeHtml(weather.today_min)}° / ${escapeHtml(weather.today_max)}°</div></div>
         ` : '<div class="small">No weather data</div>';
 
-        // Calendar
         document.getElementById("calendar-box").innerHTML =
           (data.calendar?.items || []).map(item => `
             <div class="row">
@@ -402,7 +392,6 @@
             </div>
           `).join("") || '<div class="small">No upcoming events</div>';
 
-        // Bookmarks
         const b = data.bookmarks?.items || {};
         document.getElementById("bookmarks-box").innerHTML =
           Object.entries(b).map(([topic, links]) => `
