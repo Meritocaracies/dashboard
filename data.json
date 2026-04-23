@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-23T07:57:21.994473+00:00",
+  "last_updated": "2026-04-23T13:47:12.705980+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -103,6 +103,12 @@
     "status": "ok",
     "items": [
       {
+        "title": "/u/Drwillpowers on Gen sequencing for dysphoric nonbinary",
+        "link": "https://www.reddit.com/r/DrWillPowers/comments/1ssmefl/gen_sequencing_for_dysphoric_nonbinary/ohtgy9j/",
+        "updated": "2026-04-23T13:36:12+00:00",
+        "snippet": "This is exactly correct. This is my theory. For clarity purposes, most of the time the straight transgender woman have more of a hormone synthesis failure rather than a double failure of both androgen and estrogen signal..."
+      },
+      {
         "title": "/u/Drwillpowers on People with ADHD are 2x more likely to have low ferritin levels",
         "link": "https://www.reddit.com/r/Biohackers/comments/1sszz24/people_with_adhd_are_2x_more_likely_to_have_low/ohqjm3d/",
         "updated": "2026-04-23T01:08:53+00:00",
@@ -125,16 +131,10 @@
         "link": "https://www.reddit.com/r/DrWillPowers/comments/1smh6au/17ahydroxyprogesterone_is_an_underutilized_but/ohqb1tl/",
         "updated": "2026-04-23T00:20:14+00:00",
         "snippet": "Your doctor is wrong. How are you going to convert pregnenolone into excess DHEAS when it has to first go over 17 alpha hydroxylase? Obviously you're not a complete deficiency or you'd be in much worse shape. In reality ..."
-      },
-      {
-        "title": "/u/Drwillpowers on I collect more and more labs/genome/dutch tests that support my theory on PFS. I really think I have it nailed down. I do not have a optimized treatment regimen, but if you're interested in this, this post details what you should NOT do and will likely make you worse even if it \"windows\" you briefly",
-        "link": "https://www.reddit.com/r/DrWillPowers/comments/1sbm8xq/i_collect_more_and_more_labsgenomedutch_tests/ohqac72/",
-        "updated": "2026-04-23T00:16:12+00:00",
-        "snippet": "Yes this sounds like dopamine depletion. That is the one caveat of that supplement."
       }
     ],
     "source": "https://www.reddit.com/user/Drwillpowers/comments.rss",
-    "retrieved_at": "2026-04-23T07:57:18.055622+00:00",
+    "retrieved_at": "2026-04-23T13:47:06.409492+00:00",
     "meta": {
       "entry_count": 25
     }
@@ -159,7 +159,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-23T07:57:18.321572+00:00",
+    "retrieved_at": "2026-04-23T13:47:06.696281+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -204,19 +204,22 @@
         "provider": "Sequencing.com",
         "product_name": "30x Whole Genome Sequencing",
         "coverage": "30x",
-        "price_usd": 444.0,
-        "display_price": "$444",
+        "price_usd": 349.0,
+        "display_price": "$349",
         "url": "https://sequencing.com/order/special-dna-day-wgs-bundle",
         "notes": "Special DNA Day WGS bundle",
         "status": "ok",
         "candidates": [
           0.0,
-          188.0,
+          349.0,
           444.0,
+          632.0,
           773.0,
+          813.0,
+          949.0,
+          958.0,
           3900.0,
-          6900.0,
-          12900.0
+          6900.0
         ]
       },
       {
@@ -239,7 +242,7 @@
       }
     ],
     "source": "tracked 30x WGS provider pages",
-    "retrieved_at": "2026-04-23T07:57:19.776969+00:00",
+    "retrieved_at": "2026-04-23T13:47:08.448141+00:00",
     "meta": {
       "coverage": "30x",
       "cheapest_provider": "UMN Genomics"
@@ -252,7 +255,7 @@
     "retrieved_at": "2026-04-22T21:48:50.290682+00:00",
     "error": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,41938343,41802677,41923668",
     "stale": true,
-    "stale_reason": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,41938343,41802677,41923668"
+    "stale_reason": "429 Client Error: Too Many Requests for url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=pubmed&retmode=json&id=41915379,41838943,42022787,41938343,41802677"
   },
   "arxiv": {
     "status": "ok",
@@ -349,29 +352,29 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-23T07:57:21.494274+00:00",
+    "retrieved_at": "2026-04-23T13:47:12.233719+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 12.9,
-        "feels_like": 12.4,
+        "temperature": 12.8,
+        "feels_like": 12.0,
         "weather_code": 3,
-        "today_max": 25.8,
-        "today_min": 10.7
+        "today_max": 24.8,
+        "today_min": 11.4
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-23T07:57:21.994202+00:00",
+    "retrieved_at": "2026-04-23T13:47:12.705736+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-23T07:57:21.994264+00:00",
+    "retrieved_at": "2026-04-23T13:47:12.705800+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -399,7 +402,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-23T07:57:21.994461+00:00",
+    "retrieved_at": "2026-04-23T13:47:12.705969+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -415,7 +418,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-23T07:57:21.994470+00:00",
+    "retrieved_at": "2026-04-23T13:47:12.705977+00:00",
     "meta": {}
   }
 }
