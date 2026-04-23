@@ -244,7 +244,7 @@ loadArxiv();
 async function loadLeaderboard(){
   const el = document.getElementById('ai-board');
   try {
-    const r = await fetch('https://raw.githubusercontent.com/nakasyou/lmarena-history/main/output/scores.json', {cache: 'no-store'});
+    const r = await fetch('/dashboard/data/arena.json', {cache: 'no-store'});
     const data = await r.json();
 
     // get latest date
