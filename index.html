@@ -3,94 +3,249 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI/Bio Command Center v3 - Realtime</title>
+<title>AI/Bio Command Center v2</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <style>
-  body { font-family: 'Inter', system-ui; background: #0a0a0b; }
+  :root { color-scheme: dark; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0b; }
   .mono { font-family: 'JetBrains Mono', monospace; }
   .card { background: rgba(17,17,19,0.8); backdrop-filter: blur(12px); border: 1px solid #222225; }
   .card:hover { border-color: #2dd4bf33; }
+  .glass { backdrop-filter: blur(16px); }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
 </style>
 </head>
 <body class="text-zinc-200 min-h-screen">
-<header class="sticky top-0 z-40 border-b border-zinc-800 bg-[#0a0a0b]/80 backdrop-blur">
-  <div class="max-w-[1600px] mx-auto px-6 py-3 flex items-center gap-4">
-    <h1 class="font-semibold">AI/Bio Command Center <span class="text-zinc-500 text-xs">v3</span></h1>
-    <div class="flex-1"></div>
-    <div id="time" class="mono text-sm"></div>
-  </div>
-</header>
-<main class="max-w-[1600px] mx-auto p-6">
-<div id="grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
-  <section class="card rounded-2xl p-5" data-title="AI Leaderboard">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="font-medium">🏆 AI Leaderboard</h2>
-      <div class="flex gap-2">
-        <span id="lb-updated" class="text-[10px] px-2 py-0.5 rounded bg-zinc-800">loading</span>
-        <button onclick="loadLeaderboard()" class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-700">refresh</button>
+  <header class="sticky top-0 z-40 border-b border-zinc-800 bg-[#0a0a0b]/80 glass">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-teal-500/20 grid place-items-center border border-teal-500/30">
+          <span class="text-teal-400 text-sm">⌘</span>
+        </div>
+        <div>
+          <h1 class="font-semibold leading-none">AI/Bio Command Center</h1>
+          <p class="text-xs text-zinc-500 -mt-0.5">v2 • Cheney, WA</p>
+        </div>
+      </div>
+      <div class="flex-1 max-w-xl mx-4 hidden md:block">
+        <div class="relative">
+          <input id="cmd" placeholder="⌘K to search widgets..." class="w-full bg-zinc-900/60 border border-zinc-800 rounded-lg pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-teal-500/50">
+          <svg class="w-4 h-4 absolute left-3 top-2.5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+      </div>
+      <div class="ml-auto flex items-center gap-4 text-sm">
+        <div class="text-right hidden sm:block">
+          <div id="time" class="mono text-zinc-300">--:--:--</div>
+          <div class="text-[11px] text-zinc-500 -mt-1">America/Los_Angeles</div>
+        </div>
+        <button id="theme" class="p-2 rounded-lg hover:bg-zinc-800 border border-zinc-800">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
       </div>
     </div>
-    <table class="w-full text-sm">
-      <thead class="text-[11px] text-zinc-500 uppercase"><tr><th class="text-left pb-2">#</th><th class="text-left pb-2">Model</th><th class="text-right pb-2">Elo</th><th class="text-left pl-3 pb-2">Vendor</th></tr></thead>
-      <tbody id="ai-board" class="divide-y divide-zinc-800/50"></tbody>
-    </table>
-    <p class="text-[11px] text-zinc-600 mt-3">Live from LMArena via api.wulong.dev — updates daily</p>
-  </section>
+  </header>
 
-  <section class="card rounded-2xl p-5"><h2 class="font-medium mb-2">🆓 Free-Tier AI</h2><div class="text-sm space-y-1"><div>ChatGPT • 4o-mini</div><div>Claude • Sonnet daily</div><div>Gemini • 1.5 Pro</div></div></section>
-  <section class="card rounded-2xl p-5"><h2 class="font-medium mb-2">🧬 WGS $249 Nebula</h2><p class="text-xs text-zinc-500">Dante $999 • Updated Apr 2026</p></section>
-  <section class="card rounded-2xl p-5"><h2 class="font-medium mb-2">🌤 Cheney Weather</h2><div id="weather" class="text-2xl mono">--°F</div></section>
-  <section class="card rounded-2xl p-5 md:col-span-2"><h2 class="font-medium mb-2">📚 PubMed</h2><div id="pubmed" class="text-xs text-zinc-500">loading...</div></section>
-  <section class="card rounded-2xl p-5 md:col-span-2"><h2 class="font-medium mb-2">🧠 arXiv</h2><div id="arxiv" class="text-xs text-zinc-500">loading...</div></section>
-</div>
-</main>
+  <main class="max-w-[1600px] mx-auto p-4 sm:p-6">
+    <div id="grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-min">
+      
+      <!-- AI Leaderboard -->
+      <section class="card rounded-2xl p-5" data-title="AI Leaderboard">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="font-medium flex items-center gap-2">🏆 AI Leaderboard</h2>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">LMSYS Dec 2025</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="text-[11px] text-zinc-500 uppercase">
+              <tr><th class="text-left pb-2 font-medium">Model</th><th class="text-right pb-2 font-medium">Elo</th><th class="text-left pb-2 font-medium pl-3">Specialty</th></tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-800/50" id="ai-board">
+              <tr><td class="py-2">GPT-5.2</td><td class="text-right mono text-teal-400">1342</td><td class="pl-3 text-zinc-400">Multimodal / Reasoning</td></tr>
+              <tr><td class="py-2">Claude Opus 4.5</td><td class="text-right mono">1321</td><td class="pl-3 text-zinc-400">Coding / Webdev</td></tr>
+              <tr><td class="py-2">Gemini 3 Pro</td><td class="text-right mono">1315</td><td class="pl-3 text-zinc-400">Vision</td></tr>
+              <tr><td class="py-2">Grok 4.1</td><td class="text-right mono">1298</td><td class="pl-3 text-zinc-400">Speed</td></tr>
+              <tr><td class="py-2">Llama 4 405B</td><td class="text-right mono">1270</td><td class="pl-3 text-zinc-400">Open weight</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="text-[11px] text-zinc-600 mt-3">Source: community arena, Dec 2025 rush</p>
+      </section>
+
+      <!-- Free Tier -->
+      <section class="card rounded-2xl p-5" data-title="Free Tier AI">
+        <h2 class="font-medium mb-3 flex items-center gap-2">🆓 Free-Tier AI</h2>
+        <div class="space-y-2.5 text-sm" id="free-tier">
+          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>ChatGPT</span><span class="text-zinc-500 text-xs">4o-mini • limited</span></div>
+          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Claude</span><span class="text-zinc-500 text-xs">Sonnet • daily</span></div>
+          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Gemini</span><span class="text-zinc-500 text-xs">1.5 Pro • 1,500/d</span></div>
+          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-yellow-500"></span>Perplexity</span><span class="text-zinc-500 text-xs">5 Pro searches/d</span></div>
+          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Grok</span><span class="text-zinc-500 text-xs">x.com • free</span></div>
+        </div>
+      </section>
+
+      <!-- WGS Price Watch -->
+      <section class="card rounded-2xl p-5" data-title="WGS Price">
+        <h2 class="font-medium mb-3 flex items-center gap-2">🧬 30x WGS Price Watch</h2>
+        <div class="space-y-3">
+          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/50 border border-zinc-800">
+            <div><div class="font-medium">Nebula Genomics</div><div class="text-[11px] text-zinc-500">30x • 6.4B bases</div></div>
+            <div class="text-right"><div class="text-xl mono text-teal-400">$249</div><div class="text-[10px] text-emerald-500">↓ lowest ever</div></div>
+          </div>
+          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/30 border border-zinc-800/50">
+            <div><div class="text-sm">Dante Labs</div><div class="text-[11px] text-zinc-500">Whole GenomeZ</div></div>
+            <div class="mono">$999</div>
+          </div>
+          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/30 border border-zinc-800/50">
+            <div><div class="text-sm">Sequencing.com</div><div class="text-[11px] text-zinc-500">Ultimate</div></div>
+            <div class="mono">$399</div>
+          </div>
+        </div>
+        <p class="text-[11px] text-zinc-600 mt-3">Last checked: Apr 2026 • <a href="https://nebula.org" class="underline hover:text-teal-400">nebula.org</a></p>
+      </section>
+
+      <!-- Weather -->
+      <section class="card rounded-2xl p-5" data-title="Weather">
+        <h2 class="font-medium mb-3 flex items-center gap-2">🌤 Weather — Cheney</h2>
+        <div id="weather" class="flex items-end justify-between">
+          <div><div class="text-4xl mono" id="temp">--°</div><div class="text-xs text-zinc-500 mt-1" id="wdesc">Loading...</div></div>
+          <div class="text-right text-xs text-zinc-500"><div>Wind <span id="wind" class="text-zinc-300">--</span></div><div class="mt-1">47.49°N, 117.58°W</div></div>
+        </div>
+      </section>
+
+      <!-- PubMed -->
+      <section class="card rounded-2xl p-5 md:col-span-1 xl:col-span-1" data-title="PubMed">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="font-medium flex items-center gap-2">📚 PubMed Tracker</h2>
+          <button class="text-[11px] px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700" onclick="loadPubmed()">refresh</button>
+        </div>
+        <div id="pubmed" class="space-y-2.5 text-sm"><div class="text-zinc-500 text-xs">Loading longevity + CRISPR...</div></div>
+      </section>
+
+      <!-- arXiv -->
+      <section class="card rounded-2xl p-5 md:col-span-1 xl:col-span-1" data-title="arXiv">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="font-medium flex items-center gap-2">🧠 arXiv Tracker</h2>
+          <button class="text-[11px] px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700" onclick="loadArxiv()">refresh</button>
+        </div>
+        <div id="arxiv" class="space-y-2.5 text-sm"><div class="text-zinc-500 text-xs">Loading cs.AI + q-bio...</div></div>
+      </section>
+
+      <!-- Reddit -->
+      <section class="card rounded-2xl p-5" data-title="Reddit">
+        <h2 class="font-medium mb-3 flex items-center gap-2">🔴 Reddit Saved Searches</h2>
+        <div class="grid grid-cols-2 gap-2 text-sm">
+          <a href="https://reddit.com/r/longevity/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/longevity</a>
+          <a href="https://reddit.com/r/Biohackers/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/Biohackers</a>
+          <a href="https://reddit.com/r/LocalLLaMA/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/LocalLLaMA</a>
+          <a href="https://reddit.com/r/singularity/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/singularity</a>
+        </div>
+      </section>
+
+      <!-- DrWillPowers -->
+      <section class="card rounded-2xl p-5" data-title="DrWillPowers">
+        <h2 class="font-medium mb-3 flex items-center gap-2">💬 DrWillPowers</h2>
+        <div class="aspect-video rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800 grid place-items-center">
+          <a href="https://www.youtube.com/@drwillpowers" target="_blank" class="text-sm text-zinc-400 hover:text-teal-400">Open YouTube channel →</a>
+        </div>
+        <p class="text-[11px] text-zinc-600 mt-2">Add your favorite HRT/longevity creators here</p>
+      </section>
+
+      <!-- Gmail -->
+      <section class="card rounded-2xl p-5" data-title="Gmail">
+        <h2 class="font-medium mb-3 flex items-center gap-2">📩 Gmail Deep Links</h2>
+        <div class="space-y-1.5 text-sm">
+          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#inbox">Primary</a>
+          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#label/Biohacking">Biohacking label</a>
+          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#label/AI-Papers">AI Papers</a>
+          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#advanced-search">Advanced search</a>
+        </div>
+      </section>
+
+      <!-- Calendar -->
+      <section class="card rounded-2xl p-5" data-title="Calendar">
+        <h2 class="font-medium mb-3 flex items-center gap-2">📅 Calendar</h2>
+        <div class="text-sm text-zinc-400">
+          <p class="mb-3">Connect Google Calendar for live events.</p>
+          <button class="px-3 py-1.5 rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs hover:bg-teal-500/30">Connect (OAuth)</button>
+          <p class="text-[11px] text-zinc-600 mt-3">For now: <a href="https://calendar.google.com" class="underline">open calendar</a></p>
+        </div>
+      </section>
+
+      <!-- Bookmarks -->
+      <section class="card rounded-2xl p-5 xl:col-span-3" data-title="Bookmarks">
+        <h2 class="font-medium mb-3 flex items-center gap-2">🔖 Bookmarks by Topic</h2>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">AI Papers</span>
+          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">WGS Reports</span>
+          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Peptides</span>
+          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Longevity Protocols</span>
+          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Local LLMs</span>
+          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Lab Tests</span>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
 <script>
-function updateTime(){ document.getElementById('time').textContent = new Date().toLocaleTimeString(); }
+// Time
+function updateTime(){ const now = new Date(); document.getElementById('time').textContent = now.toLocaleTimeString('en-US', {hour12:false}); }
 setInterval(updateTime,1000); updateTime();
-new Sortable(document.getElementById('grid'), {animation:150});
 
-async function loadLeaderboard(){
-  const board = document.getElementById('ai-board');
-  const upd = document.getElementById('lb-updated');
-  board.innerHTML = '<tr><td colspan=4 class="py-3 text-center text-zinc-500 text-xs">Fetching...</td></tr>';
-  try {
-    const res = await fetch('https://api.wulong.dev/arena-ai-leaderboards/v1/leaderboard?name=text');
-    const data = await res.json();
-    const models = data.models.slice(0,10);
-    upd.textContent = new Date(data.fetched_at).toLocaleDateString();
-    board.innerHTML = models.map(m=>`<tr><td class="py-1.5 mono text-zinc-500">#${m.rank}</td><td>${m.model}</td><td class="text-right mono ${m.rank==1?'text-teal-400':''}">${Math.round(m.score)}</td><td class="pl-3 text-xs text-zinc-500">${m.vendor}</td></tr>`).join('');
-  } catch(e){
-    upd.textContent = 'Apr 6 2026 (fallback)';
-    const fb = [
-      {rank:1,model:'Claude Opus 4.6 Thinking',score:1504,vendor:'Anthropic'},
-      {rank:2,model:'Claude Opus 4.6',score:1500,vendor:'Anthropic'},
-      {rank:3,model:'Gemini 3.1 Pro Preview',score:1493,vendor:'Google'},
-      {rank:4,model:'Grok 4.20 Beta1',score:1491,vendor:'xAI'},
-      {rank:5,model:'Gemini 3 Pro',score:1486,vendor:'Google'},
-      {rank:6,model:'GPT-5.4 High',score:1484,vendor:'OpenAI'},
-      {rank:7,model:'Claude Sonnet 4.5',score:1472,vendor:'Anthropic'},
-      {rank:8,model:'Llama 4 Behemoth',score:1451,vendor:'Meta'},
-    ];
-    board.innerHTML = fb.map(m=>`<tr><td class="py-1.5 mono text-zinc-500">#${m.rank}</td><td>${m.model}</td><td class="text-right mono ${m.rank==1?'text-teal-4
-00':''}">${m.score}</td><td class="pl-3 text-xs text-zinc-500">${m.vendor}</td></tr>`).join('');
-  }
+// Drag reorder
+new Sortable(document.getElementById('grid'), { animation:150, handle:'h2', ghostClass:'opacity-50', store:{ get:()=>JSON.parse(localStorage.gridOrder||'[]'), set:s=>localStorage.gridOrder=JSON.stringify(s.toArray()) } });
+
+// Command palette
+const cmd = document.getElementById('cmd');
+document.addEventListener('keydown', e=>{ if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); cmd.focus(); }});
+cmd.addEventListener('input', ()=>{ const q=cmd.value.toLowerCase(); document.querySelectorAll('#grid > section').forEach(s=>{ s.style.display = s.dataset.title.toLowerCase().includes(q)?'':'none'; }); });
+
+// Weather - Cheney WA
+async function loadWeather(){
+  try{
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.4889&longitude=-117.5758&current=temperature_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&timezone=America/Los_Angeles');
+    const d = await r.json(); const c = d.current;
+    document.getElementById('temp').textContent = Math.round(c.temperature_2m)+'°F';
+    document.getElementById('wind').textContent = Math.round(c.wind_speed_10m)+' mph';
+    const codes = {0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',51:'Drizzle',61:'Rain',71:'Snow',95:'Thunder'};
+    document.getElementById('wdesc').textContent = codes[c.weather_code]||'—';
+  }catch(e){ document.getElementById('wdesc').textContent='offline'; }
 }
-loadLeaderboard();
+loadWeather();
 
-// weather
-fetch('https://api.open-meteo.com/v1/forecast?latitude=47.4889&longitude=-117.5758&current=temperature_2m&temperature_unit=fahrenheit&timezone=America/Los_Angeles')
- .then(r=>r.json()).then(d=>{document.getElementById('weather').textContent = Math.round(d.current.temperature_2m)+'°F';});
+// PubMed
+async function loadPubmed(){
+  const el = document.getElementById('pubmed'); el.innerHTML = '<div class="text-zinc-500 text-xs">Loading...</div>';
+  try{
+    const s = await fetch('/dashboard/data/pubmed.json');
+    const j = await s.json(); const ids = j.esearchresult.idlist||[];
+    if(!ids.length) throw 0;
+    const sum = await fetch('/dashboard/data/pubmed-summary.json');
+    const sj = await sum.json();
+    el.innerHTML = ids.map(id=>{ const it=sj.result[id]; return `<a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50"><div class="line-clamp-2">${it.title}</div><div class="text-[11px] text-zinc-500 mt-1">${(it.authors||[]).slice(0,2).map(a=>a.name).join(', ')} • ${it.pubdate?.split(' ')[0]||''}</div></a>` }).join('');
+  }catch(e){ el.innerHTML = '<div class="text-xs text-zinc-500">PubMed blocked by CORS in some browsers. Use GitHub Action to pre-fetch (see instructions).</div>'; }
+}
+loadPubmed();
 
-// pubmed
-fetch('https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity&retmode=json&retmax=3')
- .then(r=>r.json()).then(j=>{document.getElementById('pubmed').innerHTML = j.esearchresult.idlist.map(id=>`<a class="block hover:text-teal-400" href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank">PMID ${id}</a>`).join('');}).catch(()=>{});
+// arXiv
+async function loadArxiv(){
+  const el = document.getElementById('arxiv'); el.innerHTML = '<div class="text-zinc-500 text-xs">Fetching...</div>';
+  try{
+    const r = await fetch('https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&start=0&max_results=5&sortBy=submittedDate&sortOrder=descending');
+    const t = await r.text(); const xml = new DOMParser().parseFromString(t,'text/xml');
+    const entries = Array.from(xml.querySelectorAll('entry')).slice(0,5);
+    el.innerHTML = entries.map(e=>{ const title=e.querySelector('title').textContent.trim().replace(/\s+/g,' '); const link=e.querySelector('id').textContent; const authors=Array.from(e.querySelectorAll('author name')).slice(0,2).map(n=>n.textContent).join(', '); return `<a href="${link}" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50"><div class="line-clamp-2">${title}</div><div class="text-[11px] text-zinc-500 mt-1">${authors}</div></a>` }).join('');
+  }catch(e){ el.innerHTML = '<div class="text-xs text-zinc-500">arXiv blocked by CORS. Use GitHub Action (see instructions).</div>'; }
+}
+loadArxiv();
 
-// arxiv
-fetch('https://export.arxiv.org/api/query?search_query=cat:cs.AI&max_results=3')
- .then(r=>r.text()).then(t=>{const xml=new DOMParser().parseFromString(t,'text/xml');document.getElementById('arxiv').innerHTML=Array.from(xml.querySelectorAll('entry')).map(e=>`<a class="block hover:text-teal-400 truncate" href="${e.querySelector('id').textContent}" target="_blank">${e.querySelector('title').textContent.trim()}</a>`).join('');}).catch(()=>{});
+// Theme toggle
+document.getElementById('theme').onclick = ()=> document.documentElement.classList.toggle('dark');
 </script>
 </body>
 </html>
