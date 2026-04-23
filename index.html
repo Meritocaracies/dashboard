@@ -240,7 +240,6 @@ async function loadArxiv(){
 }
 loadArxiv();
 
-// AI Leaderboard - live from lmarena-history
 // AI Leaderboard - live from lmarena-history (with fallback)
 async function loadLeaderboard(){
   const el = document.getElementById('ai-board');
@@ -248,7 +247,7 @@ async function loadLeaderboard(){
   
   // try local first, then raw GitHub
   const urls = [
-    '/dashboard/data/arena.json',
+    '/dashboard/dashboard/data/arena.json',
     'https://raw.githubusercontent.com/nakasyou/lmarena-history/main/output/scores.json'
   ];
 
