@@ -57,7 +57,7 @@
       <section class="card rounded-2xl p-5" data-title="AI Leaderboard">
         <div class="flex items-center justify-between mb-3">
           <h2 class="font-medium flex items-center gap-2">🏆 AI Leaderboard</h2>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">LMSYS Dec 2025</span>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">Loading...</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
@@ -65,12 +65,8 @@
               <tr><th class="text-left pb-2 font-medium">Model</th><th class="text-right pb-2 font-medium">Elo</th><th class="text-left pb-2 font-medium pl-3">Specialty</th></tr>
             </thead>
             <tbody class="divide-y divide-zinc-800/50" id="ai-board">
-              <tr><td class="py-2">GPT-5.2</td><td class="text-right mono text-teal-400">1342</td><td class="pl-3 text-zinc-400">Multimodal / Reasoning</td></tr>
-              <tr><td class="py-2">Claude Opus 4.5</td><td class="text-right mono">1321</td><td class="pl-3 text-zinc-400">Coding / Webdev</td></tr>
-              <tr><td class="py-2">Gemini 3 Pro</td><td class="text-right mono">1315</td><td class="pl-3 text-zinc-400">Vision</td></tr>
-              <tr><td class="py-2">Grok 4.1</td><td class="text-right mono">1298</td><td class="pl-3 text-zinc-400">Speed</td></tr>
-              <tr><td class="py-2">Llama 4 405B</td><td class="text-right mono">1270</td><td class="pl-3 text-zinc-400">Open weight</td></tr>
-            </tbody>
+  <tr><td colspan="3" class="py-4 text-center text-zinc-500 text-xs">Loading live Arena...</td></tr>
+</tbody>
           </table>
         </div>
         <p class="text-[11px] text-zinc-600 mt-3">Source: community arena, Dec 2025 rush</p>
@@ -244,6 +240,60 @@ async function loadArxiv(){
 }
 loadArxiv();
 
+// AI Leaderboard - live from lmarena-history
+async function loadLeaderboard(){
+  const el = document.getElementById('ai-board');
+  try {
+    const r = await fetch('https://raw.githubusercontent.com/nakasyou/lmarena-history/main/output/scores.json', {cache: 'no-store'});
+    const data = await r.json();
+
+    // get latest date
+    const latestDate = Object.keys(data).sort().pop();
+    const overall = data[latestDate]?.text?.overall || {};
+
+    // sort top 10
+    const top = Object.entries(overall)
+     .sort((a,b) => b[1] - a[1])
+     .slice(0, 8)
+     .map(([model, elo]) => {
+        // clean up model names
+        const name = model
+         .replace(/-/g, ' ')
+         .replace(/\d{4} \d{2} \d{2}/, '')
+         .replace(/chat|preview|latest/gi, '')
+         .trim();
+        const display = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+
+        // guess specialty
+        let spec = 'General';
+        if (/claude|opus/i.test(model)) spec = 'Coding';
+        if (/gemini|vision/i.test(model)) spec = 'Vision';
+        if (/grok/i.test(model)) spec = 'Speed';
+        if (/gpt-5|o3|o4/i.test(model)) spec = 'Reasoning';
+        if (/llama|mistral|yi/i.test(model)) spec = 'Open';
+
+        return { display, elo: Math.round(elo), spec };
+      });
+
+    el.innerHTML = top.map((m,i) => `
+      <tr>
+        <td class="py-2">${i===0?'🥇 ':''}${m.display}</td>
+        <td class="text-right mono ${i===0?'text-teal-400':''}">${m.elo}</td>
+        <td class="pl-3 text-zinc-400">${m.spec}</td>
+      </tr>
+    `).join('');
+
+    // update the date badge
+    document.querySelector('[data-title="AI Leaderboard"] span').textContent = `Live • ${latestDate}`;
+
+  } catch(e) {
+    el.innerHTML = `<tr><td colspan="3" class="py-3 text-xs text-amber-500">Arena offline — using cached</td></tr>`;
+    console.error(e);
+  }
+}
+loadLeaderboard();
+setInterval(loadLeaderboard, 1000*60*30); // refresh every 30 min  
+  
 // Theme toggle
 document.getElementById('theme').onclick = ()=> document.documentElement.classList.toggle('dark');
 </script>
