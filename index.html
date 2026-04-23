@@ -61,9 +61,8 @@
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-sm">
-            <thead class="text-[11px] text-zinc-500 uppercase">
-              <tr><th class="text-left pb-2 font-medium">Model</th><th class="text-right pb-2 font-medium">Elo</th><th class="text-left pb-2 font-medium pl-3">Specialty</th></tr>
-            </thead>
+            <th class="text-left pb-2 font-medium">Model</th><th class="text-right pb-2 font-medium">Intel / Speed</th><th class="text-left pb-2 font-medium pl-3">Price</th>
+
             <tbody class="divide-y divide-zinc-800/50" id="ai-board">
   <tr><td colspan="3" class="py-4 text-center text-zinc-500 text-xs">Loading live Arena...</td></tr>
 </tbody>
@@ -240,77 +239,57 @@ async function loadArxiv(){
 }
 loadArxiv();
 
-// AI Leaderboard - live from lmarena-history (with fallback)
+// AI Leaderboard - Artificial Analysis
 async function loadLeaderboard(){
   const el = document.getElementById('ai-board');
   const badge = document.querySelector('[data-title="AI Leaderboard"] span');
-  
-  // try local first, then raw GitHub
-  const urls = [
-    '/dashboard/dashboard/data/arena.json',
-    'https://raw.githubusercontent.com/nakasyou/lmarena-history/main/output/scores.json'
-  ];
 
-  for (const url of urls) {
-    try {
-      const r = await fetch(url, {cache: 'no-store'});
-      if (!r.ok) throw new Error(`${r.status} ${url}`);
-      const data = await r.json();
+  try {
+    const r = await fetch('/dashboard/dashboard/data/aa-models.json', {cache: 'no-store'});
+    if (!r.ok) throw new Error('AA file missing');
+    const {data, prompt_options} = await r.json();
 
-      // get latest date
-      const dates = Object.keys(data).filter(d => /^\d{8}$/.test(d)).sort();
-      const latestDate = dates.pop();
-      if (!latestDate) throw new Error('No dates in JSON');
+    // sort by Intelligence Index (their primary score)
+    const top = data
+     .filter(m => m.evaluations?.artificial_analysis_intelligence_index)
+     .sort((a,b) => b.evaluations.artificial_analysis_intelligence_index - a.evaluations.artificial_analysis_intelligence_index)
+     .slice(0, 5)
+     .map(m => ({
+        name: m.name,
+        creator: m.model_creator?.name || '',
+        intel: m.evaluations.artificial_analysis_intelligence_index,
+        coding: m.evaluations.artificial_analysis_coding_index,
+        speed: Math.round(m.median_output_tokens_per_second || 0),
+        price: m.pricing?.price_1m_blended_3_to_1
+      }));
 
-      // handle both old and new shapes
-      const day = data[latestDate];
-      const textBlock = day.text || {};
-      // new shape: text is already model->elo
-      // old shape: text.overall exists
-      const overall = textBlock.overall || textBlock;
+    el.innerHTML = top.map((m,i) => `
+      <tr>
+        <td class="py-2">
+          <div class="flex items-center gap-2">
+            ${i===0?'🥇':''}
+            <div>
+              <div class="leading-tight">${m.name}</div>
+              <div class="text- text-zinc-500 -mt-0.5">${m.creator}</div>
+            </div>
+          </div>
+        </td>
+        <td class="text-right">
+          <div class="mono ${i===0?'text-teal-400':''}">${m.intel.toFixed(1)}</div>
+          <div class="text- text-zinc-500">${m.speed}t/s</div>
+        </td>
+        <td class="pl-3 text-zinc-400 text-xs">$${m.price?.toFixed(2) || '—'}/M</td>
+      </tr>`).join('');
 
-      const entries = Object.entries(overall);
-      if (entries.length === 0) throw new Error('Empty leaderboard');
+    badge.textContent = 'Artificial Analysis • Live';
+    badge.className = 'text- px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30';
 
-      const top = entries
-        .sort((a,b) => b[1] - a[1])
-        .slice(0, 5)
-        .map(([model, elo]) => {
-          const clean = model.replace(/-/g,' ').replace(/\d{4}-\d{2}-\d{2}/,'').replace(/chat|preview|latest/gi,'').trim();
-          const display = clean.split(' ').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ');
-          let spec='General';
-          if (/claude|opus/i.test(model)) spec='Coding';
-          if (/gemini|vision|pro vision/i.test(model)) spec='Vision';
-          if (/grok/i.test(model)) spec='Speed';
-          if (/gpt-5|o3|o4|reasoning/i.test(model)) spec='Reasoning';
-          if (/llama|mistral|yi|qwen/i.test(model)) spec='Open';
-          return {display, elo: Math.round(elo), spec};
-        });
-
-      el.innerHTML = top.map((m,i)=>`
-        <tr>
-          <td class="py-2">${i===0?'🥇 ':''}${m.display}</td>
-          <td class="text-right mono ${i===0?'text-teal-400':''}">${m.elo}</td>
-          <td class="pl-3 text-zinc-400">${m.spec}</td>
-        </tr>`).join('');
-
-      badge.textContent = `Live • ${latestDate.slice(0,4)}-${latestDate.slice(4,6)}-${latestDate.slice(6,8)}`;
-      badge.classList.remove('text-zinc-400');
-      badge.classList.add('text-teal-400');
-      return; // success, stop trying URLs
-
-    } catch(err) {
-      console.warn('Leaderboard try failed:', url, err);
-      continue;
-    }
+  } catch(e) {
+    console.error(e);
+    el.innerHTML = `<tr><td colspan="3" class="py-3 text-xs text-amber-500">AA data missing — run the GitHub Action</td></tr>`;
   }
-
-  // if we get here, both failed
-  el.innerHTML = `<tr><td colspan="3" class="py-3 text-xs text-amber-500">Arena offline — check /dashboard/data/arena.json</td></tr>`;
-  badge.textContent = 'Offline';
 }
 loadLeaderboard();
-setInterval(loadLeaderboard, 1000*60*30);
   
 // Theme toggle
 document.getElementById('theme').onclick = ()=> document.documentElement.classList.toggle('dark');
