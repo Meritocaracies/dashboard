@@ -241,6 +241,36 @@ async function loadArxiv(){
 }
 loadArxiv();
 
+// DrWillPowers - Reddit RSS
+async function loadDrWill(){
+  const el = document.getElementById('drwill');
+  try {
+    const r = await fetch('/dashboard/data/drwillpowers.xml', {cache: 'no-store'});
+    const text = await r.text();
+    const xml = new DOMParser().parseFromString(text, 'text/xml');
+    const entries = Array.from(xml.querySelectorAll('entry')).slice(0, 5);
+    
+    if (!entries.length) throw new Error('No entries');
+    
+    el.innerHTML = entries.map(e => {
+      const title = e.querySelector('title')?.textContent || '';
+      const link = e.querySelector('link')?.getAttribute('href') || '#';
+      const updated = new Date(e.querySelector('updated')?.textContent).toLocaleDateString('en-US', {month:'short', day:'numeric'});
+      const raw = e.querySelector('content')?.textContent || '';
+      const excerpt = raw.replace(/<[^>]+>/g, '').trim().slice(0, 160) + '…';
+      
+      return `<a href="${link}" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50 transition-colors">
+        <div class="font-medium text- leading-snug line-clamp-2">${title}</div>
+        <div class="text- text-zinc-500 mt-1.5">${updated} • ${excerpt}</div>
+      </a>`;
+    }).join('');
+  } catch(err) {
+    console.error('drwill:', err);
+    el.innerHTML = '<div class="text-xs text-zinc-500">Posts unavailable — check Action logs</div>';
+  }
+}
+loadDrWill();  
+  
 // AI Leaderboard - Artificial Analysis
 async function loadLeaderboard(){
   const el = document.getElementById('ai-board');
