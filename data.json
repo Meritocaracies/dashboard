@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-23T01:56:32.145014+00:00",
+  "last_updated": "2026-04-23T02:45:32.671253+00:00",
   "ai_leaderboard": {
     "status": "ok",
     "items": [
@@ -134,7 +134,7 @@
       }
     ],
     "source": "https://www.reddit.com/user/Drwillpowers/comments.rss",
-    "retrieved_at": "2026-04-23T01:56:26.651581+00:00",
+    "retrieved_at": "2026-04-23T02:45:29.046647+00:00",
     "meta": {
       "entry_count": 25
     }
@@ -159,7 +159,7 @@
       }
     ],
     "source": "reddit rss",
-    "retrieved_at": "2026-04-23T01:56:27.131307+00:00",
+    "retrieved_at": "2026-04-23T02:45:29.263314+00:00",
     "meta": {}
   },
   "wgs_price": {
@@ -211,12 +211,12 @@
         "status": "ok",
         "candidates": [
           0.0,
-          78.0,
+          55.0,
+          61.0,
+          67.0,
           188.0,
-          267.0,
           444.0,
           773.0,
-          774.0,
           3900.0,
           6900.0,
           12900.0
@@ -242,7 +242,7 @@
       }
     ],
     "source": "tracked 30x WGS provider pages",
-    "retrieved_at": "2026-04-23T01:56:29.335737+00:00",
+    "retrieved_at": "2026-04-23T02:45:30.643141+00:00",
     "meta": {
       "coverage": "30x",
       "cheapest_provider": "UMN Genomics"
@@ -264,29 +264,29 @@
         "query": "AI agents",
         "items": [
           {
-            "title": "A Field Guide to Decision Making",
-            "link": "https://arxiv.org/abs/2604.20669v1",
-            "published": "2026-04-22T15:18:23Z"
+            "title": "DeVI: Physics-based Dexterous Human-Object Interaction via Synthetic Video Imitation",
+            "link": "https://arxiv.org/abs/2604.20841v1",
+            "published": "2026-04-22T17:59:55Z"
           },
           {
-            "title": "The Expense of Seeing: Attaining Trustworthy Multimodal Reasoning Within the Monolithic Paradigm",
-            "link": "https://arxiv.org/abs/2604.20665v1",
-            "published": "2026-04-22T15:15:32Z"
+            "title": "AVISE: Framework for Evaluating the Security of AI Systems",
+            "link": "https://arxiv.org/abs/2604.20833v1",
+            "published": "2026-04-22T17:58:17Z"
           },
           {
-            "title": "Cooperative Profiles Predict Multi-Agent LLM Team Performance in AI for Science Workflows",
-            "link": "https://arxiv.org/abs/2604.20658v1",
-            "published": "2026-04-22T15:07:54Z"
+            "title": "Diagnosing CFG Interpretation in LLMs",
+            "link": "https://arxiv.org/abs/2604.20811v1",
+            "published": "2026-04-22T17:43:05Z"
           },
           {
-            "title": "Importance Sampling in Expensive Finite-Sum Optimization via Contextual Bandit Methods",
-            "link": "https://arxiv.org/abs/2604.20657v1",
-            "published": "2026-04-22T15:07:19Z"
+            "title": "Relative Principals, Pluralistic Alignment, and the Structural Value Alignment Problem",
+            "link": "https://arxiv.org/abs/2604.20805v1",
+            "published": "2026-04-22T17:36:52Z"
           },
           {
-            "title": "Large Language Models Outperform Humans in Fraud Detection and Resistance to Motivated Investor Pressure",
-            "link": "https://arxiv.org/abs/2604.20652v1",
-            "published": "2026-04-22T15:03:37Z"
+            "title": "Autonomous LLM-generated Feedback for Student Exercises in Introductory Software Engineering Courses",
+            "link": "https://arxiv.org/abs/2604.20803v1",
+            "published": "2026-04-22T17:34:58Z"
           }
         ]
       },
@@ -294,29 +294,29 @@
         "query": "genomics foundation model",
         "items": [
           {
-            "title": "Uniqueness and Mixing in the Low-Temperature Random-Cluster Model on Trees and Random Graphs",
-            "link": "https://arxiv.org/abs/2604.20693v1",
-            "published": "2026-04-22T15:39:26Z"
+            "title": "Self-regulated galaxy evolution within a self-consistently varying galaxy-wide IMF",
+            "link": "https://arxiv.org/abs/2604.20843v1",
+            "published": "2026-04-22T17:59:59Z"
           },
           {
-            "title": "A Kinematic Framework for Evaluating Pinch Configurations in Robotic Hand Design without Object or Contact Models",
-            "link": "https://arxiv.org/abs/2604.20692v1",
-            "published": "2026-04-22T15:38:40Z"
+            "title": "SpeechParaling-Bench: A Comprehensive Benchmark for Paralinguistic-Aware Speech Generation",
+            "link": "https://arxiv.org/abs/2604.20842v1",
+            "published": "2026-04-22T17:59:58Z"
           },
           {
-            "title": "Unidirectional Transverse Scattering in Acoustic Dimers",
-            "link": "https://arxiv.org/abs/2604.20690v1",
-            "published": "2026-04-22T15:37:55Z"
+            "title": "DeVI: Physics-based Dexterous Human-Object Interaction via Synthetic Video Imitation",
+            "link": "https://arxiv.org/abs/2604.20841v1",
+            "published": "2026-04-22T17:59:55Z"
           },
           {
-            "title": "Storm Surge Modeling, Bias Correction, Graph Neural Networks, Graph Convolution Networks",
-            "link": "https://arxiv.org/abs/2604.20688v1",
-            "published": "2026-04-22T15:36:19Z"
+            "title": "Homogeneous $\\mathbb Z/2$-Harmonic Forms and Spinors on $\\R^4$ from Regular 4-Polytopes",
+            "link": "https://arxiv.org/abs/2604.20840v1",
+            "published": "2026-04-22T17:59:23Z"
           },
           {
-            "title": "Toward nanophotonic platforms for solid-state $^{229}$Th nuclear clocks",
-            "link": "https://arxiv.org/abs/2604.20687v1",
-            "published": "2026-04-22T15:35:31Z"
+            "title": "High-Girth Regular Quantum LDPC Codes from Affine-Coset Structures",
+            "link": "https://arxiv.org/abs/2604.20838v1",
+            "published": "2026-04-22T17:59:08Z"
           }
         ]
       },
@@ -352,29 +352,29 @@
       }
     ],
     "source": "arxiv",
-    "retrieved_at": "2026-04-23T01:56:31.482120+00:00",
+    "retrieved_at": "2026-04-23T02:45:32.106850+00:00",
     "meta": {}
   },
   "weather": {
     "status": "ok",
     "items": [
       {
-        "temperature": 17.2,
-        "feels_like": 14.8,
+        "temperature": 16.3,
+        "feels_like": 14.2,
         "weather_code": 0,
         "today_max": 21.3,
         "today_min": 11.5
       }
     ],
     "source": "https://api.open-meteo.com/v1/forecast?latitude=34.0522&longitude=-118.2437&current=temperature_2m,apparent_temperature,weather_code&daily=temperature_2m_max,temperature_2m_min&timezone=auto",
-    "retrieved_at": "2026-04-23T01:56:32.144724+00:00",
+    "retrieved_at": "2026-04-23T02:45:32.670996+00:00",
     "meta": {}
   },
   "calendar": {
     "status": "ok",
     "items": [],
     "source": "agenda.json",
-    "retrieved_at": "2026-04-23T01:56:32.144790+00:00",
+    "retrieved_at": "2026-04-23T02:45:32.671059+00:00",
     "meta": {}
   },
   "bookmarks": {
@@ -402,7 +402,7 @@
       ]
     },
     "source": "bookmarks.json",
-    "retrieved_at": "2026-04-23T01:56:32.145002+00:00",
+    "retrieved_at": "2026-04-23T02:45:32.671227+00:00",
     "meta": {}
   },
   "gmail_links": {
@@ -418,7 +418,7 @@
       }
     ],
     "source": "manual",
-    "retrieved_at": "2026-04-23T01:56:32.145011+00:00",
+    "retrieved_at": "2026-04-23T02:45:32.671252+00:00",
     "meta": {}
   }
 }
