@@ -5,6 +5,9 @@ on:
     - cron: "0 12 * * *" # 12:00 UTC = 5am PT
   workflow_dispatch:
 
+permissions:
+  contents: write  # Add this to allow pushing commits
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,3 +32,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: update feeds"
+          token: ${{ secrets.GITHUB_TOKEN }}
