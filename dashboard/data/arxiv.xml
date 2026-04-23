@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/VIJvrZKbruAugt03XDUIBoiejDs</id>
+  <title>arXiv Query: search_query=cat:cs.AI OR cat:q-bio.GN&amp;id_list=&amp;start=0&amp;max_results=5</title>
+  <updated>2026-04-23T18:54:41Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
+  <opensearch:totalResults>177298</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20842v1</id>
+    <title>SpeechParaling-Bench: A Comprehensive Benchmark for Paralinguistic-Aware Speech Generation</title>
+    <updated>2026-04-22T17:59:58Z</updated>
+    <link href="https://arxiv.org/abs/2604.20842v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20842v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Paralinguistic cues are essential for natural human-computer interaction, yet their evaluation in Large Audio-Language Models (LALMs) remains limited by coarse feature coverage and the inherent subjectivity of assessment. To address these challenges, we introduce SpeechParaling-Bench, a comprehensive benchmark for paralinguistic-aware speech generation. It expands existing coverage from fewer than 50 to over 100 fine-grained features, supported by more than 1,000 English-Chinese parallel speech queries, and is organized into three progressively challenging tasks: fine-grained control, intra-utterance variation, and context-aware adaptation. To enable reliable evaluation, we further develop a pairwise comparison pipeline, in which candidate responses are evaluated against a fixed baseline by an LALM-based judge. By framing evaluation as relative preference rather than absolute scoring, this approach mitigates subjectivity and yields more stable and scalable assessments without costly human annotation. Extensive experiments reveal substantial limitations in current LALMs. Even leading proprietary models struggle with comprehensive static control and dynamic modulation of paralinguistic features, while failure to correctly interpret paralinguistic cues accounts for 43.3% of errors in situational dialogue. These findings underscore the need for more robust paralinguistic modeling toward human-aligned voice assistants.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.SD" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T17:59:58Z</published>
+    <arxiv:comment>Project page: https://speechparaling-bench.github.io/</arxiv:comment>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Ruohan Liu</name>
+    </author>
+    <author>
+      <name>Shukang Yin</name>
+    </author>
+    <author>
+      <name>Tao Wang</name>
+    </author>
+    <author>
+      <name>Dong Zhang</name>
+    </author>
+    <author>
+      <name>Weiji Zhuang</name>
+    </author>
+    <author>
+      <name>Shuhuai Ren</name>
+    </author>
+    <author>
+      <name>Ran He</name>
+    </author>
+    <author>
+      <name>Caifeng Shan</name>
+    </author>
+    <author>
+      <name>Chaoyou Fu</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20833v1</id>
+    <title>AVISE: Framework for Evaluating the Security of AI Systems</title>
+    <updated>2026-04-22T17:58:17Z</updated>
+    <link href="https://arxiv.org/abs/2604.20833v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20833v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As artificial intelligence (AI) systems are increasingly deployed across critical domains, their security vulnerabilities pose growing risks of high-profile exploits and consequential system failures. Yet systematic approaches to evaluating AI security remain underdeveloped. In this paper, we introduce AVISE (AI Vulnerability Identification and Security Evaluation), a modular open-source framework for identifying vulnerabilities in and evaluating the security of AI systems and models. As a demonstration of the framework, we extend the theory-of-mind-based multi-turn Red Queen attack into an Adversarial Language Model (ALM) augmented attack and develop an automated Security Evaluation Test (SET) for discovering jailbreak vulnerabilities in language models. The SET comprises 25 test cases and an Evaluation Language Model (ELM) that determines whether each test case was able to jailbreak the target model, achieving 92% accuracy, an F1-score of 0.91, and a Matthews correlation coefficient of 0.83. We evaluate nine recently released language models of diverse sizes with the SET and find that all are vulnerable to the augmented Red Queen attack to varying degrees. AVISE provides researchers and industry practitioners with an extensible foundation for developing and deploying automated SETs, offering a concrete step toward more rigorous and reproducible AI security evaluation.</summary>
+    <category term="cs.CR" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T17:58:17Z</published>
+    <arxiv:primary_category term="cs.CR"/>
+    <author>
+      <name>Mikko Lempinen</name>
+    </author>
+    <author>
+      <name>Joni Kemppainen</name>
+    </author>
+    <author>
+      <name>Niklas Raesalmi</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20825v1</id>
+    <title>FedSIR: Spectral Client Identification and Relabeling for Federated Learning with Noisy Labels</title>
+    <updated>2026-04-22T17:49:20Z</updated>
+    <link href="https://arxiv.org/abs/2604.20825v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20825v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Federated learning (FL) enables collaborative model training without sharing raw data; however, the presence of noisy labels across distributed clients can severely degrade the learning performance. In this paper, we propose FedSIR, a multi-stage framework for robust FL under noisy labels. Different from existing approaches that mainly rely on designing noise-tolerant loss functions or exploiting loss dynamics during training, our method leverages the spectral structure of client feature representations to identify and mitigate label noise.
+  Our framework consists of three key components. First, we identify clean and noisy clients by analyzing the spectral consistency of class-wise feature subspaces with minimal communication overhead. Second, clean clients provide spectral references that enable noisy clients to relabel potentially corrupted samples using both dominant class directions and residual subspaces. Third, we employ a noise-aware training strategy that integrates logit-adjusted loss, knowledge distillation, and distance-aware aggregation to further stabilize federated optimization. Extensive experiments on standard FL benchmarks demonstrate that FedSIR consistently outperforms state-of-the-art methods for FL with noisy labels. The code is available at https://github.com/sinagh72/FedSIR.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.CV" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.DC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="eess.SP" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T17:49:20Z</published>
+    <arxiv:comment>Accepted at the 5th Workshop on Federated Learning for Computer Vision (FedVision), CVPR 2026. Sina Gholami and Abdulmoneam Ali contributed equally</arxiv:comment>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Sina Gholami</name>
+    </author>
+    <author>
+      <name>Abdulmoneam Ali</name>
+    </author>
+    <author>
+      <name>Tania Haghighi</name>
+    </author>
+    <author>
+      <name>Ahmed Arafa</name>
+    </author>
+    <author>
+      <name>Minhaj Nur Alam</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20817v1</id>
+    <title>Convergent Evolution: How Different Language Models Learn Similar Number Representations</title>
+    <updated>2026-04-22T17:45:27Z</updated>
+    <link href="https://arxiv.org/abs/2604.20817v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20817v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Language models trained on natural text learn to represent numbers using periodic features with dominant periods at $T=2, 5, 10$. In this paper, we identify a two-tiered hierarchy of these features: while Transformers, Linear RNNs, LSTMs, and classical word embeddings trained in different ways all learn features that have period-$T$ spikes in the Fourier domain, only some learn geometrically separable features that can be used to linearly classify a number mod-$T$. To explain this incongruity, we prove that Fourier domain sparsity is necessary but not sufficient for mod-$T$ geometric separability. Empirically, we investigate when model training yields geometrically separable features, finding that the data, architecture, optimizer, and tokenizer all play key roles. In particular, we identify two different routes through which models can acquire geometrically separable features: they can learn them from complementary co-occurrence signals in general language data, including text-number co-occurrence and cross-number interaction, or from multi-token (but not single-token) addition problems. Overall, our results highlight the phenomenon of convergent evolution in feature learning: A diverse range of models learn similar features from different training signals.</summary>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T17:45:27Z</published>
+    <arxiv:primary_category term="cs.CL"/>
+    <author>
+      <name>Deqing Fu</name>
+    </author>
+    <author>
+      <name>Tianyi Zhou</name>
+    </author>
+    <author>
+      <name>Mikhail Belkin</name>
+    </author>
+    <author>
+      <name>Vatsal Sharan</name>
+    </author>
+    <author>
+      <name>Robin Jia</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.20811v1</id>
+    <title>Diagnosing CFG Interpretation in LLMs</title>
+    <updated>2026-04-22T17:43:05Z</updated>
+    <link href="https://arxiv.org/abs/2604.20811v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.20811v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>As LLMs are increasingly integrated into agentic systems, they must adhere to dynamically defined, machine-interpretable interfaces. We evaluate LLMs as in-context interpreters: given a novel context-free grammar, can LLMs generate syntactically valid, behaviorally functional, and semantically faithful outputs? We introduce RoboGrid, a framework that disentangles syntax, behavior, and semantics through controlled stress-tests of recursion depth, expression complexity, and surface styles. Our experiments reveal a consistent hierarchical degradation: LLMs often maintain surface syntax but fail to preserve structural semantics. Despite the partial mitigation provided by CoT reasoning, performance collapses under structural density, specifically deep recursion and high branching, with semantic alignment vanishing at extreme depths. Furthermore, "Alien" lexicons reveal that LLMs rely on semantic bootstrapping from keywords rather than pure symbolic induction. These findings pinpoint critical gaps in hierarchical state-tracking required for reliable, grammar-agnostic agents.</summary>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-22T17:43:05Z</published>
+    <arxiv:primary_category term="cs.AI"/>
+    <author>
+      <name>Hanqi Li</name>
+    </author>
+    <author>
+      <name>Lu Chen</name>
+    </author>
+    <author>
+      <name>Kai Yu</name>
+    </author>
+  </entry>
+</feed>
