@@ -1,48 +1,20 @@
-name: Update Dashboard Data
-
+name: Update dashboard data
 on:
-  schedule:
-    - cron: '0 */6 * * *'
+  schedule: [{cron: "0 12 * *"}] # daily 5am PT
   workflow_dispatch:
-
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+            - uses: actions/checkout@v4
+            - run: |
+          mkdir -p dashboard/data
+          # PubMed
+          curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pubmed&term=longevity+OR+CRISPR&retmode=json&retmax=5&sort=date" -o dashboard/data/pubmed.json
+          # arXiv
+          curl -s "https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&max_results=5&sortBy=submittedDate" -o dashboard/data/arxiv.xml
+          # AI leaderboard - scrape LMSYS (or keep static)
+          echo '{"updated":"'$(date -u +%FT%TZ)'"}' > dashboard/data/meta.json
+            - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          python-version: '3.10'
-
-      - name: Install Dependencies
-        run: pip install -r requirements.txt
-
-      - name: Debug secret presence
-        env:
-          ARTIFICIAL_ANALYSIS_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
-        run: |
-          if [ -z "$ARTIFICIAL_ANALYSIS_API_KEY" ]; then
-            echo "ARTIFICIAL_ANALYSIS_API_KEY is NOT set"
-            exit 1
-          else
-            echo "ARTIFICIAL_ANALYSIS_API_KEY is set"
-          fi
-
-      - name: Run Dashboard Updater
-        env:
-          ARTIFICIAL_ANALYSIS_API_KEY: ${{ secrets.ARTIFICIAL_ANALYSIS_API_KEY }}
-        run: python bridge.py
-
-      - name: Commit and Push if data changed
-        run: |
-          git config --global user.name "Dashboard-Bot"
-          git config --global user.email "bot@github.com"
-          git add data.json
-          git diff --staged --quiet || (git commit -m "Auto-update data" && git push)
+          commit_message: "chore: update feeds"
