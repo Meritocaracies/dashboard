@@ -658,7 +658,7 @@ loadArxiv();
 async function loadLeaderboard(){
   const el = document.getElementById('lb-out');
   try {
-    const r = await fetch('/dashboard/data/aa-models.json', {cache:'no-store'});
+    const r = await fetch('/dashboard/dashboard/data/aa-models.json', {cache:'no-store'});
     const {data} = await r.json();
     const top = data
       .filter(m => m.evaluations?.artificial_analysis_intelligence_index)
