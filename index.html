@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI/Bio Command Center</title>
+  <title>AI/Bio Command Center v3</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
@@ -20,14 +20,16 @@
       --red:      #ff4466;
       --purple:   #b388ff;
       --text:     #c4dce8;
-      --text-dim: #3d6070;
-      --text-muted:#1e3545;
+      --text-dim: #7fa3b8;
+      --text-muted:#5a7d92;
       --display:  'Oxanium', sans-serif;
       --mono:     'JetBrains Mono', monospace;
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
     html { scroll-behavior: smooth; }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -42,61 +44,246 @@
       background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
     }
 
+    /* ─── HEADER ─────────────────────────────────────── */
     header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 13px 22px; border-bottom: 1px solid var(--border);
-      background: rgba(6,10,13,0.92); backdrop-filter: blur(16px);
-      position: sticky; top: 0; z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 22px;
+      border-bottom: 1px solid var(--border);
+      background: rgba(6,10,13,0.92);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 200;
     }
-    .h-left { display:flex; align-items:center; gap:14px; }
-    .logo {
-      width: 30px; height: 30px; border: 1.5px solid var(--cyan); border-radius: 7px;
-      display: flex; align-items:center; justify-content:center; font-size: 14px;
-      box-shadow: 0 0 14px rgba(0,200,240,0.22), inset 0 0 8px rgba(0,200,240,0.08);
-      color: var(--cyan); flex-shrink: 0;
-    }
-    .h-title { font-family: var(--display); font-size: 16px; font-weight: 600; color: #fff; letter-spacing: 0.06em; }
-    .badge { font-size: 9px; color: var(--cyan); border: 1px solid rgba(0,200,240,0.3); padding: 2px 6px; border-radius: 3px; letter-spacing: 0.08em; }
-    .h-center { font-size: 10px; color: var(--text-dim); letter-spacing: 0.09em; display: flex; align-items: center; gap: 8px; }
-    .pulse { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulseAnim 2.2s ease-in-out infinite; }
-    @keyframes pulseAnim { 0%,100%{opacity:1} 50%{opacity:.3} }
-    #clock { font-family: var(--display); font-size: 20px; font-weight: 300; color: var(--cyan); letter-spacing: 0.12em; text-shadow: 0 0 22px rgba(0,200,240,0.35); min-width: 100px; text-align: right; }
 
-    .quick-wrap { padding: 12px 22px 0; max-width: 1640px; margin: 0 auto; }
-    .quick-launch { display: flex; gap: 7px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
-    .ql { display: flex; align-items: center; gap: 6px; padding: 5px 11px; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; color: var(--text); text-decoration: none; font-size: 10px; font-family: var(--mono); transition: all 0.18s; white-space: nowrap; letter-spacing: 0.03em; }
-    .ql:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,200,240,0.06); box-shadow: 0 0 10px rgba(0,200,240,0.12); }
+    .h-left { display:flex; align-items:center; gap:14px; }
+
+    .logo {
+      width: 30px; height: 30px;
+      border: 1.5px solid var(--cyan);
+      border-radius: 7px;
+      display: flex; align-items:center; justify-content:center;
+      font-size: 14px;
+      box-shadow: 0 0 14px rgba(0,200,240,0.22), inset 0 0 8px rgba(0,200,240,0.08);
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .h-title {
+      font-family: var(--display);
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 0.06em;
+    }
+
+    .badge {
+      font-size: 9px;
+      color: var(--cyan);
+      border: 1px solid rgba(0,200,240,0.3);
+      padding: 2px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.08em;
+    }
+
+    .h-center {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.09em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pulse {
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulseAnim 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulseAnim { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+    #clock {
+      font-family: var(--display);
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--cyan);
+      letter-spacing: 0.12em;
+      text-shadow: 0 0 22px rgba(0,200,240,0.35);
+      min-width: 100px;
+      text-align: right;
+    }
+
+    /* ─── QUICK LAUNCH ───────────────────────────────── */
+    .quick-wrap {
+      padding: 12px 22px 0;
+      max-width: 1640px;
+      margin: 0 auto;
+    }
+
+    .quick-launch {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 18px;
+    }
+
+    .ql {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 11px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 10px;
+      font-family: var(--mono);
+      transition: all 0.18s;
+      white-space: nowrap;
+      letter-spacing: 0.03em;
+    }
+
+    .ql:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(0,200,240,0.06);
+      box-shadow: 0 0 10px rgba(0,200,240,0.12);
+    }
+
     .qd { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
 
-    .main { padding: 0 22px 30px; max-width: 1640px; margin: 0 auto; }
-    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
-    .c3  { grid-column: span 3; } .c4  { grid-column: span 4; } .c5  { grid-column: span 5; }
-    .c6  { grid-column: span 6; } .c7  { grid-column: span 7; } .c8  { grid-column: span 8; } .c12 { grid-column: span 12; }
+    /* ─── MAIN GRID ──────────────────────────────────── */
+    .main {
+      padding: 0 22px 30px;
+      max-width: 1640px;
+      margin: 0 auto;
+    }
 
-    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 15px; backdrop-filter: blur(10px); position: relative; overflow: hidden; transition: border-color 0.28s, box-shadow 0.28s; }
-    .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(0,200,240,0.25) 40%, rgba(0,255,136,0.15) 60%, transparent 100%); pointer-events: none; }
-    .card:hover { border-color: rgba(0,200,240,0.22); box-shadow: 0 0 24px rgba(0,200,240,0.06); }
-    .ch { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
-    .ct { font-family: var(--display); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
-    .ca { font-size: 10px; color: var(--cyan); background: none; border: none; font-family: var(--mono); cursor: pointer; opacity: 0.65; transition: opacity 0.18s; text-decoration: none; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .c3  { grid-column: span 3; }
+    .c4  { grid-column: span 4; }
+    .c5  { grid-column: span 5; }
+    .c6  { grid-column: span 6; }
+    .c7  { grid-column: span 7; }
+    .c8  { grid-column: span 8; }
+    .c12 { grid-column: span 12; }
+
+    /* ─── CARD ───────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.28s, box-shadow 0.28s;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent 0%, rgba(0,200,240,0.25) 40%, rgba(0,255,136,0.15) 60%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .card:hover {
+      border-color: rgba(0,200,240,0.22);
+      box-shadow: 0 0 24px rgba(0,200,240,0.06);
+    }
+
+    .ch {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 13px;
+    }
+
+    .ct {
+      font-family: var(--display);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .ca {
+      font-size: 10px;
+      color: var(--cyan);
+      background: none;
+      border: none;
+      font-family: var(--mono);
+      cursor: pointer;
+      opacity: 0.65;
+      transition: opacity 0.18s;
+      text-decoration: none;
+    }
     .ca:hover { opacity: 1; }
-    .loading { color: var(--text-muted); font-size: 10px; animation: blink 1.6s step-end infinite; }
+
+    .loading {
+      color: var(--text-muted);
+      font-size: 10px;
+      animation: blink 1.6s step-end infinite;
+    }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
+    /* ─── WEATHER ────────────────────────────────────── */
     .w-main { display:flex; align-items:flex-end; gap:10px; margin-bottom:10px; }
-    .w-temp { font-family: var(--display); font-size: 54px; font-weight: 300; line-height: 1; color: #fff; }
+    .w-temp {
+      font-family: var(--display);
+      font-size: 54px;
+      font-weight: 300;
+      line-height: 1;
+      color: #fff;
+    }
     .w-ico { font-size: 34px; line-height:1; margin-bottom:4px; }
     .w-desc { font-size:11px; color: var(--text-dim); margin-bottom:4px; }
     .w-extra { font-size:10px; color: var(--text-muted); }
 
-    .lb { display:flex; align-items:center; gap:9px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
+    /* ─── LEADERBOARD ────────────────────────────────── */
+    .lb {
+      display:flex;
+      align-items:center;
+      gap:9px;
+      padding:6px 0;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+      font-size:11px;
+    }
     .lb:last-child { border-bottom:none; }
     .lbr { width:16px; text-align:center; font-size:9px; color:var(--text-muted); }
     .lbr.gold { color:var(--amber); }
     .lbn { flex:1; color:var(--text); }
-    .lbs { font-family: var(--display); font-size:13px; color:var(--cyan); }
-    .lbbd { font-size:8px; padding:1px 5px; border-radius:3px; background:rgba(0,255,136,0.08); color:var(--green); border:1px solid rgba(0,255,136,0.18); letter-spacing:0.05em; }
+    .lbs {
+      font-family: var(--display);
+      font-size:13px;
+      color:var(--cyan);
+    }
+    .lbbd {
+      font-size:8px; padding:1px 5px; border-radius:3px;
+      background:rgba(0,255,136,0.08);
+      color:var(--green);
+      border:1px solid rgba(0,255,136,0.18);
+      letter-spacing:0.05em;
+    }
 
+    /* ─── WGS ────────────────────────────────────────── */
     .wgs { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:start; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
     .wgs:last-child { border-bottom:none; }
     .wgsn { font-size:11px; color:var(--text); margin-bottom:2px; }
@@ -104,13 +291,16 @@
     .wgsp { font-family:var(--display); font-size:20px; font-weight:600; color:#fff; text-align:right; }
     .wgst { font-size:9px; text-align:right; margin-top:2px; }
 
+    /* ─── PAPERS ─────────────────────────────────────── */
     .paper { padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
     .paper:last-child { border-bottom:none; }
-    .pt { font-size:11px; color:var(--text); line-height:1.5; margin-bottom:3px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .pt { font-size:11px; color:var(--text); line-height:1.5; margin-bottom:3px;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
     .pt a { color:inherit; text-decoration:none; transition:color 0.18s; }
     .pt a:hover { color:var(--cyan); }
     .pm { font-size:9px; color:var(--text-muted); }
 
+    /* ─── FREE AI ────────────────────────────────────── */
     .fai { display:flex; align-items:center; gap:9px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
     .fai:last-child { border-bottom:none; }
     .fai a { flex:1; color:var(--text); text-decoration:none; transition:color 0.18s; }
@@ -118,44 +308,88 @@
     .fai-lim { font-size:9px; color:var(--text-dim); text-align:right; }
     .dot5 { width:5px;height:5px;border-radius:50%;flex-shrink:0; }
 
-    .rl { display:flex; align-items:center; gap:6px; padding:6px 0; text-decoration:none; color:var(--text); font-size:11px; transition:color 0.18s; border-bottom:1px solid rgba(255,255,255,0.04); }
+    /* ─── REDDIT ─────────────────────────────────────── */
+    .rl {
+      display:flex; align-items:center; gap:6px;
+      padding:6px 0; text-decoration:none; color:var(--text);
+      font-size:11px; transition:color 0.18s;
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
     .rl:last-child { border-bottom:none; }
     .rl:hover { color:var(--cyan); }
     .rl::before { content:'r/'; color:var(--text-muted); font-size:9px; }
 
+    /* ─── GMAIL ──────────────────────────────────────── */
     .gmail-g { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-    .gl { display:flex; align-items:center; gap:6px; padding:7px 9px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:6px; text-decoration:none; color:var(--text); font-size:10px; transition:all 0.18s; }
-    .gl:hover { background:rgba(0,200,240,0.06); border-color:rgba(0,200,240,0.28); color:var(--cyan); }
+    .gl {
+      display:flex; align-items:center; gap:6px;
+      padding:7px 9px; background:rgba(255,255,255,0.02);
+      border:1px solid var(--border); border-radius:6px;
+      text-decoration:none; color:var(--text); font-size:10px;
+      transition:all 0.18s;
+    }
+    .gl:hover {
+      background:rgba(0,200,240,0.06);
+      border-color:rgba(0,200,240,0.28);
+      color:var(--cyan);
+    }
 
+    /* ─── BOOKMARKS ──────────────────────────────────── */
     .bm-wrap { display:flex; flex-wrap:wrap; gap:7px; }
-    .bm { padding:4px 11px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:20px; font-size:10px; color:var(--text-dim); cursor:pointer; transition:all 0.18s; }
+    .bm {
+      padding:4px 11px; background:rgba(255,255,255,0.02);
+      border:1px solid var(--border); border-radius:20px;
+      font-size:10px; color:var(--text-dim); cursor:pointer;
+      transition:all 0.18s;
+    }
     .bm:hover { background:rgba(0,255,136,0.07); border-color:rgba(0,255,136,0.28); color:var(--green); }
 
-    .sdiv { font-family:var(--display); font-size:9px; letter-spacing:0.2em; color:var(--text-muted); text-transform:uppercase; margin:12px 0 10px; padding-bottom:7px; border-bottom:1px solid var(--border); }
+    /* ─── SECTION DIVIDER ────────────────────────────── */
+    .sdiv {
+      font-family:var(--display); font-size:9px; letter-spacing:0.2em;
+      color:var(--text-muted); text-transform:uppercase;
+      margin:12px 0 10px; padding-bottom:7px;
+      border-bottom:1px solid var(--border);
+    }
 
+    /* ─── SCROLLBAR ──────────────────────────────────── */
     ::-webkit-scrollbar { width:3px; }
     ::-webkit-scrollbar-track { background:transparent; }
     ::-webkit-scrollbar-thumb { background:rgba(0,200,240,0.18); border-radius:2px; }
 
-    @media(max-width:1100px) { .c3,.c4 { grid-column:span 6; } .c5,.c7,.c8 { grid-column:span 12; } }
-    @media(max-width:720px) { .c3,.c4,.c5,.c6,.c7,.c8 { grid-column:span 12; } .h-center { display:none; } }
-  </style>
+    /* ─── RESPONSIVE ─────────────────────────────────── */
+    @media(max-width:1100px) {
+      .c3,.c4 { grid-column:span 6; }
+      .c5,.c7,.c8 { grid-column:span 12; }
+    }
+    @media(max-width:720px) {
+      .c3,.c4,.c5,.c6,.c7,.c8 { grid-column:span 12; }
+      .h-center { display:none; }
+    }
+  @media(min-width:900px){ .search-desktop{display:block!important} }
+</style>
 </head>
 <body>
 
+<!-- ── HEADER ──────────────────────────────────────────── -->
 <header>
   <div class="h-left">
     <div class="logo">⌬</div>
     <div class="h-title">AI/Bio Command Center</div>
-    <span class="badge">LIVE</span>
+    <span class="badge">v3</span>
   </div>
   <div class="h-center">
     <span class="pulse"></span>
     CHENEY, WA &nbsp;•&nbsp; 47.49°N 117.58°W
   </div>
-  <div id="clock">--:--:--</div>
+  <div style="position:relative; flex:1; max-width:380px; margin:0 18px; display:none" class="search-desktop">
+      <input id="cmd" placeholder="⌘K search cards…" style="width:100%; background:rgba(0,0,0,0.35); border:1px solid var(--border); border-radius:6px; padding:6px 10px 6px 26px; font-family:var(--mono); font-size:11px; color:var(--text); outline:none;">
+      <svg style="position:absolute; left:8px; top:7px; width:12px; height:12px; opacity:.45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+    </div>
+    <div id="clock">--:--:--</div>
 </header>
 
+<!-- ── QUICK LAUNCH ─────────────────────────────────────── -->
 <div class="quick-wrap">
   <div class="quick-launch">
     <a class="ql" href="https://chat.openai.com" target="_blank"><span class="qd" style="background:#10a37f"></span>ChatGPT</a>
@@ -172,48 +406,103 @@
     <a class="ql" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><span class="qd" style="background:#ea4335"></span>Gmail</a>
     <a class="ql" href="https://calendar.google.com" target="_blank"><span class="qd" style="background:#4285f4"></span>Calendar</a>
     <a class="ql" href="https://nebula.org" target="_blank"><span class="qd" style="background:#00c8f0"></span>Nebula</a>
-    <a class="ql" href="https://artificialanalysis.ai" target="_blank"><span class="qd" style="background:#ffb340"></span>AA</a>
+    <a class="ql" href="https://artificialanalysis.ai" target="_blank"><span class="qd" style="background:#ffb340"></span>Arena</a>
   </div>
 
+  <!-- ── MAIN GRID ─────────────────────────────────────── -->
   <div class="main" style="padding:0 0 30px">
   <div class="grid">
 
+    <!-- WEATHER c3 -->
     <div class="card c3">
-      <div class="ch"><span class="ct">🌤 Weather</span><span style="font-size:9px;color:var(--text-muted)">Cheney, WA</span></div>
+      <div class="ch">
+        <span class="ct">🌤 Weather</span>
+        <span style="font-size:9px;color:var(--text-muted)">Cheney, WA</span>
+      </div>
       <div id="weather-out"><div class="loading">fetching...</div></div>
     </div>
 
+    <!-- LEADERBOARD c5 -->
     <div class="card c5">
-      <div class="ch"><span class="ct">🏆 AI Leaderboard</span><a class="ca" href="https://artificialanalysis.ai" target="_blank">↗ artificial analysis</a></div>
-      <div id="lb-out"><div class="loading">loading models...</div></div>
+      <div class="ch">
+        <span class="ct">🏆 AI Leaderboard</span>
+        <a class="ca" href="https://artificialanalysis.ai" target="_blank">↗ artificialanalysis.ai</a>
+      </div>
+      <div id="lb-out">
+        <div class="loading">loading Artificial Analysis...</div>
+      </div>
+      <div style="margin-top:9px;font-size:9px;color:var(--text-muted)">Intelligence Index • from aa-models.json</div>
     </div>
 
+    <!-- WGS PRICES c4 -->
     <div class="card c4">
-      <div class="ch"><span class="ct">🧬 30x WGS Price Watch</span><span style="font-size:9px;color:var(--text-muted)">updated daily</span></div>
-      <div class="wgs"><div><div class="wgsn">Nebula Genomics</div><div class="wgss">30x • 6.4B bases</div></div><div><div class="wgsp">$249</div><div class="wgst" style="color:var(--green)">↓ lowest ever</div></div></div>
-      <div class="wgs"><div><div class="wgsn">Sequencing.com</div><div class="wgss">Ultimate</div></div><div><div class="wgsp">$399</div><div class="wgst" style="color:var(--text-dim)">stable</div></div></div>
-      <div class="wgs"><div><div class="wgsn">Dante Labs</div><div class="wgss">Whole GenomeZ</div></div><div><div class="wgsp">$999</div><div class="wgst" style="color:var(--red)">↑ premium</div></div></div>
+      <div class="ch">
+        <span class="ct">🧬 30x WGS Prices</span>
+        <span style="font-size:9px;color:var(--text-muted)">checked Apr 2026</span>
+      </div>
+      <div class="wgs">
+        <div><div class="wgsn">Nebula Genomics</div><div class="wgss">30x · 6.4B bases</div></div>
+        <div><div class="wgsp">$249</div><div class="wgst" style="color:var(--green)">↓ lowest ever</div></div>
+      </div>
+      <div class="wgs">
+        <div><div class="wgsn">Sequencing.com</div><div class="wgss">Ultimate Genome</div></div>
+        <div><div class="wgsp">$399</div><div class="wgst" style="color:var(--text-dim)">— stable</div></div>
+      </div>
+      <div class="wgs">
+        <div><div class="wgsn">Dante Labs</div><div class="wgss">Whole GenomeZ</div></div>
+        <div><div class="wgsp">$999</div><div class="wgst" style="color:var(--red)">↑ premium</div></div>
+      </div>
     </div>
 
+    <!-- PUBMED c6 -->
     <div class="card c6">
-      <div class="ch"><span class="ct">📚 PubMed — Longevity + CRISPR</span><button class="ca" onclick="loadPubmed()">↺ refresh</button></div>
+      <div class="ch">
+        <span class="ct">📚 PubMed — Longevity + CRISPR</span>
+        <button class="ca" onclick="loadPubmed()">↺ refresh</button>
+      </div>
       <div id="pubmed-out"><div class="loading">loading papers...</div></div>
     </div>
 
+    <!-- ARXIV c6 -->
     <div class="card c6">
-      <div class="ch"><span class="ct">🧠 arXiv — cs.AI + q-bio</span><button class="ca" onclick="loadArxiv()">↺ refresh</button></div>
+      <div class="ch">
+        <span class="ct">🧠 arXiv — cs.AI + q-bio</span>
+        <button class="ca" onclick="loadArxiv()">↺ refresh</button>
+      </div>
       <div id="arxiv-out"><div class="loading">loading papers...</div></div>
     </div>
 
+    <!-- FREE AI c3 -->
     <div class="card c3">
       <div class="ch"><span class="ct">🆓 Free AI Tiers</span></div>
-      <div class="fai"><span class="dot5" style="background:#10a37f;box-shadow:0 0 5px #10a37f"></span><a href="https://chat.openai.com" target="_blank">ChatGPT 4o-mini</a><span class="fai-lim">limited</span></div>
-      <div class="fai"><span class="dot5" style="background:#cc785c;box-shadow:0 0 5px #cc785c"></span><a href="https://claude.ai" target="_blank">Claude Sonnet</a><span class="fai-lim">daily cap</span></div>
-      <div class="fai"><span class="dot5" style="background:#4285f4;box-shadow:0 0 5px #4285f4"></span><a href="https://gemini.google.com" target="_blank">Gemini 1.5 Pro</a><span class="fai-lim">1,500/day</span></div>
-      <div class="fai"><span class="dot5" style="background:#20b2aa;box-shadow:0 0 5px #20b2aa"></span><a href="https://perplexity.ai" target="_blank">Perplexity</a><span class="fai-lim">5 Pro/day</span></div>
-      <div class="fai"><span class="dot5" style="background:#444"></span><a href="https://x.com/i/grok" target="_blank">Grok</a><span class="fai-lim">x.com free</span></div>
+      <div class="fai">
+        <span class="dot5" style="background:#10a37f;box-shadow:0 0 5px #10a37f"></span>
+        <a href="https://chat.openai.com" target="_blank">ChatGPT 4o-mini</a>
+        <span class="fai-lim">limited</span>
+      </div>
+      <div class="fai">
+        <span class="dot5" style="background:#cc785c;box-shadow:0 0 5px #cc785c"></span>
+        <a href="https://claude.ai" target="_blank">Claude Sonnet</a>
+        <span class="fai-lim">daily cap</span>
+      </div>
+      <div class="fai">
+        <span class="dot5" style="background:#4285f4;box-shadow:0 0 5px #4285f4"></span>
+        <a href="https://gemini.google.com" target="_blank">Gemini 1.5 Pro</a>
+        <span class="fai-lim">1,500/day</span>
+      </div>
+      <div class="fai">
+        <span class="dot5" style="background:#20b2aa;box-shadow:0 0 5px #20b2aa"></span>
+        <a href="https://perplexity.ai" target="_blank">Perplexity</a>
+        <span class="fai-lim">5 Pro/day</span>
+      </div>
+      <div class="fai">
+        <span class="dot5" style="background:#444"></span>
+        <a href="https://x.com/i/grok" target="_blank">Grok</a>
+        <span class="fai-lim">x.com free</span>
+      </div>
     </div>
 
+    <!-- REDDIT + DRWP c3 -->
     <div class="card c3">
       <div class="ch"><span class="ct">🔴 Reddit Feeds</span></div>
       <a class="rl" href="https://reddit.com/r/longevity/new" target="_blank">longevity</a>
@@ -221,9 +510,11 @@
       <a class="rl" href="https://reddit.com/r/LocalLLaMA/new" target="_blank">LocalLLaMA</a>
       <a class="rl" href="https://reddit.com/r/singularity/new" target="_blank">singularity</a>
       <div class="sdiv">DrWillPowers</div>
-      <div id="drwill-out"><div class="loading">loading...</div></div>
+      <div id="drwill-out" style="margin:4px 0 6px"></div>
+      <a class="rl" href="https://www.reddit.com/user/drwillpowers/submitted/?sort=new" target="_blank" style="border-bottom:none">u/drwillpowers →</a>
     </div>
 
+    <!-- GMAIL c3 -->
     <div class="card c3">
       <div class="ch"><span class="ct">📩 Gmail</span></div>
       <div class="gmail-g">
@@ -232,77 +523,197 @@
         <a class="gl" href="https://mail.google.com/mail/u/0/#label/AI-Papers" target="_blank">🤖 AI Papers</a>
         <a class="gl" href="https://mail.google.com/mail/u/0/#advanced-search" target="_blank">🔍 Search</a>
       </div>
-      <div style="margin-top:8px"><a class="gl" href="https://calendar.google.com" target="_blank" style="justify-content:center">📅 Google Calendar →</a></div>
+      <div style="margin-top:8px">
+        <a class="gl" href="https://calendar.google.com" target="_blank" style="justify-content:center">📅 Google Calendar →</a>
+      </div>
     </div>
 
+    <!-- BOOKMARKS c3 -->
     <div class="card c3">
       <div class="ch"><span class="ct">🔖 Topics</span></div>
       <div class="bm-wrap">
-        <span class="bm">AI Papers</span><span class="bm">WGS Reports</span><span class="bm">Peptides</span>
-        <span class="bm">Longevity Protocols</span><span class="bm">Local LLMs</span><span class="bm">Lab Tests</span>
+        <span class="bm">AI Papers</span>
+        <span class="bm">WGS Reports</span>
+        <span class="bm">Peptides</span>
+        <span class="bm">Longevity Protocols</span>
+        <span class="bm">Local LLMs</span>
+        <span class="bm">Lab Tests</span>
         <span class="bm" style="border-style:dashed;opacity:.5">+ Add</span>
       </div>
     </div>
 
-  </div></div>
-</div>
+  </div><!-- /grid -->
+  </div><!-- /main -->
+</div><!-- /quick-wrap -->
 
 <script>
-function tick(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'America/Los_Angeles'}); }
-setInterval(tick,1000); tick();
+/* ─── CLOCK ──────────────────────────────────────────────── */
+function tick() {
+  document.getElementById('clock').textContent =
+    new Date().toLocaleTimeString('en-US', {
+      hour12: false, hour:'2-digit', minute:'2-digit', second:'2-digit',
+      timeZone: 'America/Los_Angeles'
+    });
+}
+setInterval(tick, 1000); tick();
 
-const WMO_DESC={0:'Clear Sky',1:'Mainly Clear',2:'Partly Cloudy',3:'Overcast',45:'Foggy',48:'Icy Fog',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Moderate Rain',65:'Heavy Rain',71:'Light Snow',73:'Moderate Snow',75:'Heavy Snow',77:'Snow Grains',80:'Rain Showers',81:'Moderate Showers',82:'Violent Showers',85:'Snow Showers',86:'Heavy Snow Showers',95:'Thunderstorm',96:'T-Storm + Hail',99:'Severe Thunderstorm'};
-const WMO_ICO={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌧',55:'🌧',61:'🌧',63:'🌧',65:'⛈',71:'🌨',73:'❄️',75:'❄️',77:'❄️',80:'🌦',81:'🌧',82:'⛈',85:'🌨',86:'❄️',95:'⛈',96:'⛈',99:'⛈'};
+/* ─── WEATHER ────────────────────────────────────────────── */
+const WMO_DESC = {
+  0:'Clear Sky', 1:'Mainly Clear', 2:'Partly Cloudy', 3:'Overcast',
+  45:'Foggy', 48:'Icy Fog',
+  51:'Light Drizzle', 53:'Drizzle', 55:'Heavy Drizzle',
+  61:'Light Rain', 63:'Moderate Rain', 65:'Heavy Rain',
+  71:'Light Snow', 73:'Moderate Snow', 75:'Heavy Snow', 77:'Snow Grains',
+  80:'Rain Showers', 81:'Moderate Showers', 82:'Violent Showers',
+  85:'Snow Showers', 86:'Heavy Snow Showers',
+  95:'Thunderstorm', 96:'T-Storm + Hail', 99:'Severe Thunderstorm'
+};
+const WMO_ICO = {
+  0:'☀️', 1:'🌤', 2:'⛅', 3:'☁️', 45:'🌫', 48:'🌫',
+  51:'🌦', 53:'🌧', 55:'🌧', 61:'🌧', 63:'🌧', 65:'⛈',
+  71:'🌨', 73:'❄️', 75:'❄️', 77:'❄️',
+  80:'🌦', 81:'🌧', 82:'⛈', 85:'🌨', 86:'❄️',
+  95:'⛈', 96:'⛈', 99:'⛈'
+};
 
-async function loadWeather(){
-  try{
-    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.49&longitude=-117.58&current=temperature_2m,weathercode,windspeed_10m,apparent_temperature,relative_humidity_2m&temperature_unit=fahrenheit&windspeed_unit=mph');
-    const d=await r.json(); const c=d.current; const code=c.weathercode;
-    document.getElementById('weather-out').innerHTML=`<div class="w-main"><div class="w-temp">${Math.round(c.temperature_2m)}°</div><div><div class="w-ico">${WMO_ICO[code]||'🌡'}</div></div></div><div class="w-desc">${WMO_DESC[code]||'Unknown'}</div><div class="w-extra" style="margin-top:6px">Feels ${Math.round(c.apparent_temperature)}° &nbsp;·&nbsp; Wind ${Math.round(c.windspeed_10m)} mph &nbsp;·&nbsp; RH ${c.relative_humidity_2m}%</div>`;
-  }catch{ document.getElementById('weather-out').innerHTML='<div class="loading">unavailable</div>'; }
+async function loadWeather() {
+  try {
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.49&longitude=-117.58&current=temperature_2m,weathercode,windspeed_10m,apparent_temperature,relative_humidity_2m&temperature_unit=fahrenheit&windspeed_unit=mph');
+    const d = await r.json(); const c = d.current;
+    const code = c.weathercode;
+    document.getElementById('weather-out').innerHTML = `
+      <div class="w-main">
+        <div class="w-temp">${Math.round(c.temperature_2m)}°</div>
+        <div><div class="w-ico">${WMO_ICO[code]||'🌡'}</div></div>
+      </div>
+      <div class="w-desc">${WMO_DESC[code]||'Unknown'}</div>
+      <div class="w-extra" style="margin-top:6px">
+        Feels ${Math.round(c.apparent_temperature)}° &nbsp;·&nbsp;
+        Wind ${Math.round(c.windspeed_10m)} mph &nbsp;·&nbsp;
+        RH ${c.relative_humidity_2m}%
+      </div>`;
+  } catch {
+    document.getElementById('weather-out').innerHTML = '<div class="loading">unavailable</div>';
+  }
 }
 loadWeather();
 
-async function loadLeaderboard(){
-  const el=document.getElementById('lb-out');
-  try{
-    const r=await fetch('/dashboard/data/aa-models.json',{cache:'no-store'});
-    const j=await r.json();
-    const top=j.data.filter(m=>m.evaluations?.artificial_analysis_intelligence_index).sort((a,b)=>b.evaluations.artificial_analysis_intelligence_index-a.evaluations.artificial_analysis_intelligence_index).slice(0,5);
-    el.innerHTML=top.map((m,i)=>`<div class="lb"><span class="lbr ${i<3?'gold':''}">${i+1}</span><span class="lbn">${m.name}<span style="color:var(--text-muted);font-size:9px;margin-left:6px">${m.model_creator?.name||''}</span></span><span class="lbbd" style="margin-right:6px">${Math.round(m.median_output_tokens_per_second||0)}t/s</span><span class="lbs">${m.evaluations.artificial_analysis_intelligence_index.toFixed(1)}</span></div>`).join('');
-  }catch(e){ el.innerHTML='<div class="loading">using cached — run Action</div>'; }
-}
-loadLeaderboard();
 
-async function loadPubmed(){
-  const el=document.getElementById('pubmed-out'); el.innerHTML='<div class="loading">fetching...</div>';
-  try{
-    const r=await fetch('/dashboard/data/pubmed.json'); const j=await r.json(); const ids=j.esearchresult?.idlist||[];
-    const s=await fetch('/dashboard/data/pubmed-summary.json'); const sj=await s.json();
-    el.innerHTML=ids.map(id=>{const a=sj.result?.[id]; if(!a) return ''; const date=a.pubdate?.split(' ').slice(0,2).join(' ')||''; return `<div class="paper"><div class="pt"><a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank">${a.title}</a></div><div class="pm">${a.fulljournalname||a.source||''}${date?' · '+date:''}</div></div>`;}).join('')||'<div class="loading">no results</div>';
-  }catch{ el.innerHTML='<div class="loading">run GitHub Action first</div>'; }
+/* ─── PUBMED ─────────────────────────────────────────────── */
+async function loadPubmed() {
+  const el = document.getElementById('pubmed-out');
+  el.innerHTML = '<div class="loading">fetching...</div>';
+  try {
+    const s = await fetch('/dashboard/data/pubmed.json', {cache:'no-store'});
+    const sd = await s.json();
+    const ids = sd.esearchresult?.idlist || [];
+    if (!ids.length) { el.innerHTML='<div class="loading">no results</div>'; return; }
+    const sm = await fetch('/dashboard/data/pubmed-summary.json', {cache:'no-store'});
+    const smd = await sm.json();
+    const rows = ids.map(id => {
+      const a = smd.result?.[id];
+      if (!a || !a.title) return '';
+      const date = a.pubdate?.split(' ').slice(0,2).join(' ') || '';
+      const src = a.fulljournalname || a.source || '';
+      return `<div class="paper">
+        <div class="pt"><a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank">${a.title}</a></div>
+        <div class="pm">${src}${date?' · '+date:''}</div>
+      </div>`;
+    }).join('');
+    el.innerHTML = rows || '<div class="loading">no results</div>';
+  } catch {
+    el.innerHTML = '<div class="loading">run GitHub Action</div>';
+  }
 }
 loadPubmed();
 
-async function loadArxiv(){
-  const el=document.getElementById('arxiv-out'); el.innerHTML='<div class="loading">fetching...</div>';
-  try{
-    const r=await fetch('/dashboard/data/arxiv.xml'); const t=await r.text(); const xml=new DOMParser().parseFromString(t,'application/xml');
-    const entries=[...xml.querySelectorAll('entry')].slice(0,6);
-    el.innerHTML=entries.map(e=>{const title=e.querySelector('title')?.textContent.trim().replace(/\s+/g,' '); const link=e.querySelector('id')?.textContent; const pub=e.querySelector('published')?.textContent.slice(0,10); const cats=[...e.querySelectorAll('category')].map(c=>c.getAttribute('term')).slice(0,2).join(' · '); return `<div class="paper"><div class="pt"><a href="${link}" target="_blank">${title}</a></div><div class="pm">${cats}${pub?' · '+pub:''}</div></div>`;}).join('')||'<div class="loading">no results</div>';
-  }catch{ el.innerHTML='<div class="loading">run GitHub Action first</div>'; }
+/* ─── ARXIV ──────────────────────────────────────────────── */
+async function loadArxiv() {
+  const el = document.getElementById('arxiv-out');
+  el.innerHTML = '<div class="loading">fetching...</div>';
+  try {
+    const r = await fetch('/dashboard/data/arxiv.xml', {cache:'no-store'});
+    const txt = await r.text();
+    const xml = new DOMParser().parseFromString(txt, 'application/xml');
+    const entries = xml.querySelectorAll('entry');
+    let html = '';
+    entries.forEach(e => {
+      const title = e.querySelector('title')?.textContent?.trim().replace(/\s+/g,' ') || '';
+      const link = e.querySelector('id')?.textContent?.trim() || '#';
+      const pub = e.querySelector('published')?.textContent?.trim().slice(0,10) || '';
+      const cats = [...e.querySelectorAll('category')].map(c=>c.getAttribute('term')).slice(0,2).join(' · ');
+      html += `<div class="paper">
+        <div class="pt"><a href="${link}" target="_blank">${title}</a></div>
+        <div class="pm">${cats}${pub?' · '+pub:''}</div>
+      </div>`;
+    });
+    el.innerHTML = html || '<div class="loading">no results</div>';
+  } catch {
+    el.innerHTML = '<div class="loading">run GitHub Action</div>';
+  }
 }
 loadArxiv();
 
+/* ─── AI LEADERBOARD ─────────────────────────────────────── */
+async function loadLeaderboard(){
+  const el = document.getElementById('lb-out');
+  try {
+    const r = await fetch('/dashboard/data/aa-models.json', {cache:'no-store'});
+    const {data} = await r.json();
+    const top = data
+      .filter(m => m.evaluations?.artificial_analysis_intelligence_index)
+      .sort((a,b) => b.evaluations.artificial_analysis_intelligence_index - a.evaluations.artificial_analysis_intelligence_index)
+      .slice(0,5);
+    el.innerHTML = top.map((m,i)=>{
+      const intel = m.evaluations.artificial_analysis_intelligence_index.toFixed(1);
+      const price = m.pricing?.price_1m_blended_3_to_1?.toFixed(2) || '—';
+      const speed = Math.round(m.median_output_tokens_per_second||0);
+      const gold = i<3 ? 'gold' : '';
+      return `<div class="lb">
+        <span class="lbr ${gold}">${i+1}</span>
+        <span class="lbn">${m.name}<span style="opacity:.55;margin-left:6px;font-size:9px">${m.model_creator?.name||''}</span></span>
+        <span class="lbbd" title="${speed} t/s">$${price}</span>
+        <span class="lbs">${intel}</span>
+      </div>`;
+    }).join('');
+  } catch(e){
+    el.innerHTML = '<div class="loading">run GitHub Action</div>';
+  }
+}
+loadLeaderboard();
+
+/* ─── DRWILL ─────────────────────────────────────────────── */
 async function loadDrWill(){
-  const el=document.getElementById('drwill-out');
+  const target = document.getElementById('drwill-out');
+  if(!target) return;
   try{
-    const r=await fetch('/dashboard/data/drwillpowers.xml'); const t=await r.text(); const xml=new DOMParser().parseFromString(t,'application/xml');
-    const entries=[...xml.querySelectorAll('entry')].slice(0,4);
-    el.innerHTML=entries.map(e=>{const title=e.querySelector('title')?.textContent; const link=e.querySelector('link')?.getAttribute('href'); const date=new Date(e.querySelector('updated')?.textContent).toLocaleDateString('en-US',{month:'short',day:'numeric'}); return `<a class="rl" href="${link}" target="_blank" style="border-bottom:1px solid rgba(255,255,255,0.04);padding:5px 0"><span style="display:block;line-height:1.3">${title}</span><span style="font-size:8px;color:var(--text-muted)">${date}</span></a>`;}).join('')||'<div class="loading">no posts</div>';
-  }catch{ el.innerHTML='<div class="loading">run Action</div>'; }
+    const r = await fetch('/dashboard/data/drwillpowers.xml',{cache:'no-store'});
+    const txt = await r.text();
+    const xml = new DOMParser().parseFromString(txt,'application/xml');
+    const entries = [...xml.querySelectorAll('entry')].slice(0,3);
+    target.innerHTML = entries.map(e=>{
+      const t = e.querySelector('title')?.textContent||'';
+      const l = e.querySelector('link')?.getAttribute('href')||'#';
+      const d = new Date(e.querySelector('updated')?.textContent).toLocaleDateString('en-US',{month:'short',day:'numeric'});
+      return `<a class="rl" href="${l}" target="_blank" style="border:none;padding:3px 0"><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</span><span style="color:var(--text-muted);font-size:9px;margin-left:8px">${d}</span></a>`;
+    }).join('');
+  }catch{}
 }
 loadDrWill();
+
+/* ─── SEARCH ─────────────────────────────────────────────── */
+const cmd = document.getElementById('cmd');
+if(cmd){
+  document.addEventListener('keydown', e=>{
+    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); cmd.focus(); }
+  });
+  cmd.addEventListener('input', ()=>{
+    const q = cmd.value.toLowerCase();
+    document.querySelectorAll('.card').forEach(c=>{
+      c.style.display = !q || c.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+}
 </script>
 </body>
 </html>
