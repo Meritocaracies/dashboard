@@ -1,330 +1,308 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI/Bio Command Center v2</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
-<style>
-  :root { color-scheme: dark; }
-  body { font-family: 'Inter', system-ui, sans-serif; background: #0a0a0b; }
-  .mono { font-family: 'JetBrains Mono', monospace; }
-  .card { background: rgba(17,17,19,0.8); backdrop-filter: blur(12px); border: 1px solid #222225; }
-  .card:hover { border-color: #2dd4bf33; }
-  .glass { backdrop-filter: blur(16px); }
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI/Bio Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #060a0d;
+      --bg2:      #0a1018;
+      --bg3:      #0d1622;
+      --card:     rgba(9,17,28,0.88);
+      --border:   rgba(0,200,240,0.10);
+      --border-hi:rgba(0,255,136,0.28);
+      --green:    #00ff88;
+      --cyan:     #00c8f0;
+      --amber:    #ffb340;
+      --red:      #ff4466;
+      --purple:   #b388ff;
+      --text:     #c4dce8;
+      --text-dim: #3d6070;
+      --text-muted:#1e3545;
+      --display:  'Oxanium', sans-serif;
+      --mono:     'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse 60% 40% at 15% 5%,  rgba(0,200,240,0.05) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 50% at 85% 95%, rgba(0,255,136,0.04) 0%, transparent 100%),
+        linear-gradient(rgba(0,200,240,0.013) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,240,0.013) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 13px 22px; border-bottom: 1px solid var(--border);
+      background: rgba(6,10,13,0.92); backdrop-filter: blur(16px);
+      position: sticky; top: 0; z-index: 200;
+    }
+    .h-left { display:flex; align-items:center; gap:14px; }
+    .logo {
+      width: 30px; height: 30px; border: 1.5px solid var(--cyan); border-radius: 7px;
+      display: flex; align-items:center; justify-content:center; font-size: 14px;
+      box-shadow: 0 0 14px rgba(0,200,240,0.22), inset 0 0 8px rgba(0,200,240,0.08);
+      color: var(--cyan); flex-shrink: 0;
+    }
+    .h-title { font-family: var(--display); font-size: 16px; font-weight: 600; color: #fff; letter-spacing: 0.06em; }
+    .badge { font-size: 9px; color: var(--cyan); border: 1px solid rgba(0,200,240,0.3); padding: 2px 6px; border-radius: 3px; letter-spacing: 0.08em; }
+    .h-center { font-size: 10px; color: var(--text-dim); letter-spacing: 0.09em; display: flex; align-items: center; gap: 8px; }
+    .pulse { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulseAnim 2.2s ease-in-out infinite; }
+    @keyframes pulseAnim { 0%,100%{opacity:1} 50%{opacity:.3} }
+    #clock { font-family: var(--display); font-size: 20px; font-weight: 300; color: var(--cyan); letter-spacing: 0.12em; text-shadow: 0 0 22px rgba(0,200,240,0.35); min-width: 100px; text-align: right; }
+
+    .quick-wrap { padding: 12px 22px 0; max-width: 1640px; margin: 0 auto; }
+    .quick-launch { display: flex; gap: 7px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--border); margin-bottom: 18px; }
+    .ql { display: flex; align-items: center; gap: 6px; padding: 5px 11px; background: var(--bg3); border: 1px solid var(--border); border-radius: 5px; color: var(--text); text-decoration: none; font-size: 10px; font-family: var(--mono); transition: all 0.18s; white-space: nowrap; letter-spacing: 0.03em; }
+    .ql:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(0,200,240,0.06); box-shadow: 0 0 10px rgba(0,200,240,0.12); }
+    .qd { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+
+    .main { padding: 0 22px 30px; max-width: 1640px; margin: 0 auto; }
+    .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+    .c3  { grid-column: span 3; } .c4  { grid-column: span 4; } .c5  { grid-column: span 5; }
+    .c6  { grid-column: span 6; } .c7  { grid-column: span 7; } .c8  { grid-column: span 8; } .c12 { grid-column: span 12; }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 15px; backdrop-filter: blur(10px); position: relative; overflow: hidden; transition: border-color 0.28s, box-shadow 0.28s; }
+    .card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(0,200,240,0.25) 40%, rgba(0,255,136,0.15) 60%, transparent 100%); pointer-events: none; }
+    .card:hover { border-color: rgba(0,200,240,0.22); box-shadow: 0 0 24px rgba(0,200,240,0.06); }
+    .ch { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+    .ct { font-family: var(--display); font-size: 10px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); }
+    .ca { font-size: 10px; color: var(--cyan); background: none; border: none; font-family: var(--mono); cursor: pointer; opacity: 0.65; transition: opacity 0.18s; text-decoration: none; }
+    .ca:hover { opacity: 1; }
+    .loading { color: var(--text-muted); font-size: 10px; animation: blink 1.6s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    .w-main { display:flex; align-items:flex-end; gap:10px; margin-bottom:10px; }
+    .w-temp { font-family: var(--display); font-size: 54px; font-weight: 300; line-height: 1; color: #fff; }
+    .w-ico { font-size: 34px; line-height:1; margin-bottom:4px; }
+    .w-desc { font-size:11px; color: var(--text-dim); margin-bottom:4px; }
+    .w-extra { font-size:10px; color: var(--text-muted); }
+
+    .lb { display:flex; align-items:center; gap:9px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
+    .lb:last-child { border-bottom:none; }
+    .lbr { width:16px; text-align:center; font-size:9px; color:var(--text-muted); }
+    .lbr.gold { color:var(--amber); }
+    .lbn { flex:1; color:var(--text); }
+    .lbs { font-family: var(--display); font-size:13px; color:var(--cyan); }
+    .lbbd { font-size:8px; padding:1px 5px; border-radius:3px; background:rgba(0,255,136,0.08); color:var(--green); border:1px solid rgba(0,255,136,0.18); letter-spacing:0.05em; }
+
+    .wgs { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:start; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .wgs:last-child { border-bottom:none; }
+    .wgsn { font-size:11px; color:var(--text); margin-bottom:2px; }
+    .wgss { font-size:9px; color:var(--text-dim); }
+    .wgsp { font-family:var(--display); font-size:20px; font-weight:600; color:#fff; text-align:right; }
+    .wgst { font-size:9px; text-align:right; margin-top:2px; }
+
+    .paper { padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .paper:last-child { border-bottom:none; }
+    .pt { font-size:11px; color:var(--text); line-height:1.5; margin-bottom:3px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .pt a { color:inherit; text-decoration:none; transition:color 0.18s; }
+    .pt a:hover { color:var(--cyan); }
+    .pm { font-size:9px; color:var(--text-muted); }
+
+    .fai { display:flex; align-items:center; gap:9px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
+    .fai:last-child { border-bottom:none; }
+    .fai a { flex:1; color:var(--text); text-decoration:none; transition:color 0.18s; }
+    .fai a:hover { color:var(--cyan); }
+    .fai-lim { font-size:9px; color:var(--text-dim); text-align:right; }
+    .dot5 { width:5px;height:5px;border-radius:50%;flex-shrink:0; }
+
+    .rl { display:flex; align-items:center; gap:6px; padding:6px 0; text-decoration:none; color:var(--text); font-size:11px; transition:color 0.18s; border-bottom:1px solid rgba(255,255,255,0.04); }
+    .rl:last-child { border-bottom:none; }
+    .rl:hover { color:var(--cyan); }
+    .rl::before { content:'r/'; color:var(--text-muted); font-size:9px; }
+
+    .gmail-g { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
+    .gl { display:flex; align-items:center; gap:6px; padding:7px 9px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:6px; text-decoration:none; color:var(--text); font-size:10px; transition:all 0.18s; }
+    .gl:hover { background:rgba(0,200,240,0.06); border-color:rgba(0,200,240,0.28); color:var(--cyan); }
+
+    .bm-wrap { display:flex; flex-wrap:wrap; gap:7px; }
+    .bm { padding:4px 11px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:20px; font-size:10px; color:var(--text-dim); cursor:pointer; transition:all 0.18s; }
+    .bm:hover { background:rgba(0,255,136,0.07); border-color:rgba(0,255,136,0.28); color:var(--green); }
+
+    .sdiv { font-family:var(--display); font-size:9px; letter-spacing:0.2em; color:var(--text-muted); text-transform:uppercase; margin:12px 0 10px; padding-bottom:7px; border-bottom:1px solid var(--border); }
+
+    ::-webkit-scrollbar { width:3px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:rgba(0,200,240,0.18); border-radius:2px; }
+
+    @media(max-width:1100px) { .c3,.c4 { grid-column:span 6; } .c5,.c7,.c8 { grid-column:span 12; } }
+    @media(max-width:720px) { .c3,.c4,.c5,.c6,.c7,.c8 { grid-column:span 12; } .h-center { display:none; } }
+  </style>
 </head>
-<body class="text-zinc-200 min-h-screen">
-  <header class="sticky top-0 z-40 border-b border-zinc-800 bg-[#0a0a0b]/80 glass">
-    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex items-center gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-teal-500/20 grid place-items-center border border-teal-500/30">
-          <span class="text-teal-400 text-sm">⌘</span>
-        </div>
-        <div>
-          <h1 class="font-semibold leading-none">AI/Bio Command Center</h1>
-          <p class="text-xs text-zinc-500 -mt-0.5">v2 • Cheney, WA</p>
-        </div>
+<body>
+
+<header>
+  <div class="h-left">
+    <div class="logo">⌬</div>
+    <div class="h-title">AI/Bio Command Center</div>
+    <span class="badge">LIVE</span>
+  </div>
+  <div class="h-center">
+    <span class="pulse"></span>
+    CHENEY, WA &nbsp;•&nbsp; 47.49°N 117.58°W
+  </div>
+  <div id="clock">--:--:--</div>
+</header>
+
+<div class="quick-wrap">
+  <div class="quick-launch">
+    <a class="ql" href="https://chat.openai.com" target="_blank"><span class="qd" style="background:#10a37f"></span>ChatGPT</a>
+    <a class="ql" href="https://claude.ai" target="_blank"><span class="qd" style="background:#cc785c"></span>Claude</a>
+    <a class="ql" href="https://gemini.google.com" target="_blank"><span class="qd" style="background:#4285f4"></span>Gemini</a>
+    <a class="ql" href="https://perplexity.ai" target="_blank"><span class="qd" style="background:#20b2aa"></span>Perplexity</a>
+    <a class="ql" href="https://x.com/i/grok" target="_blank"><span class="qd" style="background:#666"></span>Grok</a>
+    <span style="width:1px;background:var(--border);margin:0 2px;align-self:stretch;display:inline-block"></span>
+    <a class="ql" href="https://pubmed.ncbi.nlm.nih.gov/?term=longevity+CRISPR" target="_blank"><span class="qd" style="background:#00ff88"></span>PubMed</a>
+    <a class="ql" href="https://arxiv.org/search/?query=AI+longevity&searchtype=all" target="_blank"><span class="qd" style="background:#b388ff"></span>arXiv</a>
+    <a class="ql" href="https://reddit.com/r/longevity/new" target="_blank"><span class="qd" style="background:#ff4500"></span>r/longevity</a>
+    <a class="ql" href="https://reddit.com/r/LocalLLaMA/new" target="_blank"><span class="qd" style="background:#ff4500"></span>r/LocalLLaMA</a>
+    <span style="width:1px;background:var(--border);margin:0 2px;align-self:stretch;display:inline-block"></span>
+    <a class="ql" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><span class="qd" style="background:#ea4335"></span>Gmail</a>
+    <a class="ql" href="https://calendar.google.com" target="_blank"><span class="qd" style="background:#4285f4"></span>Calendar</a>
+    <a class="ql" href="https://nebula.org" target="_blank"><span class="qd" style="background:#00c8f0"></span>Nebula</a>
+    <a class="ql" href="https://artificialanalysis.ai" target="_blank"><span class="qd" style="background:#ffb340"></span>AA</a>
+  </div>
+
+  <div class="main" style="padding:0 0 30px">
+  <div class="grid">
+
+    <div class="card c3">
+      <div class="ch"><span class="ct">🌤 Weather</span><span style="font-size:9px;color:var(--text-muted)">Cheney, WA</span></div>
+      <div id="weather-out"><div class="loading">fetching...</div></div>
+    </div>
+
+    <div class="card c5">
+      <div class="ch"><span class="ct">🏆 AI Leaderboard</span><a class="ca" href="https://artificialanalysis.ai" target="_blank">↗ artificial analysis</a></div>
+      <div id="lb-out"><div class="loading">loading models...</div></div>
+    </div>
+
+    <div class="card c4">
+      <div class="ch"><span class="ct">🧬 30x WGS Price Watch</span><span style="font-size:9px;color:var(--text-muted)">updated daily</span></div>
+      <div class="wgs"><div><div class="wgsn">Nebula Genomics</div><div class="wgss">30x • 6.4B bases</div></div><div><div class="wgsp">$249</div><div class="wgst" style="color:var(--green)">↓ lowest ever</div></div></div>
+      <div class="wgs"><div><div class="wgsn">Sequencing.com</div><div class="wgss">Ultimate</div></div><div><div class="wgsp">$399</div><div class="wgst" style="color:var(--text-dim)">stable</div></div></div>
+      <div class="wgs"><div><div class="wgsn">Dante Labs</div><div class="wgss">Whole GenomeZ</div></div><div><div class="wgsp">$999</div><div class="wgst" style="color:var(--red)">↑ premium</div></div></div>
+    </div>
+
+    <div class="card c6">
+      <div class="ch"><span class="ct">📚 PubMed — Longevity + CRISPR</span><button class="ca" onclick="loadPubmed()">↺ refresh</button></div>
+      <div id="pubmed-out"><div class="loading">loading papers...</div></div>
+    </div>
+
+    <div class="card c6">
+      <div class="ch"><span class="ct">🧠 arXiv — cs.AI + q-bio</span><button class="ca" onclick="loadArxiv()">↺ refresh</button></div>
+      <div id="arxiv-out"><div class="loading">loading papers...</div></div>
+    </div>
+
+    <div class="card c3">
+      <div class="ch"><span class="ct">🆓 Free AI Tiers</span></div>
+      <div class="fai"><span class="dot5" style="background:#10a37f;box-shadow:0 0 5px #10a37f"></span><a href="https://chat.openai.com" target="_blank">ChatGPT 4o-mini</a><span class="fai-lim">limited</span></div>
+      <div class="fai"><span class="dot5" style="background:#cc785c;box-shadow:0 0 5px #cc785c"></span><a href="https://claude.ai" target="_blank">Claude Sonnet</a><span class="fai-lim">daily cap</span></div>
+      <div class="fai"><span class="dot5" style="background:#4285f4;box-shadow:0 0 5px #4285f4"></span><a href="https://gemini.google.com" target="_blank">Gemini 1.5 Pro</a><span class="fai-lim">1,500/day</span></div>
+      <div class="fai"><span class="dot5" style="background:#20b2aa;box-shadow:0 0 5px #20b2aa"></span><a href="https://perplexity.ai" target="_blank">Perplexity</a><span class="fai-lim">5 Pro/day</span></div>
+      <div class="fai"><span class="dot5" style="background:#444"></span><a href="https://x.com/i/grok" target="_blank">Grok</a><span class="fai-lim">x.com free</span></div>
+    </div>
+
+    <div class="card c3">
+      <div class="ch"><span class="ct">🔴 Reddit Feeds</span></div>
+      <a class="rl" href="https://reddit.com/r/longevity/new" target="_blank">longevity</a>
+      <a class="rl" href="https://reddit.com/r/Biohackers/new" target="_blank">Biohackers</a>
+      <a class="rl" href="https://reddit.com/r/LocalLLaMA/new" target="_blank">LocalLLaMA</a>
+      <a class="rl" href="https://reddit.com/r/singularity/new" target="_blank">singularity</a>
+      <div class="sdiv">DrWillPowers</div>
+      <div id="drwill-out"><div class="loading">loading...</div></div>
+    </div>
+
+    <div class="card c3">
+      <div class="ch"><span class="ct">📩 Gmail</span></div>
+      <div class="gmail-g">
+        <a class="gl" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">📥 Primary</a>
+        <a class="gl" href="https://mail.google.com/mail/u/0/#label/Biohacking" target="_blank">🧬 Biohacking</a>
+        <a class="gl" href="https://mail.google.com/mail/u/0/#label/AI-Papers" target="_blank">🤖 AI Papers</a>
+        <a class="gl" href="https://mail.google.com/mail/u/0/#advanced-search" target="_blank">🔍 Search</a>
       </div>
-      <div class="flex-1 max-w-xl mx-4 hidden md:block">
-        <div class="relative">
-          <input id="cmd" placeholder="⌘K to search widgets..." class="w-full bg-zinc-900/60 border border-zinc-800 rounded-lg pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-teal-500/50">
-          <svg class="w-4 h-4 absolute left-3 top-2.5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        </div>
-      </div>
-      <div class="ml-auto flex items-center gap-4 text-sm">
-        <div class="text-right hidden sm:block">
-          <div id="time" class="mono text-zinc-300">--:--:--</div>
-          <div class="text-[11px] text-zinc-500 -mt-1">America/Los_Angeles</div>
-        </div>
-        <button id="theme" class="p-2 rounded-lg hover:bg-zinc-800 border border-zinc-800">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-        </button>
+      <div style="margin-top:8px"><a class="gl" href="https://calendar.google.com" target="_blank" style="justify-content:center">📅 Google Calendar →</a></div>
+    </div>
+
+    <div class="card c3">
+      <div class="ch"><span class="ct">🔖 Topics</span></div>
+      <div class="bm-wrap">
+        <span class="bm">AI Papers</span><span class="bm">WGS Reports</span><span class="bm">Peptides</span>
+        <span class="bm">Longevity Protocols</span><span class="bm">Local LLMs</span><span class="bm">Lab Tests</span>
+        <span class="bm" style="border-style:dashed;opacity:.5">+ Add</span>
       </div>
     </div>
-  </header>
 
-  <main class="max-w-[1600px] mx-auto p-4 sm:p-6">
-    <div id="grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 auto-rows-min">
-      
-      <!-- AI Leaderboard -->
-      <section class="card rounded-2xl p-5" data-title="AI Leaderboard">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="font-medium flex items-center gap-2">🏆 AI Leaderboard</h2>
-          <span class="text-[10px] px-2 py-0.5 rounded bg-zinc-800 text-zinc-400">Loading...</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-sm">
-            <th class="text-left pb-2 font-medium">Model</th><th class="text-right pb-2 font-medium">Intel / Speed</th><th class="text-left pb-2 font-medium pl-3">Price</th>
-
-            <tbody class="divide-y divide-zinc-800/50" id="ai-board">
-  <tr><td colspan="3" class="py-4 text-center text-zinc-500 text-xs">Loading live Arena...</td></tr>
-</tbody>
-          </table>
-        </div>
-        <p class="text-[11px] text-zinc-600 mt-3">Source: community arena, Dec 2025 rush</p>
-      </section>
-
-      <!-- Free Tier -->
-      <section class="card rounded-2xl p-5" data-title="Free Tier AI">
-        <h2 class="font-medium mb-3 flex items-center gap-2">🆓 Free-Tier AI</h2>
-        <div class="space-y-2.5 text-sm" id="free-tier">
-          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>ChatGPT</span><span class="text-zinc-500 text-xs">4o-mini • limited</span></div>
-          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Claude</span><span class="text-zinc-500 text-xs">Sonnet • daily</span></div>
-          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Gemini</span><span class="text-zinc-500 text-xs">1.5 Pro • 1,500/d</span></div>
-          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-yellow-500"></span>Perplexity</span><span class="text-zinc-500 text-xs">5 Pro searches/d</span></div>
-          <div class="flex items-center justify-between"><span class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Grok</span><span class="text-zinc-500 text-xs">x.com • free</span></div>
-        </div>
-      </section>
-
-      <!-- WGS Price Watch -->
-      <section class="card rounded-2xl p-5" data-title="WGS Price">
-        <h2 class="font-medium mb-3 flex items-center gap-2">🧬 30x WGS Price Watch</h2>
-        <div class="space-y-3">
-          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/50 border border-zinc-800">
-            <div><div class="font-medium">Nebula Genomics</div><div class="text-[11px] text-zinc-500">30x • 6.4B bases</div></div>
-            <div class="text-right"><div class="text-xl mono text-teal-400">$249</div><div class="text-[10px] text-emerald-500">↓ lowest ever</div></div>
-          </div>
-          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/30 border border-zinc-800/50">
-            <div><div class="text-sm">Dante Labs</div><div class="text-[11px] text-zinc-500">Whole GenomeZ</div></div>
-            <div class="mono">$999</div>
-          </div>
-          <div class="flex items-center justify-between p-3 rounded-xl bg-zinc-900/30 border border-zinc-800/50">
-            <div><div class="text-sm">Sequencing.com</div><div class="text-[11px] text-zinc-500">Ultimate</div></div>
-            <div class="mono">$399</div>
-          </div>
-        </div>
-        <p class="text-[11px] text-zinc-600 mt-3">Last checked: Apr 2026 • <a href="https://nebula.org" class="underline hover:text-teal-400">nebula.org</a></p>
-      </section>
-
-      <!-- Weather -->
-      <section class="card rounded-2xl p-5" data-title="Weather">
-        <h2 class="font-medium mb-3 flex items-center gap-2">🌤 Weather — Cheney</h2>
-        <div id="weather" class="flex items-end justify-between">
-          <div><div class="text-4xl mono" id="temp">--°</div><div class="text-xs text-zinc-500 mt-1" id="wdesc">Loading...</div></div>
-          <div class="text-right text-xs text-zinc-500"><div>Wind <span id="wind" class="text-zinc-300">--</span></div><div class="mt-1">47.49°N, 117.58°W</div></div>
-        </div>
-      </section>
-
-      <!-- PubMed -->
-      <section class="card rounded-2xl p-5 md:col-span-1 xl:col-span-1" data-title="PubMed">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="font-medium flex items-center gap-2">📚 PubMed Tracker</h2>
-          <button class="text-[11px] px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700" onclick="loadPubmed()">refresh</button>
-        </div>
-        <div id="pubmed" class="space-y-2.5 text-sm"><div class="text-zinc-500 text-xs">Loading longevity + CRISPR...</div></div>
-      </section>
-
-      <!-- arXiv -->
-      <section class="card rounded-2xl p-5 md:col-span-1 xl:col-span-1" data-title="arXiv">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="font-medium flex items-center gap-2">🧠 arXiv Tracker</h2>
-          <button class="text-[11px] px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700" onclick="loadArxiv()">refresh</button>
-        </div>
-        <div id="arxiv" class="space-y-2.5 text-sm"><div class="text-zinc-500 text-xs">Loading cs.AI + q-bio...</div></div>
-      </section>
-
-      <!-- Reddit -->
-      <section class="card rounded-2xl p-5" data-title="Reddit">
-        <h2 class="font-medium mb-3 flex items-center gap-2">🔴 Reddit Saved Searches</h2>
-        <div class="grid grid-cols-2 gap-2 text-sm">
-          <a href="https://reddit.com/r/longevity/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/longevity</a>
-          <a href="https://reddit.com/r/Biohackers/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/Biohackers</a>
-          <a href="https://reddit.com/r/LocalLLaMA/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/LocalLLaMA</a>
-          <a href="https://reddit.com/r/singularity/new" class="p-2.5 rounded-lg bg-zinc-900/50 hover:bg-zinc-800 border border-zinc-800">r/singularity</a>
-        </div>
-      </section>
-
-      <!-- DrWillPowers -->
-      <section class="card rounded-2xl p-5" data-title="DrWillPowers">
-  <div class="flex items-center justify-between mb-3">
-    <h2 class="font-medium flex items-center gap-2">💬 DrWillPowers</h2>
-    <a href="https://www.reddit.com/user/drwillpowers" target="_blank" class="text-[11px] px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700">reddit</a>
-  </div>
-  <div id="drwill" class="space-y-2.5 text-sm">
-    <div class="text-zinc-500 text-xs">Loading posts...</div>
-  </div>
-</section>
-
-      <!-- Gmail -->
-      <section class="card rounded-2xl p-5" data-title="Gmail">
-        <h2 class="font-medium mb-3 flex items-center gap-2">📩 Gmail Deep Links</h2>
-        <div class="space-y-1.5 text-sm">
-          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#inbox">Primary</a>
-          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#label/Biohacking">Biohacking label</a>
-          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#label/AI-Papers">AI Papers</a>
-          <a class="block p-2 rounded hover:bg-zinc-800" href="https://mail.google.com/mail/u/0/#advanced-search">Advanced search</a>
-        </div>
-      </section>
-
-      <!-- Calendar -->
-      <section class="card rounded-2xl p-5" data-title="Calendar">
-        <h2 class="font-medium mb-3 flex items-center gap-2">📅 Calendar</h2>
-        <div class="text-sm text-zinc-400">
-          <p class="mb-3">Connect Google Calendar for live events.</p>
-          <button class="px-3 py-1.5 rounded-lg bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs hover:bg-teal-500/30">Connect (OAuth)</button>
-          <p class="text-[11px] text-zinc-600 mt-3">For now: <a href="https://calendar.google.com" class="underline">open calendar</a></p>
-        </div>
-      </section>
-
-      <!-- Bookmarks -->
-      <section class="card rounded-2xl p-5 xl:col-span-3" data-title="Bookmarks">
-        <h2 class="font-medium mb-3 flex items-center gap-2">🔖 Bookmarks by Topic</h2>
-        <div class="flex flex-wrap gap-2 text-xs">
-          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">AI Papers</span>
-          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">WGS Reports</span>
-          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Peptides</span>
-          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Longevity Protocols</span>
-          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Local LLMs</span>
-          <span class="px-2.5 py-1 rounded-full bg-zinc-800 border border-zinc-700">Lab Tests</span>
-        </div>
-      </section>
-
-    </div>
-  </main>
+  </div></div>
+</div>
 
 <script>
-// Time
-function updateTime(){ const now = new Date(); document.getElementById('time').textContent = now.toLocaleTimeString('en-US', {hour12:false}); }
-setInterval(updateTime,1000); updateTime();
+function tick(){ document.getElementById('clock').textContent = new Date().toLocaleTimeString('en-US',{hour12:false,hour:'2-digit',minute:'2-digit',second:'2-digit',timeZone:'America/Los_Angeles'}); }
+setInterval(tick,1000); tick();
 
-// Drag reorder
-new Sortable(document.getElementById('grid'), { animation:150, handle:'h2', ghostClass:'opacity-50', store:{ get:()=>JSON.parse(localStorage.gridOrder||'[]'), set:s=>localStorage.gridOrder=JSON.stringify(s.toArray()) } });
+const WMO_DESC={0:'Clear Sky',1:'Mainly Clear',2:'Partly Cloudy',3:'Overcast',45:'Foggy',48:'Icy Fog',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Moderate Rain',65:'Heavy Rain',71:'Light Snow',73:'Moderate Snow',75:'Heavy Snow',77:'Snow Grains',80:'Rain Showers',81:'Moderate Showers',82:'Violent Showers',85:'Snow Showers',86:'Heavy Snow Showers',95:'Thunderstorm',96:'T-Storm + Hail',99:'Severe Thunderstorm'};
+const WMO_ICO={0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌧',55:'🌧',61:'🌧',63:'🌧',65:'⛈',71:'🌨',73:'❄️',75:'❄️',77:'❄️',80:'🌦',81:'🌧',82:'⛈',85:'🌨',86:'❄️',95:'⛈',96:'⛈',99:'⛈'};
 
-// Command palette
-const cmd = document.getElementById('cmd');
-document.addEventListener('keydown', e=>{ if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){ e.preventDefault(); cmd.focus(); }});
-cmd.addEventListener('input', ()=>{ const q=cmd.value.toLowerCase(); document.querySelectorAll('#grid > section').forEach(s=>{ s.style.display = s.dataset.title.toLowerCase().includes(q)?'':'none'; }); });
-
-// Weather - Cheney WA
 async function loadWeather(){
   try{
-    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.4889&longitude=-117.5758&current=temperature_2m,weather_code,wind_speed_10m&temperature_unit=fahrenheit&timezone=America/Los_Angeles');
-    const d = await r.json(); const c = d.current;
-    document.getElementById('temp').textContent = Math.round(c.temperature_2m)+'°F';
-    document.getElementById('wind').textContent = Math.round(c.wind_speed_10m)+' mph';
-    const codes = {0:'Clear',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',51:'Drizzle',61:'Rain',71:'Snow',95:'Thunder'};
-    document.getElementById('wdesc').textContent = codes[c.weather_code]||'—';
-  }catch(e){ document.getElementById('wdesc').textContent='offline'; }
+    const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.49&longitude=-117.58&current=temperature_2m,weathercode,windspeed_10m,apparent_temperature,relative_humidity_2m&temperature_unit=fahrenheit&windspeed_unit=mph');
+    const d=await r.json(); const c=d.current; const code=c.weathercode;
+    document.getElementById('weather-out').innerHTML=`<div class="w-main"><div class="w-temp">${Math.round(c.temperature_2m)}°</div><div><div class="w-ico">${WMO_ICO[code]||'🌡'}</div></div></div><div class="w-desc">${WMO_DESC[code]||'Unknown'}</div><div class="w-extra" style="margin-top:6px">Feels ${Math.round(c.apparent_temperature)}° &nbsp;·&nbsp; Wind ${Math.round(c.windspeed_10m)} mph &nbsp;·&nbsp; RH ${c.relative_humidity_2m}%</div>`;
+  }catch{ document.getElementById('weather-out').innerHTML='<div class="loading">unavailable</div>'; }
 }
 loadWeather();
 
-// PubMed
-async function loadPubmed(){
-  const el = document.getElementById('pubmed'); el.innerHTML = '<div class="text-zinc-500 text-xs">Loading...</div>';
+async function loadLeaderboard(){
+  const el=document.getElementById('lb-out');
   try{
-    const s = await fetch('/dashboard/data/pubmed.json');
-    const j = await s.json(); const ids = j.esearchresult.idlist||[];
-    if(!ids.length) throw 0;
-    const sum = await fetch('/dashboard/data/pubmed-summary.json');
-    const sj = await sum.json();
-    el.innerHTML = ids.map(id=>{ const it=sj.result[id]; return `<a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50"><div class="line-clamp-2">${it.title}</div><div class="text-[11px] text-zinc-500 mt-1">${(it.authors||[]).slice(0,2).map(a=>a.name).join(', ')} • ${it.pubdate?.split(' ')[0]||''}</div></a>` }).join('');
-  }catch(e){ el.innerHTML = '<div class="text-xs text-zinc-500">PubMed blocked by CORS in some browsers. Use GitHub Action to pre-fetch (see instructions).</div>'; }
+    const r=await fetch('/dashboard/data/aa-models.json',{cache:'no-store'});
+    const j=await r.json();
+    const top=j.data.filter(m=>m.evaluations?.artificial_analysis_intelligence_index).sort((a,b)=>b.evaluations.artificial_analysis_intelligence_index-a.evaluations.artificial_analysis_intelligence_index).slice(0,5);
+    el.innerHTML=top.map((m,i)=>`<div class="lb"><span class="lbr ${i<3?'gold':''}">${i+1}</span><span class="lbn">${m.name}<span style="color:var(--text-muted);font-size:9px;margin-left:6px">${m.model_creator?.name||''}</span></span><span class="lbbd" style="margin-right:6px">${Math.round(m.median_output_tokens_per_second||0)}t/s</span><span class="lbs">${m.evaluations.artificial_analysis_intelligence_index.toFixed(1)}</span></div>`).join('');
+  }catch(e){ el.innerHTML='<div class="loading">using cached — run Action</div>'; }
+}
+loadLeaderboard();
+
+async function loadPubmed(){
+  const el=document.getElementById('pubmed-out'); el.innerHTML='<div class="loading">fetching...</div>';
+  try{
+    const r=await fetch('/dashboard/data/pubmed.json'); const j=await r.json(); const ids=j.esearchresult?.idlist||[];
+    const s=await fetch('/dashboard/data/pubmed-summary.json'); const sj=await s.json();
+    el.innerHTML=ids.map(id=>{const a=sj.result?.[id]; if(!a) return ''; const date=a.pubdate?.split(' ').slice(0,2).join(' ')||''; return `<div class="paper"><div class="pt"><a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank">${a.title}</a></div><div class="pm">${a.fulljournalname||a.source||''}${date?' · '+date:''}</div></div>`;}).join('')||'<div class="loading">no results</div>';
+  }catch{ el.innerHTML='<div class="loading">run GitHub Action first</div>'; }
 }
 loadPubmed();
 
-// arXiv
 async function loadArxiv(){
-  const el = document.getElementById('arxiv'); el.innerHTML = '<div class="text-zinc-500 text-xs">Fetching...</div>';
+  const el=document.getElementById('arxiv-out'); el.innerHTML='<div class="loading">fetching...</div>';
   try{
-    const r = await fetch('https://export.arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&start=0&max_results=5&sortBy=submittedDate&sortOrder=descending');
-    const t = await r.text(); const xml = new DOMParser().parseFromString(t,'text/xml');
-    const entries = Array.from(xml.querySelectorAll('entry')).slice(0,5);
-    el.innerHTML = entries.map(e=>{ const title=e.querySelector('title').textContent.trim().replace(/\s+/g,' '); const link=e.querySelector('id').textContent; const authors=Array.from(e.querySelectorAll('author name')).slice(0,2).map(n=>n.textContent).join(', '); return `<a href="${link}" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50"><div class="line-clamp-2">${title}</div><div class="text-[11px] text-zinc-500 mt-1">${authors}</div></a>` }).join('');
-  }catch(e){ el.innerHTML = '<div class="text-xs text-zinc-500">arXiv blocked by CORS. Use GitHub Action (see instructions).</div>'; }
+    const r=await fetch('/dashboard/data/arxiv.xml'); const t=await r.text(); const xml=new DOMParser().parseFromString(t,'application/xml');
+    const entries=[...xml.querySelectorAll('entry')].slice(0,6);
+    el.innerHTML=entries.map(e=>{const title=e.querySelector('title')?.textContent.trim().replace(/\s+/g,' '); const link=e.querySelector('id')?.textContent; const pub=e.querySelector('published')?.textContent.slice(0,10); const cats=[...e.querySelectorAll('category')].map(c=>c.getAttribute('term')).slice(0,2).join(' · '); return `<div class="paper"><div class="pt"><a href="${link}" target="_blank">${title}</a></div><div class="pm">${cats}${pub?' · '+pub:''}</div></div>`;}).join('')||'<div class="loading">no results</div>';
+  }catch{ el.innerHTML='<div class="loading">run GitHub Action first</div>'; }
 }
 loadArxiv();
 
-// DrWillPowers - Reddit RSS
 async function loadDrWill(){
-  const el = document.getElementById('drwill');
-  try {
-    const r = await fetch('/dashboard/data/drwillpowers.xml', {cache: 'no-store'});
-    const text = await r.text();
-    const xml = new DOMParser().parseFromString(text, 'text/xml');
-    const entries = Array.from(xml.querySelectorAll('entry')).slice(0, 5);
-    
-    if (!entries.length) throw new Error('No entries');
-    
-    el.innerHTML = entries.map(e => {
-      const title = e.querySelector('title')?.textContent || '';
-      const link = e.querySelector('link')?.getAttribute('href') || '#';
-      const updated = new Date(e.querySelector('updated')?.textContent).toLocaleDateString('en-US', {month:'short', day:'numeric'});
-      const raw = e.querySelector('content')?.textContent || '';
-      const excerpt = raw.replace(/<[^>]+>/g, '').trim().slice(0, 160) + '…';
-      
-      return `<a href="${link}" target="_blank" class="block p-2.5 rounded-lg bg-zinc-900/40 hover:bg-zinc-800 border border-zinc-800/50 transition-colors">
-        <div class="font-medium text- leading-snug line-clamp-2">${title}</div>
-        <div class="text- text-zinc-500 mt-1.5">${updated} • ${excerpt}</div>
-      </a>`;
-    }).join('');
-  } catch(err) {
-    console.error('drwill:', err);
-    el.innerHTML = '<div class="text-xs text-zinc-500">Posts unavailable — check Action logs</div>';
-  }
+  const el=document.getElementById('drwill-out');
+  try{
+    const r=await fetch('/dashboard/data/drwillpowers.xml'); const t=await r.text(); const xml=new DOMParser().parseFromString(t,'application/xml');
+    const entries=[...xml.querySelectorAll('entry')].slice(0,4);
+    el.innerHTML=entries.map(e=>{const title=e.querySelector('title')?.textContent; const link=e.querySelector('link')?.getAttribute('href'); const date=new Date(e.querySelector('updated')?.textContent).toLocaleDateString('en-US',{month:'short',day:'numeric'}); return `<a class="rl" href="${link}" target="_blank" style="border-bottom:1px solid rgba(255,255,255,0.04);padding:5px 0"><span style="display:block;line-height:1.3">${title}</span><span style="font-size:8px;color:var(--text-muted)">${date}</span></a>`;}).join('')||'<div class="loading">no posts</div>';
+  }catch{ el.innerHTML='<div class="loading">run Action</div>'; }
 }
 loadDrWill();
-  
-// AI Leaderboard - Artificial Analysis
-async function loadLeaderboard(){
-  const el = document.getElementById('ai-board');
-  const badge = document.querySelector('[data-title="AI Leaderboard"] span');
-
-  try {
-    const r = await fetch('/dashboard/dashboard/data/aa-models.json', {cache: 'no-store'});
-    if (!r.ok) throw new Error('AA file missing');
-    const {data, prompt_options} = await r.json();
-
-    // sort by Intelligence Index (their primary score)
-    const top = data
-     .filter(m => m.evaluations?.artificial_analysis_intelligence_index)
-     .sort((a,b) => b.evaluations.artificial_analysis_intelligence_index - a.evaluations.artificial_analysis_intelligence_index)
-     .slice(0, 5)
-     .map(m => ({
-        name: m.name,
-        creator: m.model_creator?.name || '',
-        intel: m.evaluations.artificial_analysis_intelligence_index,
-        coding: m.evaluations.artificial_analysis_coding_index,
-        speed: Math.round(m.median_output_tokens_per_second || 0),
-        price: m.pricing?.price_1m_blended_3_to_1
-      }));
-
-    el.innerHTML = top.map((m,i) => `
-      <tr>
-        <td class="py-2">
-          <div class="flex items-center gap-2">
-            ${i===0?'🥇':''}
-            <div>
-              <div class="leading-tight">${m.name}</div>
-              <div class="text- text-zinc-500 -mt-0.5">${m.creator}</div>
-            </div>
-          </div>
-        </td>
-        <td class="text-right">
-          <div class="mono ${i===0?'text-teal-400':''}">${m.intel.toFixed(1)}</div>
-          <div class="text- text-zinc-500">${m.speed}t/s</div>
-        </td>
-        <td class="pl-3 text-zinc-400 text-xs">$${m.price?.toFixed(2) || '—'}/M</td>
-      </tr>`).join('');
-
-    badge.textContent = 'Artificial Analysis • Live';
-    badge.className = 'text- px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30';
-
-  } catch(e) {
-    console.error(e);
-    el.innerHTML = `<tr><td colspan="3" class="py-3 text-xs text-amber-500">AA data missing — run the GitHub Action</td></tr>`;
-  }
-}
-loadLeaderboard();
-  
-// Theme toggle
-document.getElementById('theme').onclick = ()=> document.documentElement.classList.toggle('dark');
 </script>
 </body>
 </html>
