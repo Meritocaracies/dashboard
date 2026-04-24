@@ -604,11 +604,11 @@ async function loadPubmed() {
   const el = document.getElementById('pubmed-out');
   el.innerHTML = '<div class="loading">fetching...</div>';
   try {
-    const s = await fetch('/dashboard/data/pubmed.json', {cache:'no-store'});
+    const s = await fetch('/dashboard/dashboard/data/pubmed.json', {cache:'no-store'});
     const sd = await s.json();
     const ids = sd.esearchresult?.idlist || [];
     if (!ids.length) { el.innerHTML='<div class="loading">no results</div>'; return; }
-    const sm = await fetch('/dashboard/data/pubmed-summary.json', {cache:'no-store'});
+    const sm = await fetch('/dashboard/dashboard//data/pubmed-summary.json', {cache:'no-store'});
     const smd = await sm.json();
     const rows = ids.map(id => {
       const a = smd.result?.[id];
@@ -632,7 +632,7 @@ async function loadArxiv() {
   const el = document.getElementById('arxiv-out');
   el.innerHTML = '<div class="loading">fetching...</div>';
   try {
-    const r = await fetch('/dashboard/data/arxiv.xml', {cache:'no-store'});
+    const r = await fetch('/dashboard/dashboard//data/arxiv.xml', {cache:'no-store'});
     const txt = await r.text();
     const xml = new DOMParser().parseFromString(txt, 'application/xml');
     const entries = xml.querySelectorAll('entry');
@@ -687,7 +687,7 @@ async function loadDrWill(){
   const target = document.getElementById('drwill-out');
   if(!target) return;
   try{
-    const r = await fetch('/dashboard/data/drwillpowers.xml',{cache:'no-store'});
+    const r = await fetch('/dashboard/dashboard/data/drwillpowers.xml',{cache:'no-store'});
     const txt = await r.text();
     const xml = new DOMParser().parseFromString(txt,'application/xml');
     const entries = [...xml.querySelectorAll('entry')].slice(0,3);
