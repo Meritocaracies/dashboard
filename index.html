@@ -928,7 +928,9 @@ async function spPoll(){
     if(r.status===401){sessionStorage.removeItem('sp_tok');renderSpConnect();return;}
     if(!r.ok) return;
     renderNowPlaying(await r.json());
-  }catch{}
+  }catch(e){
+  console.error("Spotify error:", e);
+}
 }
 
 async function initSpotify(){
