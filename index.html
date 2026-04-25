@@ -3,32 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI/Bio Command Center v3</title>
+  <title>AI/Bio Command Center v4</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:       #060a0d;
-      --bg2:      #0a1018;
-      --bg3:      #0d1622;
-      --card:     rgba(9,17,28,0.88);
-      --border:   rgba(0,200,240,0.10);
-      --border-hi:rgba(0,255,136,0.28);
-      --green:    #00ff88;
-      --cyan:     #00c8f0;
-      --amber:    #ffb340;
-      --red:      #ff4466;
-      --purple:   #b388ff;
-      --text:     #c4dce8;
-      --text-dim: #7fa3b8;
-      --text-muted:#5a7d92;
-      --display:  'Oxanium', sans-serif;
-      --mono:     'JetBrains Mono', monospace;
+      --bg:         #060a0d;
+      --bg2:        #0a1018;
+      --bg3:        #0d1622;
+      --card:       rgba(9,17,28,0.92);
+      --border:     rgba(0,200,240,0.10);
+      --border-hi:  rgba(0,255,136,0.28);
+      --green:      #00ff88;
+      --cyan:       #00c8f0;
+      --amber:      #ffb340;
+      --red:        #ff4466;
+      --purple:     #b388ff;
+      --spotify:    #1ed760;
+      --hn:         #ff6600;
+      --text:       #c4dce8;
+      --text-dim:   #7fa3b8;
+      --text-muted: #5a7d92;
+      --display:    'Oxanium', sans-serif;
+      --mono:       'JetBrains Mono', monospace;
+      --radius:     10px;
+      --gap:        14px;
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior:smooth; }
 
     body {
       background: var(--bg);
@@ -39,251 +42,114 @@
       background-image:
         radial-gradient(ellipse 60% 40% at 15% 5%,  rgba(0,200,240,0.05) 0%, transparent 100%),
         radial-gradient(ellipse 50% 50% at 85% 95%, rgba(0,255,136,0.04) 0%, transparent 100%),
+        radial-gradient(ellipse 40% 30% at 50% 50%, rgba(179,136,255,0.02) 0%, transparent 100%),
         linear-gradient(rgba(0,200,240,0.013) 1px, transparent 1px),
         linear-gradient(90deg, rgba(0,200,240,0.013) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+      background-size: 100% 100%, 100% 100%, 100% 100%, 36px 36px, 36px 36px;
     }
 
-    /* ─── HEADER ─────────────────────────────────────── */
+    /* ─── HEADER ──────────────────────────────────── */
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 13px 22px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(6,10,13,0.92);
-      backdrop-filter: blur(16px);
-      position: sticky;
-      top: 0;
-      z-index: 200;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:13px 22px;
+      border-bottom:1px solid var(--border);
+      background:rgba(6,10,13,0.96);
+      backdrop-filter:blur(20px);
+      position:sticky; top:0; z-index:200;
     }
-
     .h-left { display:flex; align-items:center; gap:14px; }
-
     .logo {
-      width: 30px; height: 30px;
-      border: 1.5px solid var(--cyan);
-      border-radius: 7px;
-      display: flex; align-items:center; justify-content:center;
-      font-size: 14px;
-      box-shadow: 0 0 14px rgba(0,200,240,0.22), inset 0 0 8px rgba(0,200,240,0.08);
-      color: var(--cyan);
-      flex-shrink: 0;
+      width:30px; height:30px;
+      border:1.5px solid var(--cyan); border-radius:7px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:14px;
+      box-shadow:0 0 14px rgba(0,200,240,0.22), inset 0 0 8px rgba(0,200,240,0.08);
+      color:var(--cyan); flex-shrink:0;
     }
-
-    .h-title {
-      font-family: var(--display);
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-      letter-spacing: 0.06em;
-    }
-
-    .badge {
-      font-size: 9px;
-      color: var(--cyan);
-      border: 1px solid rgba(0,200,240,0.3);
-      padding: 2px 6px;
-      border-radius: 3px;
-      letter-spacing: 0.08em;
-    }
-
-    .h-center {
-      font-size: 10px;
-      color: var(--text-dim);
-      letter-spacing: 0.09em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .pulse {
-      display: inline-block;
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--green);
-      box-shadow: 0 0 6px var(--green);
-      animation: pulseAnim 2.2s ease-in-out infinite;
-    }
-
+    .h-title { font-family:var(--display); font-size:16px; font-weight:600; color:#fff; letter-spacing:0.06em; }
+    .badge { font-size:9px; color:var(--cyan); border:1px solid rgba(0,200,240,0.3); padding:2px 6px; border-radius:3px; letter-spacing:0.08em; }
+    .h-center { font-size:10px; color:var(--text-dim); letter-spacing:0.09em; display:flex; align-items:center; gap:8px; }
+    .pulse { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulseAnim 2.2s ease-in-out infinite; }
     @keyframes pulseAnim { 0%,100%{opacity:1} 50%{opacity:.3} }
+    #clock { font-family:var(--display); font-size:20px; font-weight:300; color:var(--cyan); letter-spacing:0.12em; text-shadow:0 0 22px rgba(0,200,240,0.35); min-width:100px; text-align:right; }
 
-    #clock {
-      font-family: var(--display);
-      font-size: 20px;
-      font-weight: 300;
-      color: var(--cyan);
-      letter-spacing: 0.12em;
-      text-shadow: 0 0 22px rgba(0,200,240,0.35);
-      min-width: 100px;
-      text-align: right;
-    }
-
-    /* ─── QUICK LAUNCH ───────────────────────────────── */
-    .quick-wrap {
-      padding: 12px 22px 0;
-      max-width: 1640px;
-      margin: 0 auto;
-    }
-
-    .quick-launch {
-      display: flex;
-      gap: 7px;
-      flex-wrap: wrap;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 18px;
-    }
-
+    /* ─── QUICK LAUNCH ────────────────────────────── */
+    .quick-wrap { padding:12px 22px 0; max-width:1640px; margin:0 auto; }
+    .quick-launch { display:flex; gap:7px; flex-wrap:wrap; padding-bottom:14px; border-bottom:1px solid var(--border); margin-bottom:18px; }
     .ql {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 5px 11px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      color: var(--text);
-      text-decoration: none;
-      font-size: 10px;
-      font-family: var(--mono);
-      transition: all 0.18s;
-      white-space: nowrap;
-      letter-spacing: 0.03em;
+      display:flex; align-items:center; gap:6px; padding:5px 11px;
+      background:var(--bg3); border:1px solid var(--border); border-radius:5px;
+      color:var(--text); text-decoration:none; font-size:10px; font-family:var(--mono);
+      transition:all 0.18s; white-space:nowrap; letter-spacing:0.03em;
     }
-
-    .ql:hover {
-      border-color: var(--cyan);
-      color: var(--cyan);
-      background: rgba(0,200,240,0.06);
-      box-shadow: 0 0 10px rgba(0,200,240,0.12);
-    }
-
+    .ql:hover { border-color:var(--cyan); color:var(--cyan); background:rgba(0,200,240,0.06); box-shadow:0 0 10px rgba(0,200,240,0.12); }
     .qd { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
+    .ql-sep { width:1px; background:var(--border); margin:0 2px; align-self:stretch; display:inline-block; }
 
-    /* ─── MAIN GRID ──────────────────────────────────── */
-    .main {
-      padding: 0 22px 30px;
-      max-width: 1640px;
-      margin: 0 auto;
-    }
+    /* ─── MAIN GRID ───────────────────────────────── */
+    .main { padding:0 22px 30px; max-width:1640px; margin:0 auto; }
+    .grid { display:grid; grid-template-columns:repeat(12,1fr); gap:var(--gap); }
+    .c3  { grid-column:span 3; }
+    .c4  { grid-column:span 4; }
+    .c5  { grid-column:span 5; }
+    .c6  { grid-column:span 6; }
+    .c7  { grid-column:span 7; }
+    .c8  { grid-column:span 8; }
+    .c12 { grid-column:span 12; }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 14px;
-    }
-
-    .c3  { grid-column: span 3; }
-    .c4  { grid-column: span 4; }
-    .c5  { grid-column: span 5; }
-    .c6  { grid-column: span 6; }
-    .c7  { grid-column: span 7; }
-    .c8  { grid-column: span 8; }
-    .c12 { grid-column: span 12; }
-
-    /* ─── CARD ───────────────────────────────────────── */
+    /* ─── CARD ────────────────────────────────────── */
     .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 15px;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.28s, box-shadow 0.28s;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:15px;
+      backdrop-filter:blur(10px);
+      position:relative; overflow:hidden;
+      transition:border-color 0.3s, box-shadow 0.3s, transform 0.25s;
+      animation:cardIn 0.4s ease both;
     }
+    @keyframes cardIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .card:nth-child(1){animation-delay:.03s} .card:nth-child(2){animation-delay:.06s} .card:nth-child(3){animation-delay:.09s}
+    .card:nth-child(4){animation-delay:.12s} .card:nth-child(5){animation-delay:.15s} .card:nth-child(6){animation-delay:.18s}
+    .card:nth-child(7){animation-delay:.21s} .card:nth-child(8){animation-delay:.24s} .card:nth-child(9){animation-delay:.27s}
+    .card:nth-child(10){animation-delay:.30s} .card:nth-child(11){animation-delay:.33s} .card:nth-child(12){animation-delay:.36s}
 
     .card::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent 0%, rgba(0,200,240,0.25) 40%, rgba(0,255,136,0.15) 60%, transparent 100%);
-      pointer-events: none;
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background:linear-gradient(90deg, transparent 0%, rgba(0,200,240,0.28) 40%, rgba(0,255,136,0.16) 60%, transparent 100%);
+      pointer-events:none;
     }
-
-    .card:hover {
-      border-color: rgba(0,200,240,0.22);
-      box-shadow: 0 0 24px rgba(0,200,240,0.06);
-    }
-
-    .ch {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 13px;
-    }
-
-    .ct {
-      font-family: var(--display);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    .ca {
-      font-size: 10px;
-      color: var(--cyan);
-      background: none;
-      border: none;
-      font-family: var(--mono);
-      cursor: pointer;
-      opacity: 0.65;
-      transition: opacity 0.18s;
-      text-decoration: none;
-    }
-    .ca:hover { opacity: 1; }
-
-    .loading {
-      color: var(--text-muted);
-      font-size: 10px;
-      animation: blink 1.6s step-end infinite;
-    }
+    .card:hover { border-color:rgba(0,200,240,0.26); box-shadow:0 0 28px rgba(0,200,240,0.07), 0 6px 24px rgba(0,0,0,0.35); transform:translateY(-2px); }
+    .ch { display:flex; align-items:center; justify-content:space-between; margin-bottom:13px; }
+    .ct { font-family:var(--display); font-size:10px; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-dim); }
+    .ca { font-size:10px; color:var(--cyan); background:none; border:none; font-family:var(--mono); cursor:pointer; opacity:0.65; transition:opacity 0.18s; text-decoration:none; }
+    .ca:hover { opacity:1; }
+    .loading { color:var(--text-muted); font-size:10px; animation:blink 1.6s step-end infinite; }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
-    /* ─── WEATHER ────────────────────────────────────── */
-    .w-main { display:flex; align-items:flex-end; gap:10px; margin-bottom:10px; }
-    .w-temp {
-      font-family: var(--display);
-      font-size: 54px;
-      font-weight: 300;
-      line-height: 1;
-      color: #fff;
-    }
-    .w-ico { font-size: 34px; line-height:1; margin-bottom:4px; }
-    .w-desc { font-size:11px; color: var(--text-dim); margin-bottom:4px; }
-    .w-extra { font-size:10px; color: var(--text-muted); }
+    /* ─── WEATHER ─────────────────────────────────── */
+    .w-main { display:flex; align-items:flex-end; gap:10px; margin-bottom:8px; }
+    .w-temp { font-family:var(--display); font-size:52px; font-weight:300; line-height:1; color:#fff; }
+    .w-ico { font-size:32px; line-height:1; margin-bottom:4px; }
+    .w-desc { font-size:11px; color:var(--text-dim); margin-bottom:4px; }
+    .w-extra { font-size:10px; color:var(--text-muted); }
+    .w-forecast { display:flex; gap:6px; margin-top:12px; padding-top:11px; border-top:1px solid var(--border); }
+    .w-day { flex:1; text-align:center; background:rgba(0,0,0,0.18); border-radius:6px; padding:7px 4px; border:1px solid var(--border); }
+    .w-day-name { font-size:8px; color:var(--text-muted); margin-bottom:4px; letter-spacing:0.12em; font-family:var(--display); }
+    .w-day-ico { font-size:18px; margin-bottom:3px; }
+    .w-day-hi { font-size:11px; color:var(--text); font-family:var(--display); }
+    .w-day-lo { font-size:9px; color:var(--text-muted); }
 
-    /* ─── LEADERBOARD ────────────────────────────────── */
-    .lb {
-      display:flex;
-      align-items:center;
-      gap:9px;
-      padding:6px 0;
-      border-bottom:1px solid rgba(255,255,255,0.04);
-      font-size:11px;
-    }
+    /* ─── LEADERBOARD ─────────────────────────────── */
+    .lb { display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
     .lb:last-child { border-bottom:none; }
     .lbr { width:16px; text-align:center; font-size:9px; color:var(--text-muted); }
-    .lbr.gold { color:var(--amber); }
+    .lbr.gold { color:var(--amber); text-shadow:0 0 6px rgba(255,179,64,0.5); }
     .lbn { flex:1; color:var(--text); }
-    .lbs {
-      font-family: var(--display);
-      font-size:13px;
-      color:var(--cyan);
-    }
-    .lbbd {
-      font-size:8px; padding:1px 5px; border-radius:3px;
-      background:rgba(0,255,136,0.08);
-      color:var(--green);
-      border:1px solid rgba(0,255,136,0.18);
-      letter-spacing:0.05em;
-    }
+    .lbs { font-family:var(--display); font-size:13px; color:var(--cyan); }
+    .lbbd { font-size:8px; padding:1px 5px; border-radius:3px; background:rgba(0,255,136,0.08); color:var(--green); border:1px solid rgba(0,255,136,0.18); letter-spacing:0.05em; }
 
-    /* ─── WGS ────────────────────────────────────────── */
+    /* ─── WGS ─────────────────────────────────────── */
     .wgs { display:grid; grid-template-columns:1fr auto; gap:8px; align-items:start; padding:9px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
     .wgs:last-child { border-bottom:none; }
     .wgsn { font-size:11px; color:var(--text); margin-bottom:2px; }
@@ -291,73 +157,120 @@
     .wgsp { font-family:var(--display); font-size:20px; font-weight:600; color:#fff; text-align:right; }
     .wgst { font-size:9px; text-align:right; margin-top:2px; }
 
-    /* ─── PAPERS ─────────────────────────────────────── */
+    /* ─── PAPERS ──────────────────────────────────── */
     .paper { padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); }
     .paper:last-child { border-bottom:none; }
-    .pt { font-size:11px; color:var(--text); line-height:1.5; margin-bottom:3px;
-      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .pt { font-size:11px; color:var(--text); line-height:1.5; margin-bottom:3px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
     .pt a { color:inherit; text-decoration:none; transition:color 0.18s; }
     .pt a:hover { color:var(--cyan); }
     .pm { font-size:9px; color:var(--text-muted); }
 
-    /* ─── FREE AI ────────────────────────────────────── */
-    .fai { display:flex; align-items:center; gap:9px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
+    /* ─── FREE AI ──────────────────────────────────── */
+    .fai { display:flex; align-items:center; gap:9px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04); font-size:11px; }
     .fai:last-child { border-bottom:none; }
     .fai a { flex:1; color:var(--text); text-decoration:none; transition:color 0.18s; }
     .fai a:hover { color:var(--cyan); }
     .fai-lim { font-size:9px; color:var(--text-dim); text-align:right; }
-    .dot5 { width:5px;height:5px;border-radius:50%;flex-shrink:0; }
+    .dot5 { width:5px; height:5px; border-radius:50%; flex-shrink:0; }
 
-    /* ─── REDDIT ─────────────────────────────────────── */
-    .rl {
-      display:flex; align-items:center; gap:6px;
-      padding:6px 0; text-decoration:none; color:var(--text);
-      font-size:11px; transition:color 0.18s;
-      border-bottom:1px solid rgba(255,255,255,0.04);
-    }
+    /* ─── REDDIT ──────────────────────────────────── */
+    .rl { display:flex; align-items:center; gap:6px; padding:6px 0; text-decoration:none; color:var(--text); font-size:11px; transition:color 0.18s; border-bottom:1px solid rgba(255,255,255,0.04); }
     .rl:last-child { border-bottom:none; }
     .rl:hover { color:var(--cyan); }
     .rl::before { content:'r/'; color:var(--text-muted); font-size:9px; }
 
-    /* ─── GMAIL ──────────────────────────────────────── */
+    /* ─── GMAIL ───────────────────────────────────── */
     .gmail-g { display:grid; grid-template-columns:1fr 1fr; gap:7px; }
-    .gl {
-      display:flex; align-items:center; gap:6px;
-      padding:7px 9px; background:rgba(255,255,255,0.02);
-      border:1px solid var(--border); border-radius:6px;
-      text-decoration:none; color:var(--text); font-size:10px;
-      transition:all 0.18s;
-    }
-    .gl:hover {
-      background:rgba(0,200,240,0.06);
-      border-color:rgba(0,200,240,0.28);
-      color:var(--cyan);
-    }
+    .gl { display:flex; align-items:center; gap:6px; padding:7px 9px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:6px; text-decoration:none; color:var(--text); font-size:10px; transition:all 0.18s; }
+    .gl:hover { background:rgba(0,200,240,0.06); border-color:rgba(0,200,240,0.28); color:var(--cyan); }
 
-    /* ─── BOOKMARKS ──────────────────────────────────── */
+    /* ─── BOOKMARKS ───────────────────────────────── */
     .bm-wrap { display:flex; flex-wrap:wrap; gap:7px; }
-    .bm {
-      padding:4px 11px; background:rgba(255,255,255,0.02);
-      border:1px solid var(--border); border-radius:20px;
-      font-size:10px; color:var(--text-dim); cursor:pointer;
-      transition:all 0.18s;
-    }
+    .bm { padding:4px 11px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:20px; font-size:10px; color:var(--text-dim); cursor:pointer; transition:all 0.18s; }
     .bm:hover { background:rgba(0,255,136,0.07); border-color:rgba(0,255,136,0.28); color:var(--green); }
 
-    /* ─── SECTION DIVIDER ────────────────────────────── */
-    .sdiv {
-      font-family:var(--display); font-size:9px; letter-spacing:0.2em;
-      color:var(--text-muted); text-transform:uppercase;
-      margin:12px 0 10px; padding-bottom:7px;
-      border-bottom:1px solid var(--border);
-    }
+    /* ─── SDIV ────────────────────────────────────── */
+    .sdiv { font-family:var(--display); font-size:9px; letter-spacing:0.2em; color:var(--text-muted); text-transform:uppercase; margin:12px 0 10px; padding-bottom:7px; border-bottom:1px solid var(--border); }
 
-    /* ─── SCROLLBAR ──────────────────────────────────── */
+    /* ─── HACKER NEWS ─────────────────────────────── */
+    .hn-item { display:flex; gap:10px; padding:8px 0; border-bottom:1px solid rgba(255,255,255,0.04); align-items:flex-start; }
+    .hn-item:last-child { border-bottom:none; }
+    .hn-num { font-family:var(--display); font-size:11px; color:var(--text-muted); width:14px; flex-shrink:0; text-align:right; padding-top:1px; }
+    .hn-body { flex:1; min-width:0; }
+    .hn-title { font-size:11px; color:var(--text); line-height:1.45; margin-bottom:3px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    .hn-title a { color:inherit; text-decoration:none; transition:color 0.18s; }
+    .hn-title a:hover { color:var(--hn); }
+    .hn-meta { font-size:9px; color:var(--text-muted); }
+    .hn-pts { color:var(--hn); }
+
+    /* ─── SYSTEM STATS ────────────────────────────── */
+    .stat-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+    .stat-item { background:rgba(0,0,0,0.22); border:1px solid var(--border); border-radius:7px; padding:9px 11px; }
+    .stat-item.wide { grid-column:span 2; }
+    .stat-label { font-size:8px; color:var(--text-muted); letter-spacing:0.14em; text-transform:uppercase; margin-bottom:5px; font-family:var(--display); }
+    .stat-val { font-family:var(--display); font-size:17px; font-weight:500; color:#fff; line-height:1; }
+    .stat-sub { font-size:9px; color:var(--text-dim); margin-top:3px; }
+    .stat-row { display:flex; justify-content:space-between; align-items:baseline; }
+    .stat-bar { height:3px; background:rgba(255,255,255,0.06); border-radius:2px; margin-top:7px; overflow:hidden; }
+    .stat-bar-fill { height:100%; border-radius:2px; transition:width 1s ease; }
+    .net-dot { display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:5px; vertical-align:middle; }
+
+    /* ─── SPOTIFY ──────────────────────────────────── */
+    .sp-connect-wrap { text-align:center; padding:8px 0 4px; }
+    .sp-connect-ico { font-size:26px; margin-bottom:7px; opacity:0.5; }
+    .sp-connect-txt { font-size:10px; color:var(--text-muted); margin-bottom:11px; }
+    .sp-connect-btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding:9px 18px; background:rgba(30,215,96,0.1); border:1px solid rgba(30,215,96,0.3);
+      border-radius:7px; color:var(--spotify); font-family:var(--mono); font-size:11px;
+      cursor:pointer; transition:all 0.2s; text-decoration:none; width:100%;
+    }
+    .sp-connect-btn:hover { background:rgba(30,215,96,0.18); box-shadow:0 0 14px rgba(30,215,96,0.18); }
+    .sp-now { display:flex; gap:12px; align-items:center; }
+    .sp-art { width:54px; height:54px; border-radius:6px; flex-shrink:0; object-fit:cover; border:1px solid rgba(255,255,255,0.08); }
+    .sp-art-ph { width:54px; height:54px; border-radius:6px; flex-shrink:0; background:rgba(255,255,255,0.04); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:22px; }
+    .sp-info { flex:1; min-width:0; }
+    .sp-track { font-size:12px; color:#fff; font-weight:500; margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .sp-artist { font-size:10px; color:var(--text-dim); margin-bottom:9px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .sp-prog-wrap { height:2px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; }
+    .sp-prog-bar { height:100%; background:var(--spotify); border-radius:2px; transition:width 1s linear; }
+    .sp-status-row { display:flex; align-items:center; gap:5px; margin-top:6px; font-size:9px; color:var(--text-muted); }
+    .sp-playing-dot { width:5px; height:5px; border-radius:50%; background:var(--spotify); box-shadow:0 0 5px var(--spotify); animation:pulseAnim 1.4s ease-in-out infinite; flex-shrink:0; }
+    .sp-nothing { text-align:center; padding:10px 0; color:var(--text-muted); font-size:10px; }
+    .sp-nothing-ico { font-size:26px; margin-bottom:6px; opacity:0.35; }
+    #sp-badge { font-size:9px; color:var(--text-muted); }
+
+    /* ─── MINI CALENDAR ───────────────────────────── */
+    .cal-month-nav { display:flex; align-items:baseline; gap:6px; }
+    .cal-month-name { font-family:var(--display); font-size:14px; color:#fff; font-weight:500; }
+    .cal-year-num { font-size:10px; color:var(--text-muted); }
+    .cal-dow-row { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; margin-bottom:2px; }
+    .cal-dow { font-size:8px; color:var(--text-muted); text-align:center; padding:3px 0; font-family:var(--display); letter-spacing:0.06em; }
+    .cal-cells { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+    .cal-cell {
+      font-size:10px; text-align:center; padding:4px 0;
+      border-radius:4px; color:var(--text-dim); cursor:default;
+      transition:background 0.15s, color 0.15s;
+      aspect-ratio:1;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cal-cell.cur { color:var(--text); }
+    .cal-cell.cur:hover { background:rgba(0,200,240,0.1); color:var(--cyan); cursor:pointer; }
+    .cal-cell.today { background:var(--cyan); color:#000 !important; font-weight:700; border-radius:50%; }
+    .cal-cell.other { opacity:0.22; }
+    .cal-cell.has-event::after { content:''; display:block; width:3px; height:3px; background:var(--green); border-radius:50%; position:absolute; bottom:1px; left:50%; transform:translateX(-50%); }
+    .cal-cell { position:relative; }
+    .cal-footer { margin-top:10px; padding-top:9px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .cal-today-str { font-size:9px; color:var(--text-muted); }
+    .cal-gcal-link { font-size:9px; color:var(--cyan); text-decoration:none; opacity:0.7; transition:opacity 0.18s; }
+    .cal-gcal-link:hover { opacity:1; }
+
+    /* ─── SCROLLBAR ───────────────────────────────── */
     ::-webkit-scrollbar { width:3px; }
     ::-webkit-scrollbar-track { background:transparent; }
     ::-webkit-scrollbar-thumb { background:rgba(0,200,240,0.18); border-radius:2px; }
 
-    /* ─── RESPONSIVE ─────────────────────────────────── */
+    /* ─── RESPONSIVE ──────────────────────────────── */
     @media(max-width:1100px) {
       .c3,.c4 { grid-column:span 6; }
       .c5,.c7,.c8 { grid-column:span 12; }
@@ -366,50 +279,52 @@
       .c3,.c4,.c5,.c6,.c7,.c8 { grid-column:span 12; }
       .h-center { display:none; }
     }
-  @media(min-width:900px){ .search-desktop{display:block!important} }
-</style>
+    @media(min-width:900px){ .search-desktop{display:block!important} }
+  </style>
 </head>
 <body>
 
-<!-- ── HEADER ──────────────────────────────────────────── -->
+<!-- ── HEADER ─────────────────────────────────────────── -->
 <header>
   <div class="h-left">
     <div class="logo">⌬</div>
     <div class="h-title">AI/Bio Command Center</div>
-    <span class="badge">v3</span>
+    <span class="badge">v4</span>
   </div>
   <div class="h-center">
     <span class="pulse"></span>
     CHENEY, WA &nbsp;•&nbsp; 47.49°N 117.58°W
   </div>
-  <div style="position:relative; flex:1; max-width:380px; margin:0 18px; display:none" class="search-desktop">
-      <input id="cmd" placeholder="⌘K search cards…" style="width:100%; background:rgba(0,0,0,0.35); border:1px solid var(--border); border-radius:6px; padding:6px 10px 6px 26px; font-family:var(--mono); font-size:11px; color:var(--text); outline:none;">
-      <svg style="position:absolute; left:8px; top:7px; width:12px; height:12px; opacity:.45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-    </div>
-    <div id="clock">--:--:--</div>
+  <div style="position:relative;flex:1;max-width:380px;margin:0 18px;display:none" class="search-desktop">
+    <input id="cmd" placeholder="⌘K search cards…" style="width:100%;background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:6px;padding:6px 10px 6px 26px;font-family:var(--mono);font-size:11px;color:var(--text);outline:none;">
+    <svg style="position:absolute;left:8px;top:7px;width:12px;height:12px;opacity:.45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+  </div>
+  <div id="clock">--:--:--</div>
 </header>
 
-<!-- ── QUICK LAUNCH ─────────────────────────────────────── -->
+<!-- ── QUICK LAUNCH ──────────────────────────────────── -->
 <div class="quick-wrap">
   <div class="quick-launch">
-    <a class="ql" href="https://chat.openai.com" target="_blank"><span class="qd" style="background:#10a37f"></span>ChatGPT</a>
-    <a class="ql" href="https://claude.ai" target="_blank"><span class="qd" style="background:#cc785c"></span>Claude</a>
-    <a class="ql" href="https://gemini.google.com" target="_blank"><span class="qd" style="background:#4285f4"></span>Gemini</a>
-    <a class="ql" href="https://https://thepiratebay.org/" target="_blank"><span class="qd" style="background:#20b2aa"></span>The Pirate Bay</a>
-    <a class="ql" href="https://x.com/i/grok" target="_blank"><span class="qd" style="background:#666"></span>Grok</a>
-    <span style="width:1px;background:var(--border);margin:0 2px;align-self:stretch;display:inline-block"></span>
+    <a class="ql" href="https://chat.openai.com"    target="_blank"><span class="qd" style="background:#10a37f"></span>ChatGPT</a>
+    <a class="ql" href="https://claude.ai"           target="_blank"><span class="qd" style="background:#cc785c"></span>Claude</a>
+    <a class="ql" href="https://gemini.google.com"   target="_blank"><span class="qd" style="background:#4285f4"></span>Gemini</a>
+    <a class="ql" href="https://thepiratebay.org/"   target="_blank"><span class="qd" style="background:#20b2aa"></span>The Pirate Bay</a>
+    <a class="ql" href="https://x.com/i/grok"        target="_blank"><span class="qd" style="background:#666"></span>Grok</a>
+    <span class="ql-sep"></span>
     <a class="ql" href="https://pubmed.ncbi.nlm.nih.gov/?term=longevity+CRISPR" target="_blank"><span class="qd" style="background:#00ff88"></span>PubMed</a>
     <a class="ql" href="https://arxiv.org/search/?query=AI+longevity&searchtype=all" target="_blank"><span class="qd" style="background:#b388ff"></span>arXiv</a>
-    <a class="ql" href="https://reddit.com/r/longevity/new" target="_blank"><span class="qd" style="background:#ff4500"></span>r/longevity</a>
-    <a class="ql" href="https://reddit.com/r/LocalLLaMA/new" target="_blank"><span class="qd" style="background:#ff4500"></span>r/LocalLLaMA</a>
-    <span style="width:1px;background:var(--border);margin:0 2px;align-self:stretch;display:inline-block"></span>
+    <a class="ql" href="https://reddit.com/r/longevity/new"   target="_blank"><span class="qd" style="background:#ff4500"></span>r/longevity</a>
+    <a class="ql" href="https://reddit.com/r/LocalLLaMA/new"  target="_blank"><span class="qd" style="background:#ff4500"></span>r/LocalLLaMA</a>
+    <a class="ql" href="https://news.ycombinator.com"         target="_blank"><span class="qd" style="background:#ff6600"></span>HN</a>
+    <span class="ql-sep"></span>
     <a class="ql" href="https://mail.google.com/mail/u/0/#inbox" target="_blank"><span class="qd" style="background:#ea4335"></span>Gmail</a>
-    <a class="ql" href="https://calendar.google.com" target="_blank"><span class="qd" style="background:#4285f4"></span>Calendar</a>
-    <a class="ql" href="https://nebula.org" target="_blank"><span class="qd" style="background:#00c8f0"></span>Nebula</a>
-    <a class="ql" href="https://artificialanalysis.ai" target="_blank"><span class="qd" style="background:#ffb340"></span>Arena</a>
+    <a class="ql" href="https://calendar.google.com"          target="_blank"><span class="qd" style="background:#4285f4"></span>Calendar</a>
+    <a class="ql" href="https://open.spotify.com"             target="_blank"><span class="qd" style="background:#1ed760"></span>Spotify</a>
+    <a class="ql" href="https://nebula.org"                   target="_blank"><span class="qd" style="background:#00c8f0"></span>Nebula</a>
+    <a class="ql" href="https://artificialanalysis.ai"        target="_blank"><span class="qd" style="background:#ffb340"></span>Arena</a>
   </div>
 
-  <!-- ── MAIN GRID ─────────────────────────────────────── -->
+  <!-- ── MAIN GRID ──────────────────────────────────── -->
   <div class="main" style="padding:0 0 30px">
   <div class="grid">
 
@@ -428,30 +343,17 @@
         <span class="ct">🏆 AI Leaderboard</span>
         <a class="ca" href="https://artificialanalysis.ai" target="_blank">↗ artificialanalysis.ai</a>
       </div>
-      <div id="lb-out">
-        <div class="loading">loading Artificial Analysis...</div>
-      </div>
-      <div style="margin-top:9px;font-size:9px;color:var(--text-muted)">Intelligence Index • from aa-models.json</div>
+      <div id="lb-out"><div class="loading">loading Artificial Analysis...</div></div>
+      <div style="margin-top:9px;font-size:9px;color:var(--text-muted)">Intelligence Index · aa-models.json</div>
     </div>
 
-    <!-- WGS PRICES c4 -->
+    <!-- SPOTIFY c4 -->
     <div class="card c4">
       <div class="ch">
-        <span class="ct">🧬 30x WGS Prices</span>
-        <span style="font-size:9px;color:var(--text-muted)">checked Apr 2026</span>
+        <span class="ct">🎵 Now Playing</span>
+        <span id="sp-badge">Spotify</span>
       </div>
-      <div class="wgs">
-        <div><div class="wgsn">Nebula Genomics</div><div class="wgss">30x · 6.4B bases</div></div>
-        <div><div class="wgsp">$249</div><div class="wgst" style="color:var(--green)">↓ lowest ever</div></div>
-      </div>
-      <div class="wgs">
-        <div><div class="wgsn">Sequencing.com</div><div class="wgss">Ultimate Genome</div></div>
-        <div><div class="wgsp">$399</div><div class="wgst" style="color:var(--text-dim)">— stable</div></div>
-      </div>
-      <div class="wgs">
-        <div><div class="wgsn">Dante Labs</div><div class="wgss">Whole GenomeZ</div></div>
-        <div><div class="wgsp">$999</div><div class="wgst" style="color:var(--red)">↑ premium</div></div>
-      </div>
+      <div id="spotify-out"><div class="loading">initializing...</div></div>
     </div>
 
     <!-- PUBMED c6 -->
@@ -470,6 +372,53 @@
         <button class="ca" onclick="loadArxiv()">↺ refresh</button>
       </div>
       <div id="arxiv-out"><div class="loading">loading papers...</div></div>
+    </div>
+
+    <!-- HACKER NEWS c4 -->
+    <div class="card c4">
+      <div class="ch">
+        <span class="ct">🔶 Hacker News</span>
+        <button class="ca" onclick="loadHN()">↺ refresh</button>
+      </div>
+      <div id="hn-out"><div class="loading">fetching top stories...</div></div>
+    </div>
+
+    <!-- SYSTEM STATS c4 -->
+    <div class="card c4">
+      <div class="ch">
+        <span class="ct">💻 System Stats</span>
+        <button class="ca" onclick="refreshStats()">↺ refresh</button>
+      </div>
+      <div id="stats-out"></div>
+    </div>
+
+    <!-- MINI CALENDAR c4 -->
+    <div class="card c4">
+      <div class="ch">
+        <span class="ct">📅 Calendar</span>
+        <a class="ca" href="https://calendar.google.com" target="_blank">↗ Google Cal</a>
+      </div>
+      <div id="cal-out"></div>
+    </div>
+
+    <!-- WGS PRICES c3 -->
+    <div class="card c3">
+      <div class="ch">
+        <span class="ct">🧬 30x WGS Prices</span>
+        <span style="font-size:9px;color:var(--text-muted)">Apr 2026</span>
+      </div>
+      <div class="wgs">
+        <div><div class="wgsn">Nebula Genomics</div><div class="wgss">30x · 6.4B bases</div></div>
+        <div><div class="wgsp">$249</div><div class="wgst" style="color:var(--green)">↓ lowest ever</div></div>
+      </div>
+      <div class="wgs">
+        <div><div class="wgsn">Sequencing.com</div><div class="wgss">Ultimate Genome</div></div>
+        <div><div class="wgsp">$399</div><div class="wgst" style="color:var(--text-dim)">— stable</div></div>
+      </div>
+      <div class="wgs">
+        <div><div class="wgsn">Dante Labs</div><div class="wgss">Whole GenomeZ</div></div>
+        <div><div class="wgsp">$999</div><div class="wgst" style="color:var(--red)">↑ premium</div></div>
+      </div>
     </div>
 
     <!-- FREE AI c3 -->
@@ -505,9 +454,9 @@
     <!-- REDDIT + DRWP c3 -->
     <div class="card c3">
       <div class="ch"><span class="ct">🔴 Reddit Feeds</span></div>
-      <a class="rl" href="https://reddit.com/r/longevity/new" target="_blank">longevity</a>
-      <a class="rl" href="https://reddit.com/r/Biohackers/new" target="_blank">Biohackers</a>
-      <a class="rl" href="https://reddit.com/r/LocalLLaMA/new" target="_blank">LocalLLaMA</a>
+      <a class="rl" href="https://reddit.com/r/longevity/new"   target="_blank">longevity</a>
+      <a class="rl" href="https://reddit.com/r/Biohackers/new"  target="_blank">Biohackers</a>
+      <a class="rl" href="https://reddit.com/r/LocalLLaMA/new"  target="_blank">LocalLLaMA</a>
       <a class="rl" href="https://reddit.com/r/singularity/new" target="_blank">singularity</a>
       <div class="sdiv">DrWillPowers</div>
       <div id="drwill-out" style="margin:4px 0 6px"></div>
@@ -518,10 +467,10 @@
     <div class="card c3">
       <div class="ch"><span class="ct">📩 Gmail</span></div>
       <div class="gmail-g">
-        <a class="gl" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">📥 Primary</a>
+        <a class="gl" href="https://mail.google.com/mail/u/0/#inbox"           target="_blank">📥 Primary</a>
         <a class="gl" href="https://mail.google.com/mail/u/0/#label/Biohacking" target="_blank">🧬 Biohacking</a>
-        <a class="gl" href="https://mail.google.com/mail/u/0/#label/AI-Papers" target="_blank">🤖 AI Papers</a>
-        <a class="gl" href="https://mail.google.com/mail/u/0/#advanced-search" target="_blank">🔍 Search</a>
+        <a class="gl" href="https://mail.google.com/mail/u/0/#label/AI-Papers"  target="_blank">🤖 AI Papers</a>
+        <a class="gl" href="https://mail.google.com/mail/u/0/#advanced-search"  target="_blank">🔍 Search</a>
       </div>
       <div style="margin-top:8px">
         <a class="gl" href="https://calendar.google.com" target="_blank" style="justify-content:center">📅 Google Calendar →</a>
@@ -547,40 +496,51 @@
 </div><!-- /quick-wrap -->
 
 <script>
-/* ─── CLOCK ──────────────────────────────────────────────── */
+/* ══════════════════════════════════════════════
+   CONFIG — paste your Spotify Client ID below.
+   Steps:
+   1. Go to developer.spotify.com/dashboard
+   2. Create an app, set redirect URI to your
+      GitHub Pages URL (e.g. https://you.github.io/dashboard/)
+   3. Copy the Client ID here
+   ══════════════════════════════════════════════ */
+const SPOTIFY_CLIENT_ID = 'YOUR_SPOTIFY_CLIENT_ID'; // ← replace
+const SPOTIFY_REDIRECT  = location.origin + location.pathname;
+const SPOTIFY_SCOPES    = 'user-read-currently-playing user-read-playback-state';
+
+/* ─── CLOCK ──────────────────────────────────────────── */
 function tick() {
   document.getElementById('clock').textContent =
     new Date().toLocaleTimeString('en-US', {
-      hour12: false, hour:'2-digit', minute:'2-digit', second:'2-digit',
-      timeZone: 'America/Los_Angeles'
+      hour12:false, hour:'2-digit', minute:'2-digit', second:'2-digit',
+      timeZone:'America/Los_Angeles'
     });
 }
 setInterval(tick, 1000); tick();
 
-/* ─── WEATHER ────────────────────────────────────────────── */
-const WMO_DESC = {
-  0:'Clear Sky', 1:'Mainly Clear', 2:'Partly Cloudy', 3:'Overcast',
-  45:'Foggy', 48:'Icy Fog',
-  51:'Light Drizzle', 53:'Drizzle', 55:'Heavy Drizzle',
-  61:'Light Rain', 63:'Moderate Rain', 65:'Heavy Rain',
-  71:'Light Snow', 73:'Moderate Snow', 75:'Heavy Snow', 77:'Snow Grains',
-  80:'Rain Showers', 81:'Moderate Showers', 82:'Violent Showers',
-  85:'Snow Showers', 86:'Heavy Snow Showers',
-  95:'Thunderstorm', 96:'T-Storm + Hail', 99:'Severe Thunderstorm'
-};
-const WMO_ICO = {
-  0:'☀️', 1:'🌤', 2:'⛅', 3:'☁️', 45:'🌫', 48:'🌫',
-  51:'🌦', 53:'🌧', 55:'🌧', 61:'🌧', 63:'🌧', 65:'⛈',
-  71:'🌨', 73:'❄️', 75:'❄️', 77:'❄️',
-  80:'🌦', 81:'🌧', 82:'⛈', 85:'🌨', 86:'❄️',
-  95:'⛈', 96:'⛈', 99:'⛈'
-};
+/* ─── WEATHER (current + 3-day forecast) ─────────────── */
+const WMO_DESC = {0:'Clear Sky',1:'Mainly Clear',2:'Partly Cloudy',3:'Overcast',45:'Foggy',48:'Icy Fog',51:'Light Drizzle',53:'Drizzle',55:'Heavy Drizzle',61:'Light Rain',63:'Moderate Rain',65:'Heavy Rain',71:'Light Snow',73:'Moderate Snow',75:'Heavy Snow',77:'Snow Grains',80:'Rain Showers',81:'Moderate Showers',82:'Violent Showers',85:'Snow Showers',86:'Heavy Snow Showers',95:'Thunderstorm',96:'T-Storm + Hail',99:'Severe Thunderstorm'};
+const WMO_ICO  = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',51:'🌦',53:'🌧',55:'🌧',61:'🌧',63:'🌧',65:'⛈',71:'🌨',73:'❄️',75:'❄️',77:'❄️',80:'🌦',81:'🌧',82:'⛈',85:'🌨',86:'❄️',95:'⛈',96:'⛈',99:'⛈'};
 
 async function loadWeather() {
   try {
-    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.49&longitude=-117.58&current=temperature_2m,weathercode,windspeed_10m,apparent_temperature,relative_humidity_2m&temperature_unit=fahrenheit&windspeed_unit=mph');
-    const d = await r.json(); const c = d.current;
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=47.49&longitude=-117.58&current=temperature_2m,weathercode,windspeed_10m,apparent_temperature,relative_humidity_2m&daily=weathercode,temperature_2m_max,temperature_2m_min&temperature_unit=fahrenheit&windspeed_unit=mph&timezone=America%2FLos_Angeles&forecast_days=4');
+    const d = await r.json();
+    const c = d.current;
     const code = c.weathercode;
+    const daily = d.daily;
+    const DOW = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    let forecast = '';
+    for (let i = 1; i <= 3; i++) {
+      const dt = new Date(daily.time[i] + 'T12:00:00');
+      const dc = daily.weathercode[i];
+      forecast += `<div class="w-day">
+        <div class="w-day-name">${DOW[dt.getDay()]}</div>
+        <div class="w-day-ico">${WMO_ICO[dc]||'🌡'}</div>
+        <div class="w-day-hi">${Math.round(daily.temperature_2m_max[i])}°</div>
+        <div class="w-day-lo">${Math.round(daily.temperature_2m_min[i])}°</div>
+      </div>`;
+    }
     document.getElementById('weather-out').innerHTML = `
       <div class="w-main">
         <div class="w-temp">${Math.round(c.temperature_2m)}°</div>
@@ -591,61 +551,54 @@ async function loadWeather() {
         Feels ${Math.round(c.apparent_temperature)}° &nbsp;·&nbsp;
         Wind ${Math.round(c.windspeed_10m)} mph &nbsp;·&nbsp;
         RH ${c.relative_humidity_2m}%
-      </div>`;
+      </div>
+      <div class="w-forecast">${forecast}</div>`;
   } catch {
     document.getElementById('weather-out').innerHTML = '<div class="loading">unavailable</div>';
   }
 }
 loadWeather();
+setInterval(loadWeather, 10 * 60 * 1000); // refresh every 10 min
 
-
-/* ─── PUBMED ─────────────────────────────────────────────── */
+/* ─── PUBMED ─────────────────────────────────────────── */
 async function loadPubmed() {
   const el = document.getElementById('pubmed-out');
   el.innerHTML = '<div class="loading">fetching...</div>';
   try {
-    const s = await fetch('/dashboard/dashboard/data/pubmed.json', {cache:'no-store'});
+    const s  = await fetch('/dashboard/dashboard/data/pubmed.json', {cache:'no-store'});
     const sd = await s.json();
     const ids = sd.esearchresult?.idlist || [];
     if (!ids.length) { el.innerHTML='<div class="loading">no results</div>'; return; }
-    const sm = await fetch('/dashboard/dashboard//data/pubmed-summary.json', {cache:'no-store'});
+    const sm  = await fetch('/dashboard/dashboard/data/pubmed-summary.json', {cache:'no-store'});
     const smd = await sm.json();
-    const rows = ids.map(id => {
+    el.innerHTML = ids.map(id => {
       const a = smd.result?.[id];
-      if (!a || !a.title) return '';
+      if (!a?.title) return '';
       const date = a.pubdate?.split(' ').slice(0,2).join(' ') || '';
-      const src = a.fulljournalname || a.source || '';
-      return `<div class="paper">
-        <div class="pt"><a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank">${a.title}</a></div>
-        <div class="pm">${src}${date?' · '+date:''}</div>
-      </div>`;
-    }).join('');
-    el.innerHTML = rows || '<div class="loading">no results</div>';
+      const src  = a.fulljournalname || a.source || '';
+      return `<div class="paper"><div class="pt"><a href="https://pubmed.ncbi.nlm.nih.gov/${id}/" target="_blank">${a.title}</a></div><div class="pm">${src}${date?' · '+date:''}</div></div>`;
+    }).join('') || '<div class="loading">no results</div>';
   } catch {
     el.innerHTML = '<div class="loading">run GitHub Action</div>';
   }
 }
 loadPubmed();
 
-/* ─── ARXIV ──────────────────────────────────────────────── */
+/* ─── ARXIV ──────────────────────────────────────────── */
 async function loadArxiv() {
   const el = document.getElementById('arxiv-out');
   el.innerHTML = '<div class="loading">fetching...</div>';
   try {
-    const r = await fetch('/dashboard/dashboard//data/arxiv.xml', {cache:'no-store'});
+    const r   = await fetch('/dashboard/dashboard/data/arxiv.xml', {cache:'no-store'});
     const txt = await r.text();
     const xml = new DOMParser().parseFromString(txt, 'application/xml');
-    const entries = xml.querySelectorAll('entry');
     let html = '';
-    entries.forEach(e => {
+    xml.querySelectorAll('entry').forEach(e => {
       const title = e.querySelector('title')?.textContent?.trim().replace(/\s+/g,' ') || '';
-      const link = e.querySelector('id')?.textContent?.trim() || '#';
-      const pub = e.querySelector('published')?.textContent?.trim().slice(0,10) || '';
-      const cats = [...e.querySelectorAll('category')].map(c=>c.getAttribute('term')).slice(0,2).join(' · ');
-      html += `<div class="paper">
-        <div class="pt"><a href="${link}" target="_blank">${title}</a></div>
-        <div class="pm">${cats}${pub?' · '+pub:''}</div>
-      </div>`;
+      const link  = e.querySelector('id')?.textContent?.trim() || '#';
+      const pub   = e.querySelector('published')?.textContent?.trim().slice(0,10) || '';
+      const cats  = [...e.querySelectorAll('category')].map(c=>c.getAttribute('term')).slice(0,2).join(' · ');
+      html += `<div class="paper"><div class="pt"><a href="${link}" target="_blank">${title}</a></div><div class="pm">${cats}${pub?' · '+pub:''}</div></div>`;
     });
     el.innerHTML = html || '<div class="loading">no results</div>';
   } catch {
@@ -654,8 +607,8 @@ async function loadArxiv() {
 }
 loadArxiv();
 
-/* ─── AI LEADERBOARD ─────────────────────────────────────── */
-async function loadLeaderboard(){
+/* ─── AI LEADERBOARD ─────────────────────────────────── */
+async function loadLeaderboard() {
   const el = document.getElementById('lb-out');
   try {
     const r = await fetch('/dashboard/dashboard/data/aa-models.json', {cache:'no-store'});
@@ -663,54 +616,346 @@ async function loadLeaderboard(){
     const top = data
       .filter(m => m.evaluations?.artificial_analysis_intelligence_index)
       .sort((a,b) => b.evaluations.artificial_analysis_intelligence_index - a.evaluations.artificial_analysis_intelligence_index)
-      .slice(0,5);
-    el.innerHTML = top.map((m,i)=>{
+      .slice(0, 5);
+    el.innerHTML = top.map((m,i) => {
       const intel = m.evaluations.artificial_analysis_intelligence_index.toFixed(1);
       const price = m.pricing?.price_1m_blended_3_to_1?.toFixed(2) || '—';
       const speed = Math.round(m.median_output_tokens_per_second||0);
-      const gold = i<3 ? 'gold' : '';
       return `<div class="lb">
-        <span class="lbr ${gold}">${i+1}</span>
-        <span class="lbn">${m.name}<span style="opacity:.55;margin-left:6px;font-size:9px">${m.model_creator?.name||''}</span></span>
+        <span class="lbr ${i<3?'gold':''}">${i+1}</span>
+        <span class="lbn">${m.name}<span style="opacity:.5;margin-left:6px;font-size:9px">${m.model_creator?.name||''}</span></span>
         <span class="lbbd" title="${speed} t/s">$${price}</span>
         <span class="lbs">${intel}</span>
       </div>`;
     }).join('');
-  } catch(e){
+  } catch {
     el.innerHTML = '<div class="loading">run GitHub Action</div>';
   }
 }
 loadLeaderboard();
 
-/* ─── DRWILL ─────────────────────────────────────────────── */
-async function loadDrWill(){
+/* ─── DRWILL ─────────────────────────────────────────── */
+async function loadDrWill() {
   const target = document.getElementById('drwill-out');
-  if(!target) return;
-  try{
-    const r = await fetch('/dashboard/dashboard/data/drwillpowers.xml',{cache:'no-store'});
+  if (!target) return;
+  try {
+    const r   = await fetch('/dashboard/dashboard/data/drwillpowers.xml', {cache:'no-store'});
     const txt = await r.text();
-    const xml = new DOMParser().parseFromString(txt,'application/xml');
-    const entries = [...xml.querySelectorAll('entry')].slice(0,3);
-    target.innerHTML = entries.map(e=>{
-      const t = e.querySelector('title')?.textContent||'';
-      const l = e.querySelector('link')?.getAttribute('href')||'#';
+    const xml = new DOMParser().parseFromString(txt, 'application/xml');
+    target.innerHTML = [...xml.querySelectorAll('entry')].slice(0,3).map(e => {
+      const t = e.querySelector('title')?.textContent || '';
+      const l = e.querySelector('link')?.getAttribute('href') || '#';
       const d = new Date(e.querySelector('updated')?.textContent).toLocaleDateString('en-US',{month:'short',day:'numeric'});
       return `<a class="rl" href="${l}" target="_blank" style="border:none;padding:3px 0"><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t}</span><span style="color:var(--text-muted);font-size:9px;margin-left:8px">${d}</span></a>`;
     }).join('');
-  }catch{}
+  } catch {}
 }
 loadDrWill();
 
-/* ─── SEARCH ─────────────────────────────────────────────── */
-const cmd = document.getElementById('cmd');
+/* ─── HACKER NEWS ─────────────────────────────────────── */
+async function loadHN() {
+  const el = document.getElementById('hn-out');
+  el.innerHTML = '<div class="loading">fetching top stories...</div>';
+  try {
+    const ids  = await (await fetch('https://hacker-news.firebaseio.com/v0/topstories.json')).json();
+    const top  = ids.slice(0, 8);
+    const stories = await Promise.all(
+      top.map(id => fetch(`https://hacker-news.firebaseio.com/v0/item/${id}.json`).then(r => r.json()))
+    );
+    el.innerHTML = stories.map((s, i) => {
+      let host = 'ycombinator.com';
+      try { host = new URL(s.url).hostname.replace(/^www\./,''); } catch {}
+      const href = s.url || `https://news.ycombinator.com/item?id=${s.id}`;
+      return `<div class="hn-item">
+        <div class="hn-num">${i+1}</div>
+        <div class="hn-body">
+          <div class="hn-title"><a href="${href}" target="_blank">${s.title}</a></div>
+          <div class="hn-meta"><span class="hn-pts">${s.score||0} pts</span> · ${s.descendants||0} comments · <span style="color:var(--text-dim)">${host}</span></div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch {
+    el.innerHTML = '<div class="loading">unavailable</div>';
+  }
+}
+loadHN();
+setInterval(loadHN, 5 * 60 * 1000); // refresh every 5 min
+
+/* ─── SYSTEM STATS ────────────────────────────────────── */
+function refreshStats() {
+  const el   = document.getElementById('stats-out');
+  const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  const mem  = performance.memory; // Chrome only
+
+  const netType   = conn?.effectiveType?.toUpperCase() || conn?.type?.toUpperCase() || 'UNKNOWN';
+  const netDown   = conn?.downlink != null ? conn.downlink + ' Mbps' : '—';
+  const isOnline  = navigator.onLine;
+  const netColor  = isOnline ? 'var(--green)' : 'var(--red)';
+  const netStatus = isOnline ? 'ONLINE' : 'OFFLINE';
+
+  const perf      = performance.timing;
+  const loadMs    = perf.loadEventEnd && perf.navigationStart ? perf.loadEventEnd - perf.navigationStart : 0;
+  const loadStr   = loadMs > 0 ? (loadMs/1000).toFixed(2)+'s' : '—';
+
+  const upSec     = Math.round(performance.now() / 1000);
+  const upStr     = upSec < 60 ? upSec+'s'
+                  : upSec < 3600 ? Math.floor(upSec/60)+'m '+upSec%60+'s'
+                  : Math.floor(upSec/3600)+'h '+Math.floor((upSec%3600)/60)+'m';
+
+  const dpr       = window.devicePixelRatio?.toFixed(1) || '1.0';
+  const cores     = navigator.hardwareConcurrency || '?';
+  const platform  = navigator.platform || navigator.userAgentData?.platform || '—';
+
+  let memBlock = '';
+  if (mem) {
+    const used  = (mem.usedJSHeapSize / 1048576).toFixed(1);
+    const total = (mem.totalJSHeapSize / 1048576).toFixed(1);
+    const pct   = Math.round(mem.usedJSHeapSize / mem.jsHeapSizeLimit * 100);
+    const col   = pct > 80 ? 'var(--red)' : pct > 50 ? 'var(--amber)' : 'var(--cyan)';
+    memBlock = `<div class="stat-item wide">
+      <div class="stat-label">JS Heap Memory</div>
+      <div class="stat-row">
+        <div class="stat-val">${used}<span style="font-size:11px;color:var(--text-muted)"> / ${total} MB</span></div>
+        <div style="font-size:10px;color:var(--text-muted)">${pct}%</div>
+      </div>
+      <div class="stat-bar"><div class="stat-bar-fill" style="width:${pct}%;background:${col}"></div></div>
+    </div>`;
+  }
+
+  el.innerHTML = `<div class="stat-grid">
+    <div class="stat-item">
+      <div class="stat-label">Network</div>
+      <div class="stat-val" style="font-size:13px;color:${netColor}">
+        <span class="net-dot" style="background:${netColor}"></span>${netStatus}
+      </div>
+      <div class="stat-sub">${netType} · ↓ ${netDown}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Session Time</div>
+      <div class="stat-val" style="font-size:14px">${upStr}</div>
+      <div class="stat-sub">Load ${loadStr}</div>
+    </div>
+    ${memBlock}
+    <div class="stat-item">
+      <div class="stat-label">Display</div>
+      <div class="stat-val" style="font-size:11px">${screen.width}×${screen.height}</div>
+      <div class="stat-sub">${dpr}× DPR</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">CPU Cores</div>
+      <div class="stat-val">${cores}</div>
+      <div class="stat-sub">${platform}</div>
+    </div>
+  </div>`;
+
+  // Battery (async, append if available)
+  if ('getBattery' in navigator) {
+    navigator.getBattery().then(b => {
+      const pct     = Math.round(b.level * 100);
+      const col     = pct < 20 ? 'var(--red)' : pct < 50 ? 'var(--amber)' : 'var(--green)';
+      const label   = b.charging ? 'Battery ⚡' : 'Battery';
+      const grid    = el.querySelector('.stat-grid');
+      if (!grid) return;
+      const div = document.createElement('div');
+      div.className = 'stat-item wide';
+      div.innerHTML = `
+        <div class="stat-label">${label}</div>
+        <div class="stat-row">
+          <div class="stat-val" style="color:${col}">${pct}%</div>
+          <div style="font-size:9px;color:var(--text-muted)">${b.charging?'Charging':'On Battery'}</div>
+        </div>
+        <div class="stat-bar"><div class="stat-bar-fill" style="width:${pct}%;background:${col}"></div></div>`;
+      grid.appendChild(div);
+    });
+  }
+}
+refreshStats();
+setInterval(refreshStats, 15 * 1000);
+
+/* ─── MINI CALENDAR ───────────────────────────────────── */
+function renderCalendar() {
+  const el   = document.getElementById('cal-out');
+  const now  = new Date();
+  const y    = now.getFullYear();
+  const m    = now.getMonth();
+  const d    = now.getDate();
+  const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const DOW   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const first = new Date(y, m, 1).getDay();
+  const total = new Date(y, m+1, 0).getDate();
+  const prevT = new Date(y, m, 0).getDate();
+
+  let cells = DOW.map(dw => `<div class="cal-dow">${dw}</div>`).join('');
+  for (let i = first-1; i >= 0; i--)
+    cells += `<div class="cal-cell other">${prevT-i}</div>`;
+  for (let i = 1; i <= total; i++)
+    cells += `<div class="cal-cell cur${i===d?' today':''}">${i}</div>`;
+  const used = first + total;
+  for (let i = 1; i <= (42-used) && i <= 14; i++)
+    cells += `<div class="cal-cell other">${i}</div>`;
+
+  const dayName = now.toLocaleDateString('en-US',{weekday:'long',timeZone:'America/Los_Angeles'});
+  const timeStr = now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',timeZone:'America/Los_Angeles'});
+
+  el.innerHTML = `
+    <div class="ch" style="margin-bottom:10px">
+      <div class="cal-month-nav">
+        <span class="cal-month-name">${MONTHS[m]}</span>
+        <span class="cal-year-num">${y}</span>
+      </div>
+      <span style="font-size:9px;color:var(--text-muted)">${dayName}</span>
+    </div>
+    <div class="cal-dow-row">${DOW.map(dw=>`<div class="cal-dow">${dw}</div>`).join('')}</div>
+    <div class="cal-cells">${(() => {
+      let c2 = '';
+      for (let i=first-1;i>=0;i--) c2+=`<div class="cal-cell other">${prevT-i}</div>`;
+      for (let i=1;i<=total;i++) c2+=`<div class="cal-cell cur${i===d?' today':''}">${i}</div>`;
+      for (let i=1;i<=(42-(first+total))&&i<=14;i++) c2+=`<div class="cal-cell other">${i}</div>`;
+      return c2;
+    })()}</div>
+    <div class="cal-footer">
+      <span class="cal-today-str">Today · ${timeStr} PT</span>
+      <a class="cal-gcal-link" href="https://calendar.google.com" target="_blank">Open Calendar ↗</a>
+    </div>`;
+}
+renderCalendar();
+setInterval(renderCalendar, 60 * 1000);
+
+/* ─── SPOTIFY PKCE ────────────────────────────────────── */
+function genVerifier(len=96){
+  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
+  return Array.from(crypto.getRandomValues(new Uint8Array(len))).map(b=>chars[b%chars.length]).join('');
+}
+async function genChallenge(v){
+  const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
+  return btoa(String.fromCharCode(...new Uint8Array(buf))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=/g,'');
+}
+
+async function spotifyLogin(){
+  if(!SPOTIFY_CLIENT_ID||SPOTIFY_CLIENT_ID==='YOUR_SPOTIFY_CLIENT_ID'){
+    alert('Set SPOTIFY_CLIENT_ID at the top of the script.\n\n1. Go to developer.spotify.com/dashboard\n2. Create an app with redirect URI: '+SPOTIFY_REDIRECT+'\n3. Paste the Client ID into the SPOTIFY_CLIENT_ID constant.');
+    return;
+  }
+  const v=genVerifier();
+  sessionStorage.setItem('sp_v',v);
+  const c=await genChallenge(v);
+  const p=new URLSearchParams({client_id:SPOTIFY_CLIENT_ID,response_type:'code',redirect_uri:SPOTIFY_REDIRECT,scope:SPOTIFY_SCOPES,code_challenge_method:'S256',code_challenge:c});
+  location.href='https://accounts.spotify.com/authorize?'+p;
+}
+
+async function spExchange(code){
+  const v=sessionStorage.getItem('sp_v');
+  const b=new URLSearchParams({client_id:SPOTIFY_CLIENT_ID,grant_type:'authorization_code',code,redirect_uri:SPOTIFY_REDIRECT,code_verifier:v});
+  const r=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b});
+  const data=await r.json();
+  if(data.access_token){
+    sessionStorage.setItem('sp_tok',data.access_token);
+    sessionStorage.setItem('sp_ref',data.refresh_token||'');
+    sessionStorage.setItem('sp_exp',Date.now()+(data.expires_in||3600)*1000);
+    history.replaceState({},'',location.pathname);
+    return data.access_token;
+  }
+  return null;
+}
+
+async function spRefresh(){
+  const ref=sessionStorage.getItem('sp_ref'); if(!ref) return null;
+  const b=new URLSearchParams({client_id:SPOTIFY_CLIENT_ID,grant_type:'refresh_token',refresh_token:ref});
+  const r=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:b});
+  const data=await r.json();
+  if(data.access_token){
+    sessionStorage.setItem('sp_tok',data.access_token);
+    sessionStorage.setItem('sp_exp',Date.now()+(data.expires_in||3600)*1000);
+    return data.access_token;
+  }
+  return null;
+}
+
+async function spToken(){
+  const exp=parseInt(sessionStorage.getItem('sp_exp')||'0');
+  if(Date.now()<exp-60000) return sessionStorage.getItem('sp_tok');
+  return spRefresh();
+}
+
+function renderSpConnect(){
+  document.getElementById('spotify-out').innerHTML=`
+    <div class="sp-connect-wrap">
+      <div class="sp-connect-ico">🎵</div>
+      <div class="sp-connect-txt">Connect to see what's playing</div>
+      <button class="sp-connect-btn" onclick="spotifyLogin()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="#1ed760"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424a.622.622 0 01-.857.205c-2.348-1.435-5.304-1.76-8.785-.964a.623.623 0 01-.277-1.215c3.809-.87 7.077-.496 9.713 1.116a.623.623 0 01.206.858zm1.223-2.722a.779.779 0 01-1.072.256c-2.687-1.652-6.785-2.131-9.965-1.166a.778.778 0 01-.966-.519.779.779 0 01.519-.966c3.632-1.102 8.147-.568 11.228 1.324a.778.778 0 01.256 1.071zm.105-2.835C14.692 8.95 9.375 8.775 6.297 9.71a.935.935 0 11-.543-1.79c3.532-1.072 9.404-.865 13.115 1.338a.935.935 0 01-.955 1.609z"/></svg>
+        Connect Spotify
+      </button>
+    </div>`;
+  const b=document.getElementById('sp-badge');
+  b.textContent='not connected'; b.style.color='var(--text-muted)';
+}
+
+function renderNowPlaying(data){
+  const el=document.getElementById('spotify-out');
+  const badge=document.getElementById('sp-badge');
+  if(!data||!data.item){
+    el.innerHTML=`<div class="sp-nothing"><div class="sp-nothing-ico">⏸</div>Nothing playing right now</div>`;
+    badge.textContent='paused'; badge.style.color='var(--text-muted)'; return;
+  }
+  const t=data.item;
+  const art=t.album?.images?.[0]?.url;
+  const pct=data.progress_ms&&t.duration_ms?Math.round(data.progress_ms/t.duration_ms*100):0;
+  const artists=t.artists?.map(a=>a.name).join(', ')||'';
+  badge.textContent=data.is_playing?'▶ playing':'⏸ paused';
+  badge.style.color=data.is_playing?'var(--spotify)':'var(--text-muted)';
+  el.innerHTML=`<div class="sp-now">
+    ${art?`<img class="sp-art" src="${art}" alt="art">` : `<div class="sp-art-ph">🎵</div>`}
+    <div class="sp-info">
+      <div class="sp-track">${t.name}</div>
+      <div class="sp-artist">${artists}</div>
+      <div class="sp-prog-wrap"><div class="sp-prog-bar" style="width:${pct}%"></div></div>
+      <div class="sp-status-row">
+        ${data.is_playing?'<span class="sp-playing-dot"></span>Playing':'⏸ Paused'}
+        <span style="margin-left:auto;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100px">${t.album?.name||''}</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+let spTimer=null;
+async function spPoll(){
+  const tok=await spToken();
+  if(!tok){renderSpConnect();clearInterval(spTimer);return;}
+  try{
+    const r=await fetch('https://api.spotify.com/v1/me/player/currently-playing',{headers:{Authorization:'Bearer '+tok}});
+    if(r.status===204){renderNowPlaying(null);return;}
+    if(r.status===401){sessionStorage.removeItem('sp_tok');renderSpConnect();return;}
+    if(!r.ok) return;
+    renderNowPlaying(await r.json());
+  }catch{}
+}
+
+async function initSpotify(){
+  const params=new URLSearchParams(location.search);
+  const code=params.get('code');
+  if(code){
+    document.getElementById('spotify-out').innerHTML='<div class="loading">authenticating with Spotify...</div>';
+    const tok=await spExchange(code);
+    if(!tok){renderSpConnect();return;}
+  }
+  const tok=await spToken();
+  if(!tok){renderSpConnect();return;}
+  await spPoll();
+  spTimer=setInterval(spPoll,8000);
+}
+initSpotify();
+
+/* ─── SEARCH ─────────────────────────────────────────── */
+const cmd=document.getElementById('cmd');
 if(cmd){
-  document.addEventListener('keydown', e=>{
-    if((e.metaKey||e.ctrlKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); cmd.focus(); }
+  document.addEventListener('keydown',e=>{
+    if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();cmd.focus();}
   });
-  cmd.addEventListener('input', ()=>{
-    const q = cmd.value.toLowerCase();
+  cmd.addEventListener('input',()=>{
+    const q=cmd.value.toLowerCase();
     document.querySelectorAll('.card').forEach(c=>{
-      c.style.display = !q || c.innerText.toLowerCase().includes(q) ? '' : 'none';
+      c.style.display=!q||c.innerText.toLowerCase().includes(q)?'':'none';
     });
   });
 }
