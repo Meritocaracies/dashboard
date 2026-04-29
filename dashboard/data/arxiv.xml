@@ -2,234 +2,140 @@
 <feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
   <id>https://arxiv.org/api/VIJvrZKbruAugt03XDUIBoiejDs</id>
   <title>arXiv Query: search_query=cat:cs.AI OR cat:q-bio.GN&amp;id_list=&amp;start=0&amp;max_results=5</title>
-  <updated>2026-04-27T13:29:40Z</updated>
+  <updated>2026-04-29T13:46:17Z</updated>
   <link href="https://arxiv.org/api/query?search_query=cat:cs.AI+OR+cat:q-bio.GN&amp;start=0&amp;max_results=5&amp;id_list=" type="application/atom+xml"/>
   <opensearch:itemsPerPage>5</opensearch:itemsPerPage>
-  <opensearch:totalResults>177594</opensearch:totalResults>
+  <opensearch:totalResults>178145</opensearch:totalResults>
   <opensearch:startIndex>0</opensearch:startIndex>
   <entry>
-    <id>http://arxiv.org/abs/2604.22748v1</id>
-    <title>Agentic World Modeling: Foundations, Capabilities, Laws, and Beyond</title>
-    <updated>2026-04-24T17:48:47Z</updated>
-    <link href="https://arxiv.org/abs/2604.22748v1" rel="alternate" type="text/html"/>
-    <link href="https://arxiv.org/pdf/2604.22748v1" rel="related" type="application/pdf" title="pdf"/>
-    <summary>As AI systems move from generating text to accomplishing goals through sustained interaction, the ability to model environment dynamics becomes a central bottleneck. Agents that manipulate objects, navigate software, coordinate with others, or design experiments require predictive environment models, yet the term world model carries different meanings across research communities. We introduce a "levels x laws" taxonomy organized along two axes. The first defines three capability levels: L1 Predictor, which learns one-step local transition operators; L2 Simulator, which composes them into multi-step, action-conditioned rollouts that respect domain laws; and L3 Evolver, which autonomously revises its own model when predictions fail against new evidence. The second identifies four governing-law regimes: physical, digital, social, and scientific. These regimes determine what constraints a world model must satisfy and where it is most likely to fail. Using this framework, we synthesize over 400 works and summarize more than 100 representative systems spanning model-based reinforcement learning, video generation, web and GUI agents, multi-agent social simulation, and AI-driven scientific discovery. We analyze methods, failure modes, and evaluation practices across level-regime pairs, propose decision-centric evaluation principles and a minimal reproducible evaluation package, and outline architectural guidance, open problems, and governance challenges. The resulting roadmap connects previously isolated communities and charts a path from passive next-step prediction toward world models that can simulate, and ultimately reshape, the environments in which agents operate.</summary>
+    <id>http://arxiv.org/abs/2604.25917v1</id>
+    <title>Recursive Multi-Agent Systems</title>
+    <updated>2026-04-28T17:59:34Z</updated>
+    <link href="https://arxiv.org/abs/2604.25917v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.25917v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Recursive or looped language models have recently emerged as a new scaling axis by iteratively refining the same model computation over latent states to deepen reasoning. We extend such scaling principle from a single model to multi-agent systems, and ask: Can agent collaboration itself be scaled through recursion? To this end, we introduce RecursiveMAS, a recursive multi-agent framework that casts the entire system as a unified latent-space recursive computation. RecursiveMAS connects heterogeneous agents as a collaboration loop through the lightweight RecursiveLink module, enabling in-distribution latent thoughts generation and cross-agent latent state transfer. To optimize our framework, we develop an inner-outer loop learning algorithm for iterative whole-system co-optimization through shared gradient-based credit assignment across recursion rounds. Theoretical analyses of runtime complexity and learning dynamics establish that RecursiveMAS is more efficient than standard text-based MAS and maintains stable gradients during recursive training. Empirically, we instantiate RecursiveMAS under 4 representative agent collaboration patterns and evaluate across 9 benchmarks spanning mathematics, science, medicine, search, and code generation. In comparison with advanced single/multi-agent and recursive computation baselines, RecursiveMAS consistently delivers an average accuracy improvement of 8.3%, together with 1.2$\times$-2.4$\times$ end-to-end inference speedup, and 34.6%-75.6% token usage reduction. Code and Data are provided in https://recursivemas.github.io.</summary>
     <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
-    <published>2026-04-24T17:48:47Z</published>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-28T17:59:34Z</published>
+    <arxiv:comment>36 Pages. Project Website: https://recursivemas.github.io</arxiv:comment>
     <arxiv:primary_category term="cs.AI"/>
     <author>
-      <name>Meng Chu</name>
+      <name>Xiyuan Yang</name>
     </author>
     <author>
-      <name>Xuan Billy Zhang</name>
+      <name>Jiaru Zou</name>
     </author>
     <author>
-      <name>Kevin Qinghong Lin</name>
+      <name>Rui Pan</name>
     </author>
     <author>
-      <name>Lingdong Kong</name>
+      <name>Ruizhong Qiu</name>
     </author>
     <author>
-      <name>Jize Zhang</name>
+      <name>Pan Lu</name>
     </author>
     <author>
-      <name>Teng Tu</name>
+      <name>Shizhe Diao</name>
     </author>
     <author>
-      <name>Weijian Ma</name>
+      <name>Jindong Jiang</name>
     </author>
     <author>
-      <name>Ziqi Huang</name>
+      <name>Hanghang Tong</name>
     </author>
     <author>
-      <name>Senqiao Yang</name>
+      <name>Tong Zhang</name>
     </author>
     <author>
-      <name>Wei Huang</name>
+      <name>Markus J. Buehler</name>
     </author>
     <author>
-      <name>Yeying Jin</name>
+      <name>Jingrui He</name>
     </author>
     <author>
-      <name>Zhefan Rao</name>
-    </author>
-    <author>
-      <name>Jinhui Ye</name>
-    </author>
-    <author>
-      <name>Xinyu Lin</name>
-    </author>
-    <author>
-      <name>Xichen Zhang</name>
-    </author>
-    <author>
-      <name>Qisheng Hu</name>
-    </author>
-    <author>
-      <name>Shuai Yang</name>
-    </author>
-    <author>
-      <name>Leyang Shen</name>
-    </author>
-    <author>
-      <name>Wei Chow</name>
-    </author>
-    <author>
-      <name>Yifei Dong</name>
-    </author>
-    <author>
-      <name>Fengyi Wu</name>
-    </author>
-    <author>
-      <name>Quanyu Long</name>
-    </author>
-    <author>
-      <name>Bin Xia</name>
-    </author>
-    <author>
-      <name>Shaozuo Yu</name>
-    </author>
-    <author>
-      <name>Mingkang Zhu</name>
-    </author>
-    <author>
-      <name>Wenhu Zhang</name>
-    </author>
-    <author>
-      <name>Jiehui Huang</name>
-    </author>
-    <author>
-      <name>Haokun Gui</name>
-    </author>
-    <author>
-      <name>Haoxuan Che</name>
-    </author>
-    <author>
-      <name>Long Chen</name>
-    </author>
-    <author>
-      <name>Qifeng Chen</name>
-    </author>
-    <author>
-      <name>Wenxuan Zhang</name>
-    </author>
-    <author>
-      <name>Wenya Wang</name>
-    </author>
-    <author>
-      <name>Xiaojuan Qi</name>
-    </author>
-    <author>
-      <name>Yang Deng</name>
-    </author>
-    <author>
-      <name>Yanwei Li</name>
-    </author>
-    <author>
-      <name>Mike Zheng Shou</name>
-    </author>
-    <author>
-      <name>Zhi-Qi Cheng</name>
-    </author>
-    <author>
-      <name>See-Kiong Ng</name>
-    </author>
-    <author>
-      <name>Ziwei Liu</name>
-    </author>
-    <author>
-      <name>Philip Torr</name>
-    </author>
-    <author>
-      <name>Jiaya Jia</name>
+      <name>James Zou</name>
     </author>
   </entry>
   <entry>
-    <id>http://arxiv.org/abs/2604.22736v1</id>
-    <title>An Undecidability Proof for the Plan Existence Problem</title>
-    <updated>2026-04-24T17:36:17Z</updated>
-    <link href="https://arxiv.org/abs/2604.22736v1" rel="alternate" type="text/html"/>
-    <link href="https://arxiv.org/pdf/2604.22736v1" rel="related" type="application/pdf" title="pdf"/>
-    <summary>The plan existence problem asks, given a goal in the form of a formula in modal logic, an initial epistemic state (a pointed Kripke model), and a set of epistemic actions, whether there exists a sequence of actions that can be applied to reach the goal. We prove that even in the case where the preconditions of the epistemic actions have modal depth at most 1, and there are no postconditions, the plan existence problem is undecidable. The (un)decidability of this problem was previously unknown.</summary>
-    <category term="cs.LO" scheme="http://arxiv.org/schemas/atom"/>
-    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
-    <published>2026-04-24T17:36:17Z</published>
-    <arxiv:primary_category term="cs.LO"/>
-    <author>
-      <name>Antonis Achilleos</name>
-    </author>
-  </entry>
-  <entry>
-    <id>http://arxiv.org/abs/2604.22722v1</id>
-    <title>Aligning Dense Retrievers with LLM Utility via DistillationAligning Dense Retrievers with LLM Utility via Distillation</title>
-    <updated>2026-04-24T17:18:56Z</updated>
-    <link href="https://arxiv.org/abs/2604.22722v1" rel="alternate" type="text/html"/>
-    <link href="https://arxiv.org/pdf/2604.22722v1" rel="related" type="application/pdf" title="pdf"/>
-    <summary>Dense vector retrieval is the practical backbone of Retrieval- Augmented Generation (RAG), but similarity search can suffer from precision limitations. Conversely, utility-based approaches leveraging LLM re-ranking often achieve superior performance but are computationally prohibitive and prone to noise inherent in perplexity estimation. We propose Utility-Aligned Embeddings (UAE), a framework designed to merge these advantages into a practical, high-performance retrieval method. We formulate retrieval as a distribution matching problem, training a bi-encoder to imitate a utility distribution derived from perplexity reduction using a Utility-Modulated InfoNCE objective. This approach injects graded utility signals directly into the embedding space without requiring test-time LLM inference. On the QASPER benchmark, UAE improves retrieval Recall@1 by 30.59%, MAP by 30.16% and Token F1 by 17.3% over the strong semantic baseline BGE-Base. Crucially, UAE is over 180x faster than the efficient LLM re-ranking methods preserving competitive performance, demonstrating that aligning retrieval with generative utility yields reliable contexts at scale.</summary>
-    <category term="cs.IR" scheme="http://arxiv.org/schemas/atom"/>
-    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <id>http://arxiv.org/abs/2604.25907v1</id>
+    <title>How Fast Should a Model Commit to Supervision? Training Reasoning Models on the Tsallis Loss Continuum</title>
+    <updated>2026-04-28T17:52:38Z</updated>
+    <link href="https://arxiv.org/abs/2604.25907v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.25907v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Adapting reasoning models to new tasks during post-training with only output-level supervision stalls under reinforcement learning from verifiable rewards (RLVR) when the initial success probability $p_0$ is small. Using the Tsallis $q$-logarithm, we define a loss family $J_Q$ that interpolates between RLVR (at $q{=}0$, the exploitation pole) and the log-marginal-likelihood over latent trajectories (at $q{=}1$, the density-estimation pole). All members share the same per-example gradient direction, differing only by a scalar amplification $P_{θ^{-q}}$ that reweights each instance independently of the learning rate. This amplification is the mechanism that addresses cold-start stalling: under gradient flow, the exploitation pole requires $Ω(\frac{1}{p_0})$ time to escape cold start, while the density-estimation pole escapes in $Θ\big(\log(\frac{1}{p_0})\big)$; intermediate $q$ trades escape speed against noise memorization. Because $P_θ$ is intractable, we derive two Monte Carlo estimators from the two factorizations of the gradient: Gradient-Amplified RL (GARL) samples from the prior and amplifies the RL gradient, and Posterior-Attenuated Fine-Tuning (PAFT) importance-resamples from the posterior and runs standard SFT. Both have bias $O\big(\frac{q}{M P_θ^{q+1}}\big)$; GARL has lower variance, PAFT has semantically coherent gradients. On FinQA, HotPotQA, and MuSiQue, GARL at $q{=}0.75$ substantially mitigates cold-start stalling, escaping cold start where GRPO fails entirely. In warm start, GARL at low $q$ dominates FinQA where training is stable; on HotPotQA and MuSiQue, GARL destabilizes during training, and PAFT at $q{=}0.75$ provides stable gradients (best overall on HotPotQA at 47.9 maj@16, $+14.4$ over GRPO).</summary>
     <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
-    <published>2026-04-24T17:18:56Z</published>
-    <arxiv:primary_category term="cs.IR"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-28T17:52:38Z</published>
+    <arxiv:primary_category term="cs.LG"/>
     <author>
-      <name>Rajinder Sandhu</name>
+      <name>Chu-Cheng Lin</name>
     </author>
     <author>
-      <name>Di Mu</name>
-    </author>
-    <author>
-      <name>Cheng Chang</name>
-    </author>
-    <author>
-      <name>Md Shahriar Tasjid</name>
-    </author>
-    <author>
-      <name>Himanshu Rai</name>
-    </author>
-    <author>
-      <name>Maksims Volkovs</name>
-    </author>
-    <author>
-      <name>Ga Wu</name>
+      <name>Eugene Ie</name>
     </author>
   </entry>
   <entry>
-    <id>http://arxiv.org/abs/2604.22693v1</id>
-    <title>CRAFT: Clustered Regression for Adaptive Filtering of Training data</title>
-    <updated>2026-04-24T16:27:39Z</updated>
-    <link href="https://arxiv.org/abs/2604.22693v1" rel="alternate" type="text/html"/>
-    <link href="https://arxiv.org/pdf/2604.22693v1" rel="related" type="application/pdf" title="pdf"/>
-    <summary>Selecting a small, high-quality subset from a large corpus for fine-tuning is increasingly important as corpora grow to tens of millions of datapoints, making full fine-tuning expensive and often unnecessary. We propose CRAFT (Clustered Regression for Adaptive Filtering of Training data), a vectorization-agnostic selection method for training sequence-to-sequence models. CRAFT decomposes the joint source-target distribution and performs a two-stage selection: (i) match the validation source distribution through proportional budget allocation across k-means clusters, and (ii) within each source cluster, select training pairs whose target embeddings minimize a conditional expected distance derived from the validation target distribution. We prove that proportional cluster allocation bounds the continuous KL divergence between selected and validation distributions, with the residual controlled by cluster diameters. We evaluate CRAFT on English-Hindi translation by selecting training data from 33 million NLLB sentence pairs and fine-tuning mBART via LoRA. CRAFT achieves 43.34 BLEU, outperforming TSDS (41.21) by 2.13 points on the same candidate pool and encoder while completing selection over 40 times faster. With TF-IDF vectorization, the entire pipeline completes in under one minute on CPU. TAROT achieves 45.61 BLEU, but CRAFT completes selection in 26.86 seconds versus TAROT's 75.6 seconds, a 2.8 time speedup.</summary>
+    <id>http://arxiv.org/abs/2604.25902v1</id>
+    <title>Toward a Functional Geometric Algebra for Natural Language Semantics</title>
+    <updated>2026-04-28T17:47:46Z</updated>
+    <link href="https://arxiv.org/abs/2604.25902v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.25902v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Distributional and neural approaches to natural language semantics have been built almost exclusively on conventional linear algebra: vectors, matrices, tensors, and the operations that accompany them. These methods have achieved remarkable empirical success, yet they face persistent structural limitations in compositional semantics, type sensitivity, and interpretability. I argue in this paper that geometric algebra (GA) -- specifically, Clifford algebras -- provides a mathematically superior foundation for semantic representation, and that a Functional Geometric Algebra (FGA) framework extends GA toward a typed, compositional semantics capable of supporting inference, transformation, and interpretability while retaining full compatibility with distributional learning and modern neural architectures. I develop the formal foundations, identify three core capabilities that GA provides and linear algebra does not, present a detailed worked example illustrating operator-level semantic contrasts, and show how GA-based operations already implicit in current transformer architectures can be made explicit and extended. The central claim is not merely increased dimensionality but increased structural organization: GA expands an $n$-dimensional embedding space into a $2^n$ multivector algebra where base semantic concepts and their higher-order interactions are represented within a single, principled algebraic framework.</summary>
     <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
     <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
-    <published>2026-04-24T16:27:39Z</published>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-28T17:47:46Z</published>
+    <arxiv:comment>43 pages. Keywords: geometric algebra, Clifford algebra, compositional semantics, natural language semantics, type coercion, multivector representations, graded type system, Generative Lexicon, neural language models, distributional semantics</arxiv:comment>
     <arxiv:primary_category term="cs.CL"/>
     <author>
-      <name>Parthasarathi Panda</name>
-    </author>
-    <author>
-      <name>Asheswari Swain</name>
-    </author>
-    <author>
-      <name>Subhrakanta Panda</name>
+      <name>James Pustejovsky</name>
     </author>
   </entry>
   <entry>
-    <id>http://arxiv.org/abs/2604.22679v1</id>
-    <title>How Supply Chain Dependencies Complicate Bias Measurement and Accountability Attribution in AI Hiring Applications</title>
-    <updated>2026-04-24T16:01:35Z</updated>
-    <link href="https://arxiv.org/abs/2604.22679v1" rel="alternate" type="text/html"/>
-    <link href="https://arxiv.org/pdf/2604.22679v1" rel="related" type="application/pdf" title="pdf"/>
-    <summary>The increasing adoption of AI systems in hiring has raised concerns about algorithmic bias and accountability, prompting regulatory responses including the EU AI Act, NYC Local Law 144, and Colorado's AI Act. While existing research examines bias through technical or regulatory lenses, both perspectives overlook a fundamental challenge: modern AI hiring systems operate within complex supply chains where responsibility fragments across data vendors, model developers, platform providers, and deploying organizations. This paper investigates how these dependency chains complicate bias evaluation and accountability attribution. Drawing on literature review and regulatory analysis, we demonstrate that fragmented responsibilities create two critical problems. First, bias emerges from component interactions rather than isolated elements, yet proprietary configurations prevent integrated evaluation. A resume parser may function without bias independently but contribute to discrimination when integrated with specific ranking algorithms and filtering thresholds. Second, information asymmetries mean deploying organizations bear legal responsibility without technical visibility into vendor-supplied algorithms, while vendors control implementations without meaningful disclosure requirements. Each stakeholder may believe they are compliant; nevertheless, the integrated system may produce biased outcomes. Analysis of implementation ambiguities reveals these challenges in practice. We propose multi-layered interventions including system-level audits, vendor guidelines, continuous monitoring mechanisms, and documentation across dependency chains. Our findings reveal that effective governance requires coordinated action across technical, organizational, and regulatory domains to establish meaningful accountability in distributed development environments.</summary>
+    <id>http://arxiv.org/abs/2604.25898v1</id>
+    <title>TSN-Affinity: Similarity-Driven Parameter Reuse for Continual Offline Reinforcement Learning</title>
+    <updated>2026-04-28T17:41:04Z</updated>
+    <link href="https://arxiv.org/abs/2604.25898v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.25898v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Continual offline reinforcement learning (CORL) aims to learn a sequence of tasks from datasets collected over time while preserving performance on previously learned tasks. This setting corresponds to domains where new tasks arise over time, but adapting the model in live environment interactions is expensive, risky, or impossible. However, CORL inherits the dual difficulty of offline reinforcement learning and adapting while preventing catastrophic forgetting. Replay-based continual learning approaches remain a strong baseline but incur memory overhead and suffer from a distribution mismatch between replayed samples and newly learned policies. At the same time, architectural continual learning methods have shown strong potential in supervised learning but remain underexplored in CORL. In this work, we propose TSN-Affinity, a novel CORL method based on TinySubNetworks and Decision Transformer. The method enables task-specific parameterization and controlled knowledge sharing through a RL-aware reuse strategy that routes tasks according to action compatibility and latent similarity. We evaluate the approach on benchmarks based on Atari games and simulations of manipulation tasks with the Franka Emika Panda robotic arm, covering both discrete and continuous control. Results show strong retention from sparse SubNetworks, with routing further improving multi-task performance. Our findings suggest that similarity-guided architectural reuse is a strong and viable alternative to replay-based strategies in a CORL setting. Our code is available at: https://github.com/anonymized-for-submission123/tsn-affinity.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-28T17:41:04Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Dominik Żurek</name>
+    </author>
+    <author>
+      <name>Kamil Faber</name>
+    </author>
+    <author>
+      <name>Marcin Pietron</name>
+    </author>
+    <author>
+      <name>Paweł Gajewski</name>
+    </author>
+    <author>
+      <name>Roberto Corizzo</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2604.25895v1</id>
+    <title>Three Models of RLHF Annotation: Extension, Evidence, and Authority</title>
+    <updated>2026-04-28T17:39:14Z</updated>
+    <link href="https://arxiv.org/abs/2604.25895v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2604.25895v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Preference-based alignment methods, most prominently Reinforcement Learning with Human Feedback (RLHF), use the judgments of human annotators to shape large language model behaviour. However, the normative role of these judgments is rarely made explicit. I distinguish three conceptual models of that role. The first is extension: annotators extend the system designers' own judgments about what outputs should be. The second is evidence: annotators provide independent evidence about some facts, whether moral, social or otherwise. The third is authority: annotators have some independent authority (as representatives of the broader population) to determine system outputs. I argue that these models have implications for how RLHF pipelines should solicit, validate and aggregate annotations. I survey landmark papers in the literature on RLHF and related methods to illustrate how they implicitly draw on these models, describe failure modes that come from unintentionally or intentionally conflating them, and offer normative criteria for choosing among them. My central recommendation is that RLHF pipeline designers should decompose annotation into separable dimensions and tailor each pipeline to the model most appropriate for that dimension, rather than seeking a single unified pipeline.</summary>
     <category term="cs.CY" scheme="http://arxiv.org/schemas/atom"/>
     <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
-    <published>2026-04-24T16:01:35Z</published>
+    <category term="cs.CL" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-04-28T17:39:14Z</published>
+    <arxiv:comment>17 pages. Accepted to ACM FAccT '26, June 25-28, Montreal</arxiv:comment>
     <arxiv:primary_category term="cs.CY"/>
     <author>
-      <name>Gauri Sharma</name>
+      <name>Steve Coyne</name>
     </author>
-    <author>
-      <name>Maryam Molamohammadi</name>
-    </author>
+    <arxiv:doi>10.1145/3805689.3812225</arxiv:doi>
+    <link rel="related" href="https://doi.org/10.1145/3805689.3812225" title="doi"/>
   </entry>
 </feed>
